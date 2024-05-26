@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/abtUs"
+            android:icon="@drawable/group"
+            android:title="About Us"
+            />
+        <item
+            android:id="@+id/support"
+            android:icon="@drawable/help"
+            android:title="Support"
+            />
+
+
+    </group>
+
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:title="Profile"
+                    android:icon="@drawable/person"
+                    android:id="@+id/burgerProfile"/>
+                <item android:title="Log Out"
+                    android:icon="@drawable/person"
+                    android:id="@+id/logout"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Contact Us">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:title="City Agri Line"
+                    android:icon="@drawable/person"
+                    android:id="@+id/contactUs"/>
+                <item android:title="Gmail"
+                    android:icon="@drawable/person"
+                    android:id="@+id/gmail"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/navHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Home"
+        android:iconTint="@color/black"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/navMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Inbox"
+        android:iconTint="@color/black"
+        android:icon="@drawable/mail"/>
+    <item
+        android:id="@+id/navProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Profile"
+        android:iconTint="@color/black"
+        android:icon="@drawable/person"/>
+</menu>

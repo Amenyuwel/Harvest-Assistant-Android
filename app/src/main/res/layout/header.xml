@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:background="@drawable/abs_small"
+    android:gravity="bottom">
+
+
+        <TextView
+            android:id="@+id/burgerHeader"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="67dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@+id/burgerImage"
+            android:fontFamily="@font/ibmbold"
+            android:text="Amenyuwel"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold"/>
+
+</LinearLayout>

@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open Navigation Drawer</string>
+    <string name="close">Close Navigation Drawer</string>
+    <string name="portraitText">Portrait</string>
+    <string name="landscapeText">Landscape</string>
+
+    <string-array name="pestinfo">
+        <item>Root feeders</item>
+        <item>Stem borers</item>
+        <item>Leaf hoppers</item>
+        <item>Plant hoppers</item>
+        <item>Grain suckers</item>
+
+    </string-array>
+
+    <string-array name="crops_array">
+        <item>Rice</item>
+        <item>Wheat</item>
+        <item>Corn</item>
+        <item>Soybean</item>
+        <item>Barley</item>
+    </string-array>
+
+    <string-array name="variants_array">
+        <item>Variant 1</item>
+        <item>Variant 2</item>
+        <item>Variant 3</item>
+        <item>Variant 4</item>
+        <item>Variant 5</item>
+    </string-array>
+
+
+    <string-array name="pestdesc">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+
+
+    </string-array>
+
+</resources>
