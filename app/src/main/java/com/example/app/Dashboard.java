@@ -80,9 +80,7 @@ public class Dashboard extends AppCompatActivity {
                     if (itemId == R.id.navHome) {
                         replaceFragment(homeFragment);
                         return true;
-                    } else if (itemId == R.id.navMail) {
-                        replaceFragment(inboxFragment);
-                        return true;
+
                     } else if (itemId == R.id.navProfile) {
                         replaceFragment(profileFragment);
                         return true;
@@ -92,11 +90,6 @@ public class Dashboard extends AppCompatActivity {
                 }
             });
 
-
-            //Badge for Inbox icon
-            BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.navMail);
-            badgeDrawable.setVisible(true);
-            badgeDrawable.setNumber(1000);
 
             // Initial fragment or start up fragment 
             replaceFragment(homeFragment);
