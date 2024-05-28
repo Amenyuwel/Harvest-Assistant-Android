@@ -88,8 +88,11 @@ public class Login extends AppCompatActivity {
                         String message = jsonResponse.getString("message");
                         String token = jsonResponse.getString("remember_token");
 
-                        // Save the token to SharedPreferences
-                        saveTokenToSharedPreferences(token);
+                        // Save token in SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("token", token);
+                        editor.apply();
 
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Login.this, Dashboard.class);
@@ -115,31 +118,7 @@ public class Login extends AppCompatActivity {
             }
         };
 
-
         rq.add(postRequest);
     }
 
-    // Method to save the token to SharedPreferences
-    private void saveTokenToSharedPreferences(String token) {
-        // Get SharedPreferences instance
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-        // Get SharedPreferences editor
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        // Store the token using a unique key
-        editor.putString("token", token);
-
-        // Apply changes
-        editor.apply();
-    }
-
-    // Method to retrieve the token from SharedPreferences
-    private String getTokenFromSharedPreferences() {
-        // Get SharedPreferences instance
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-        // Retrieve the token using the unique key
-        return sharedPreferences.getString("token", "");
-    }
 }
