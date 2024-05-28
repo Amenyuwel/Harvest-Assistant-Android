@@ -26,7 +26,7 @@ import com.example.app.ml.ModelUnquant;
 
 public class CameraActivity extends AppCompatActivity {
 
-    TextView result, confidence;
+    TextView result, confidence, recommendation; // Add recommendation TextView
     ImageView imageView;
     Button picture;
     int imageSize = 224;
@@ -38,6 +38,7 @@ public class CameraActivity extends AppCompatActivity {
 
         result = findViewById(R.id.result);
         confidence = findViewById(R.id.confidence);
+        recommendation = findViewById(R.id.recommendation); // Initialize recommendation TextView
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.button);
 
@@ -49,7 +50,7 @@ public class CameraActivity extends AppCompatActivity {
                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, 1);
                 } else {
-                    //Request camera permission if we don't have it.
+                    // Request camera permission if we don't have it.
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                 }
             }
@@ -65,14 +66,14 @@ public class CameraActivity extends AppCompatActivity {
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
-            // get 1D array of 224 * 224 pixels in image
-            int [] intValues = new int[imageSize * imageSize];
+            // Get 1D array of 224 * 224 pixels in image
+            int[] intValues = new int[imageSize * imageSize];
             image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
 
-            // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
+            // Iterate over pixels and extract R, G, and B values. Add to bytebuffer.
             int pixel = 0;
-            for(int i = 0; i < imageSize; i++){
-                for(int j = 0; j < imageSize; j++){
+            for (int i = 0; i < imageSize; i++) {
+                for (int j = 0; j < imageSize; j++) {
                     int val = intValues[pixel++]; // RGB
                     byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f / 255.f));
                     byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f / 255.f));
@@ -87,11 +88,11 @@ public class CameraActivity extends AppCompatActivity {
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float[] confidences = outputFeature0.getFloatArray();
-            // find the index of the class with the biggest confidence.
+            // Find the index of the class with the biggest confidence.
             int maxPos = 0;
             float maxConfidence = 0;
-            for(int i = 0; i < confidences.length; i++){
-                if(confidences[i] > maxConfidence){
+            for (int i = 0; i < confidences.length; i++) {
+                if (confidences[i] > maxConfidence) {
                     maxConfidence = confidences[i];
                     maxPos = i;
                 }
@@ -100,11 +101,19 @@ public class CameraActivity extends AppCompatActivity {
             result.setText(classes[maxPos]);
 
             String s = "";
-            for(int i = 0; i < classes.length; i++){
+            for (int i = 0; i < classes.length; i++) {
                 s += String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
             }
             confidence.setText(s);
 
+            // Display recommendation based on detected class
+            if (classes[maxPos].equals("Snail")) {
+                recommendation.setText("Recommendation: Use Metaldehyde");
+            } else if (classes[maxPos].equals("Weevil")) {
+                recommendation.setText("Recommendation: Use Novacide.");
+            } else {
+                recommendation.setText(""); // Clear recommendation if no specific pest is detected
+            }
 
             // Releases model resources if no longer used.
             model.close();
@@ -112,7 +121,6 @@ public class CameraActivity extends AppCompatActivity {
             // TODO Handle the exception
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
