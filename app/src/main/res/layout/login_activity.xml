@@ -74,7 +74,8 @@
                 android:layout_width="300dp"
                 android:layout_height="65dp"
                 android:drawableStart="@drawable/lock_icon"
-                android:hint="PASSWORD" />
+                android:hint="PASSWORD"
+                android:inputType="textPassword"/>
 
 
         </com.google.android.material.textfield.TextInputLayout>
