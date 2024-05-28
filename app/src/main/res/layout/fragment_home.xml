@@ -174,7 +174,6 @@
 
                     <ImageView
                         android:id="@+id/ivAnalytics"
-                        android:src="@drawable/analytics"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -188,7 +187,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:fontFamily="@font/imbmedium"
-                        android:text="Analytics"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
@@ -264,7 +262,6 @@
 
                     <ImageView
                         android:id="@+id/ivHarvestvolume"
-                        android:src="@drawable/harvestvolume"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -278,7 +275,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:fontFamily="@font/imbmedium"
-                        android:text="Harvest volume"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 

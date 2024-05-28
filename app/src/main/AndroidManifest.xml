@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".RVPSecondActivity"
+            android:exported="false" />
+        <activity
             android:name=".CameraActivity"
             android:exported="false" /> <!-- Set Dashboard activity -->
         <activity
