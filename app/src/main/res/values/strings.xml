@@ -18,6 +18,38 @@
     <string name="desc_three">Interact with the Harvest Assistant\'s chatbot for more grain farming tips</string>
     <string name="desc_four">"Harvest Assistant provides pest information to combat infestations."</string>
 
+    <string-array name="Pest">
+        <item>Snail</item>
+        <item>Weevil</item>
+        <item>Pest3</item>
+        <item>Pest4</item>
+        <item>Pest5</item>
+        <item>Pest6</item>
+        <item>Pest7</item>
+        <item>Pest8</item>
+        <item>Pest9</item>
+        <item>Pest10</item>
+    </string-array>
+
+
+    <string-array name="description">
+        <item>Snails can be significant pests in paddylands, particularly the Golden Apple Snail. Prefers wet environments like rice paddies, ponds, and irrigation canals. They are notorious for feeding on young rice seedlings, which can severely affect crop yields. </item>
+        <item>The adults feed on rice leaves, while the larvae feed on the roots. Damage to the root system can lead to poor nutrient and water uptake, causing the plants to be less resilient to stress and ultimately reducing the number of grains produced per plant.</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+        <item>This is a random description</item>
+    </string-array>
+
+
+
+
+
+
     <string-array name="pestinfo">
         <item>Root feeders</item>
         <item>Stem borers</item>
