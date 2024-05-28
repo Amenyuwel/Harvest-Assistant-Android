@@ -2,6 +2,7 @@ package com.example.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    String data1[], data2[];
-    int images[];
-    Context context;
+    private String[] data1, data2;
+    private int[] images;
+    private Context context;
 
-    public MyAdapter(Context ct, String s1[], String s2[], int img[]) {
-        context = ct;
-        data1 = s1;
-        data2 = s2;
-        images = img;
+    public MyAdapter(Context ct, String[] s1, String[] s2, int[] img) {
+        this.context = ct;
+        this.data1 = s1;
+        this.data2 = s2;
+        this.images = img;
     }
 
     @NonNull
@@ -35,33 +36,32 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // Get the actual adapter position
-        int adapterPosition = holder.getAdapterPosition();
+        // Perform a bounds check
+        if (position < data1.length && position < data2.length && position < images.length) {
+            holder.myText1.setText(data1[position]);
+            holder.myText2.setText(data2[position]);
+            holder.myImage.setImageResource(images[position]);
 
-        holder.myText1.setText(data1[adapterPosition]);
-        holder.myText2.setText(data2[adapterPosition]);
-        holder.myImage.setImageResource(images[adapterPosition]);
-
-        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Use holder.getAdapterPosition() again to ensure the correct position
-                int adapterPosition = holder.getAdapterPosition();
+            holder.mainLayout.setOnClickListener(view -> {
                 Intent intent = new Intent(context, RVPSecondActivity.class);
-                intent.putExtra("data1", data1[adapterPosition]);
-                intent.putExtra("data2", data2[adapterPosition]);
-                intent.putExtra("myImage", images[adapterPosition]);
+                intent.putExtra("data1", data1[position]);
+                intent.putExtra("data2", data2[position]);
+                intent.putExtra("myImage", images[position]);
                 context.startActivity(intent);
-            }
-        });
+            });
+        } else {
+            // Handle the error scenario, maybe log an error or show a default message/image
+            Log.e("MyAdapter", "Invalid position: " + position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        // Return the minimum length to avoid index out of bounds
+        return Math.min(data1.length, Math.min(data2.length, images.length));
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView myText1, myText2;
         ImageView myImage;
