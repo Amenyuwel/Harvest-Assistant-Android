@@ -7,6 +7,17 @@
     <string name="portraitText">Portrait</string>
     <string name="landscapeText">Landscape</string>
 
+    //Heading
+    <string name="heading_one">CAMERA</string>
+    <string name="heading_two">CALENDAR</string>
+    <string name="heading_three">CHATBOT</string>
+    <string name="heading_four">PEST INFORMATION</string>
+
+    <string name="desc_one">You can access your smartphone camera through Harvest Assistant to identify pests.</string>
+    <string name="desc_two">Organize your planting date and harvest date by setting up your activities in the calendar</string>
+    <string name="desc_three">Interact with the Harvest Assistant\'s chatbot for more grain farming tips</string>
+    <string name="desc_four">"Harvest Assistant provides pest information to combat infestations."</string>
+
     <string-array name="pestinfo">
         <item>Root feeders</item>
         <item>Stem borers</item>
