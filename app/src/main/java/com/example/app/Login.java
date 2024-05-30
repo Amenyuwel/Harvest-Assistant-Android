@@ -30,6 +30,8 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
     TextInputEditText etPassword, etID;
+    Button btnLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,87 +40,96 @@ public class Login extends AppCompatActivity {
 
         etPassword = findViewById(R.id.etPassword);
         etID = findViewById(R.id.etID);
+        btnLogin = findViewById(R.id.btnLogin);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("");
         }
 
-        Button loginButton = findViewById(R.id.btnLogin);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Validate input fields
-                if (validateInputFields()) {
-                    // Perform login if validation passes
-                    String username = etID.getText().toString().trim();
-                    String password = etPassword.getText().toString().trim();
-                    performLogin(username, password);
-                }
+            public void onClick(View view) {
+                Intent i = new Intent(Login.this, Dashboard.class);
+                startActivity(i);
             }
         });
-    }
 
-    private boolean validateInputFields() {
-        String username = etID.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-
-        if (TextUtils.isEmpty(username)) {
-            etID.setError("Username is required");
-            return false;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password is required");
-            return false;
-        }
-
-        // Validation passed
-        return true;
-    }
-
-    private void performLogin(String username, String password) {
-        String url = "http://192.168.5.108/HarvestAssistantFinalII/api/login.php"; // Replace with your actual API URL
-        RequestQueue rq = Volley.newRequestQueue(Login.this);
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                response -> {
-                    try {
-                        JSONObject jsonResponse = new JSONObject(response);
-
-                        String message = jsonResponse.getString("message");
-                        String token = jsonResponse.getString("remember_token");
-
-                        // Save token in SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("token", token);
-                        editor.apply();
-
-                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Login.this, Dashboard.class);
-                        startActivity(intent);
-                        finish(); // Finish the login activity
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-                    }
-
-                },
-                error -> {
-                    Toast.makeText(this, "Wrong username or password", Toast.LENGTH_SHORT).show();
-                    Log.d("Error: ", error.toString());
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("rsbsa_num", username);
-                params.put("password", password);
-                return params;
-            }
-        };
-
-        rq.add(postRequest);
+//        Button loginButton = findViewById(R.id.btnLogin);
+//        loginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Validate input fields
+//                if (validateInputFields()) {
+//                    // Perform login if validation passes
+//                    String username = etID.getText().toString().trim();
+//                    String password = etPassword.getText().toString().trim();
+//                    performLogin(username, password);
+//                }
+//            }
+//        });
+//    }
+//
+//    private boolean validateInputFields() {
+//        String username = etID.getText().toString().trim();
+//        String password = etPassword.getText().toString().trim();
+//
+//        if (TextUtils.isEmpty(username)) {
+//            etID.setError("Username is required");
+//            return false;
+//        }
+//
+//        if (TextUtils.isEmpty(password)) {
+//            etPassword.setError("Password is required");
+//            return false;
+//        }
+//
+//        // Validation passed
+//        return true;
+//    }
+//
+//    private void performLogin(String username, String password) {
+//        String url = "http://192.168.5.108/HarvestAssistantFinalII/api/login.php"; // Replace with your actual API URL
+//        RequestQueue rq = Volley.newRequestQueue(Login.this);
+//        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+//                response -> {
+//                    try {
+//                        JSONObject jsonResponse = new JSONObject(response);
+//
+//                        String message = jsonResponse.getString("message");
+//                        String token = jsonResponse.getString("remember_token");
+//
+//                        // Save token in SharedPreferences
+//                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("token", token);
+//                        editor.apply();
+//
+//                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(Login.this, Dashboard.class);
+//                        startActivity(intent);
+//                        finish(); // Finish the login activity
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                },
+//                error -> {
+//                    Toast.makeText(this, "Wrong username or password", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error: ", error.toString());
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("rsbsa_num", username);
+//                params.put("password", password);
+//                return params;
+//            }
+//        };
+//
+//        rq.add(postRequest);
     }
 
 }
