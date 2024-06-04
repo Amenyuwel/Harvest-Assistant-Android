@@ -4,32 +4,47 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.app.ml.ModelUnquant;
 
 public class CameraActivity extends AppCompatActivity {
 
-    TextView result, confidence, recommendation; // Add recommendation TextView
+    TextView result, confidence, desc, pestrecom;
     ImageView imageView;
-    Button picture;
+    Button picture, sendButton;
     int imageSize = 224;
+    Bitmap capturedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +53,11 @@ public class CameraActivity extends AppCompatActivity {
 
         result = findViewById(R.id.result);
         confidence = findViewById(R.id.confidence);
-        recommendation = findViewById(R.id.recommendation); // Initialize recommendation TextView
+        desc = findViewById(R.id.desc);
+        pestrecom = findViewById(R.id.pestrecom);
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.button);
+        sendButton = findViewById(R.id.button_send);
 
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,9 +72,16 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
         });
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendDataToApi();
+            }
+        });
     }
 
-    public void classifyImage(Bitmap image){
+    public void classifyImage(Bitmap image) {
         try {
             ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
@@ -66,11 +90,11 @@ public class CameraActivity extends AppCompatActivity {
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
-            // Get 1D array of 224 * 224 pixels in image
+            // get 1D array of 224 * 224 pixels in image
             int[] intValues = new int[imageSize * imageSize];
             image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
 
-            // Iterate over pixels and extract R, G, and B values. Add to bytebuffer.
+            // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
             int pixel = 0;
             for (int i = 0; i < imageSize; i++) {
                 for (int j = 0; j < imageSize; j++) {
@@ -88,7 +112,7 @@ public class CameraActivity extends AppCompatActivity {
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
             float[] confidences = outputFeature0.getFloatArray();
-            // Find the index of the class with the biggest confidence.
+            // find the index of the class with the biggest confidence.
             int maxPos = 0;
             float maxConfidence = 0;
             for (int i = 0; i < confidences.length; i++) {
@@ -106,20 +130,95 @@ public class CameraActivity extends AppCompatActivity {
             }
             confidence.setText(s);
 
-            // Display recommendation based on detected class
-            if (classes[maxPos].equals("Snail")) {
-                recommendation.setText("Recommendation: Use Metaldehyde");
-            } else if (classes[maxPos].equals("Weevil")) {
-                recommendation.setText("Recommendation: Use Novacide.");
-            } else {
-                recommendation.setText(""); // Clear recommendation if no specific pest is detected
+            String identifiedPest = classes[maxPos];
+            result.setText(identifiedPest);
+
+            // Set description based on identified pest
+            String description = "";
+            String pesticides = "";
+            switch (identifiedPest) {
+                case "Snail":
+                    description = "Snails are mollusks that can damage plants by eating leaves, stems, and fruits.";
+                    pesticides = "Metaldehyde (e.g., Metarex), Iron Phosphate (e.g., Sluggo)";
+                    break;
+                case "Weevil":
+                    description = "Weevils are beetles known for damaging stored grains and crops.";
+                    pesticides = "Permethrin, Cypermethrin, Deltamethrin, Diatomaceous Earth";
+                    break;
+                case "No Pest Detected":
+                    description = "No pest detected in the image.";
+                    pesticides = "No pesticides recommended.";
+                    break;
+                default:
+                    description = "Unknown pest.";
+                    pesticides = "No specific pesticides recommended for this pest.";
+                    break;
             }
+            desc.setText(description);
+            pestrecom.setText(pesticides);
 
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
             // TODO Handle the exception
         }
+    }
+
+    private void sendDataToApi() {
+        String identifiedPest = result.getText().toString();
+
+        if (identifiedPest.equals("No Pest Detected") || capturedImage == null) {
+            Toast.makeText(this, "No pest detected or image not available.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        capturedImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+
+        String url = "https://your-api-url.com/your-endpoint"; // Replace with your actual API endpoint
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Handle the response from the server
+                        Toast.makeText(CameraActivity.this, "Data sent successfully", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                        Toast.makeText(CameraActivity.this, "Error sending data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("pestName", identifiedPest);
+                params.put("uploadPests", encodedImage);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+                // Retrieve token from SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                String token = sharedPreferences.getString("token", null);
+                if (token != null) {
+                    headers.put("Authorization", "Bearer " + token);
+                }
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -132,6 +231,7 @@ public class CameraActivity extends AppCompatActivity {
 
             image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
             classifyImage(image);
+            capturedImage = image;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

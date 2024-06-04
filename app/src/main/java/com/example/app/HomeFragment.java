@@ -27,11 +27,12 @@ public class HomeFragment extends Fragment {
     CardView recoCardView;
     CardView analyticsCardView;
     CardView pestCardView;
-    CardView hvCardView;
+    CardView cropCardView;
     CardView tutorialCardView;
     CardView chatbotCardView;
     ImageSlider imageSlider;
     ImageView ivCamera;
+
 
 
 
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment {
         recoCardView = rootView.findViewById(R.id.card1);
         analyticsCardView = rootView.findViewById(R.id.card2);
         pestCardView = rootView.findViewById(R.id.card3);
-        hvCardView = rootView.findViewById(R.id.card4);
+        cropCardView = rootView.findViewById(R.id.card4);
         tutorialCardView = rootView.findViewById(R.id.card5);
         chatbotCardView = rootView.findViewById(R.id.card6);
         imageSlider = rootView.findViewById(R.id.imageSlider);
@@ -105,10 +106,10 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        hvCardView.setOnClickListener(new View.OnClickListener() {
+        cropCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HarvestVolMainActivity.class);
+                Intent intent = new Intent(getActivity(), CropSelection.class);
                 startActivity(intent);
             }
         });

@@ -65,5 +65,10 @@ dependencies {
     implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
     implementation("androidx.camera:camera-extensions:${camerax_version}")
 
+// Add the Volley library
+    implementation ("com.android.volley:volley:1.2.0")
+
+
+
 
 }

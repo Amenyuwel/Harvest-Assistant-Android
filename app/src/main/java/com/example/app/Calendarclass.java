@@ -39,6 +39,14 @@ public class Calendarclass extends AppCompatActivity {
             }
         });
 
+        calendarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Calendarclass.this, Dashboard.class);
+                startActivity(i);
+            }
+        });
+
 
 
         Intent intent = getIntent();

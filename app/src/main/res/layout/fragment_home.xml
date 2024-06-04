@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/ivHarvestvolume"
+                        android:id="@+id/Crops"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -271,9 +271,10 @@
                         android:id="@+id/card4text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ivHarvestvolume"
+                        android:layout_below="@+id/Crops"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
+                        android:text="Crops"
                         android:fontFamily="@font/imbmedium"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
