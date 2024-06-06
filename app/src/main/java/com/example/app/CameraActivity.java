@@ -255,7 +255,8 @@ public class CameraActivity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(CameraActivity.this, "Data sent successfully!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CameraActivity.this, "Image sent to city agriculturist.", Toast.LENGTH_SHORT).show();
+                            finish(); // Close the current activity
                         }
                     }, new Response.ErrorListener() {
                 @Override
