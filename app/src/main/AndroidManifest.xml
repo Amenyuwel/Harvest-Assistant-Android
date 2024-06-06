@@ -72,7 +72,7 @@
         <activity android:name=".ElninoMain" /> <!-- Harvest Volume Activity -->
         <activity android:name=".HarvestVolMainActivity" /> <!-- Tutorial Activity -->
         <activity android:name=".TutorialMainActivity" /> <!-- FAQ Activity -->
-        <activity android:name=".Activity_Main_Faq" />
+        <activity android:name=".MainActivityFAQ" />
         <activity
             android:name=".FormActivity"
             android:exported="true">
