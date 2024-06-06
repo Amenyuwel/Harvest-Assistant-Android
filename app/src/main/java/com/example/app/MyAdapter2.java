@@ -13,16 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
 
-    private String[] data1, data2;
+    private String[] data3, data4;
     private int[] images;
     private Context context;
 
-    public MyAdapter(Context ct, String[] s1, String[] s2, int[] img) {
+    public MyAdapter2(Context ct, String[] s3, String[] s4, int[] img) {
         this.context = ct;
-        this.data1 = s1;
-        this.data2 = s2;
+        this.data3 = s3;
+        this.data4 = s4;
         this.images = img;
     }
 
@@ -30,49 +30,49 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.activity_elninorow, parent, false);
+        View view = inflater.inflate(R.layout.activity_laninarow, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // Perform a bounds check
-        if (position < data1.length && position < data2.length && position < images.length) {
-            holder.myText1.setText(data1[position]);
-            holder.myText2.setText(data2[position]);
-            holder.myImage.setImageResource(images[position]);
+        if (position < data3.length && position < data4.length && position < images.length) {
+            holder.myText3.setText(data3[position]);
+            holder.myText4.setText(data4[position]);
+            holder.myImageView3.setImageResource(images[position]);
 
-            holder.mainLayout.setOnClickListener(view -> {
-                Intent intent = new Intent(context, RVPSecondActivity.class);
-                intent.putExtra("data1", data1[position]);
-                intent.putExtra("data2", data2[position]);
+            holder.laninarowlayout.setOnClickListener(view -> {
+                Intent intent = new Intent(context, RVPThirdActivity.class);
+                intent.putExtra("data3", data3[position]);
+                intent.putExtra("data4", data4[position]);
                 intent.putExtra("myImage", images[position]);
                 context.startActivity(intent);
             });
         } else {
             // Handle the error scenario, maybe log an error or show a default message/image
-            Log.e("MyAdapter", "Invalid position: " + position);
+            Log.e("MyAdapter2", "Invalid position: " + position);
         }
     }
 
     @Override
     public int getItemCount() {
         // Return the minimum length to avoid index out of bounds
-        return Math.min(data1.length, Math.min(data2.length, images.length));
+        return Math.min(data3.length, Math.min(data4.length, images.length));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView myText1, myText2;
-        ImageView myImage;
-        ConstraintLayout mainLayout;
+        TextView myText3, myText4;
+        ImageView myImageView3;
+        ConstraintLayout laninarowlayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            myText1 = itemView.findViewById(R.id.myText1);
-            myText2 = itemView.findViewById(R.id.myText2);
-            myImage = itemView.findViewById(R.id.myImageView);
-            mainLayout = itemView.findViewById(R.id.mainLayout);
+            myText3 = itemView.findViewById(R.id.myText3);
+            myText4 = itemView.findViewById(R.id.myText4);
+            myImageView3 = itemView.findViewById(R.id.myImageView3);
+            laninarowlayout = itemView.findViewById(R.id.laninarowlayout);
         }
     }
 }
