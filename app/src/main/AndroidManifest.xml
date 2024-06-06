@@ -71,8 +71,8 @@
         <activity android:name=".AnalyticMainActivity" /> <!-- PestMainActivity -->
         <activity android:name=".ElninoMain" /> <!-- Harvest Volume Activity -->
         <activity android:name=".HarvestVolMainActivity" /> <!-- Tutorial Activity -->
-        <activity android:name=".TutorialMainActivity" /> <!-- Chatbot Activity -->
-        <activity android:name=".ChatbotMainActivity" />
+        <activity android:name=".TutorialMainActivity" /> <!-- FAQ Activity -->
+        <activity android:name=".MainActivityFAQ" />
         <activity
             android:name=".FormActivity"
             android:exported="true">
