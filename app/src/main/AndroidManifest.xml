@@ -4,6 +4,8 @@
     package="com.example.app">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -23,6 +25,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".RVPThirdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PestReal"
+            android:exported="false" />
+        <activity
             android:name=".CropSelection"
             android:exported="false" />
         <activity
@@ -37,6 +45,10 @@
         <activity
             android:name=".GrowthStageActivity"
             android:exported="false" />
+
+        <activity android:name=".LaninaMain">
+
+        </activity>
         <activity
             android:name=".RVPSecondActivity"
             android:exported="false" />
@@ -57,7 +69,7 @@
         </activity> <!-- Calendar Activity -->
         <activity android:name=".RecoMainActivity" /> <!-- Analytics Activity -->
         <activity android:name=".AnalyticMainActivity" /> <!-- PestMainActivity -->
-        <activity android:name=".PestMainActivity" /> <!-- Harvest Volume Activity -->
+        <activity android:name=".ElninoMain" /> <!-- Harvest Volume Activity -->
         <activity android:name=".HarvestVolMainActivity" /> <!-- Tutorial Activity -->
         <activity android:name=".TutorialMainActivity" /> <!-- Chatbot Activity -->
         <activity android:name=".ChatbotMainActivity" />
