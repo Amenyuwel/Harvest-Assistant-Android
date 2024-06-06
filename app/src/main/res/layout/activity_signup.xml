@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/abs"
+    tools:context=".Signup">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSignup"
+        android:layout_width="350dp"
+        android:layout_height="650dp"
+        android:layout_marginBottom="30dp"
+        app:cardBackgroundColor="@color/dirty_white"
+        app:cardCornerRadius="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/harvest_icon" />
+
+        <TextView
+            android:id="@+id/tvSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="110dp"
+            android:font="@font/ibmbold"
+            android:text="Sign Up"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="130dp"
+            android:paddingLeft="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFirstN"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="First Name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="80dp"
+            android:paddingLeft="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMiddleN"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="Middle Name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastN"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="Last Name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="120dp"
+            app:passwordToggleEnabled="true"
+            android:paddingLeft="10dp">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:drawableStart="@drawable/lock_icon"
+                android:hint="Password"
+                android:inputType="textPassword"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:passwordToggleEnabled="true"
+            android:layout_marginTop="170dp"
+            android:paddingLeft="30dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:drawableStart="@drawable/lock_icon"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="-20dp"
+            android:paddingLeft="30dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCrop"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="Crop"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:paddingLeft="30dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etContact"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="Contact Number"
+                android:inputType="phone"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="60dp"
+            android:backgroundTint="@color/black"
+            android:text="Sign up"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="45dp"
+            android:background="#6B8C9A99" />
+
+        <TextView
+            android:id="@+id/tvBottomText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="620dp"
+            android:text="Already have an account?"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tvBottomTextLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="245dp"
+            android:layout_marginTop="620dp"
+            android:text="Login"
+            android:textColor="@color/blueBlack"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
