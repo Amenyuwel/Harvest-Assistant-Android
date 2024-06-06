@@ -7,7 +7,7 @@
     <string name="portraitText">Portrait</string>
     <string name="landscapeText">Landscape</string>
 
-<!-- ONBOARDING -->
+    <!-- ONBOARDING -->
     <string name="heading_one">CAMERA</string>
     <string name="heading_two">CALENDAR</string>
     <string name="heading_three">CHATBOT</string>
@@ -49,7 +49,6 @@
         <item>Slugs feed on young rice plants, chewing on leaves and stems, which can lead to significant plant damage and reduced crop establishment.</item>
         <item>Snails, such as the golden apple snail, can devastate rice seedlings by feeding on them.</item>
     </string-array>
-
 
 
     <string-array name="pestinfo">

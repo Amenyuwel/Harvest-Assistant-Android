@@ -25,6 +25,15 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".CityValid"
+            android:exported="false" />
+        <activity
+            android:name=".SignNext"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".RVPThirdActivity"
             android:exported="false" />
         <activity
@@ -45,10 +54,7 @@
         <activity
             android:name=".GrowthStageActivity"
             android:exported="false" />
-
-        <activity android:name=".LaninaMain">
-
-        </activity>
+        <activity android:name=".LaninaMain" />
         <activity
             android:name=".RVPSecondActivity"
             android:exported="false" />
