@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvSignup"
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="650dp"
         android:layout_marginBottom="30dp"
         app:cardBackgroundColor="@color/dirty_white"
         app:cardCornerRadius="60dp"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="110dp"
             android:font="@font/ibmbold"
             android:text="Sign Up"
             android:textSize="40dp"
@@ -42,15 +42,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="130dp"
             android:paddingLeft="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etFullName"
+                android:id="@+id/etFirstN"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:drawableStart="@drawable/number_icon"
-                android:hint="Full Name" />
+                android:layout_height="45dp"
+                android:hint="First Name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +57,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="80dp"
+            android:paddingLeft="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMiddleN"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="Middle Name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastN"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:hint="Last Name" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="120dp"
             app:passwordToggleEnabled="true"
             android:paddingLeft="10dp">
 
@@ -66,7 +95,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:drawableStart="@drawable/lock_icon"
                 android:hint="Password"
                 android:inputType="textPassword"/>
@@ -78,13 +107,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:passwordToggleEnabled="true"
-            android:layout_marginTop="39dp"
+            android:layout_marginTop="170dp"
             android:paddingLeft="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:drawableStart="@drawable/lock_icon"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
@@ -95,13 +124,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="93dp"
+            android:layout_marginBottom="-20dp"
             android:paddingLeft="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCrop"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="Crop"
                 />
 
@@ -111,14 +140,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="147dp"
+            android:layout_marginTop="70dp"
             android:paddingLeft="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etContact"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:hint="Contact Number"
+                android:inputType="phone"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -145,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="65dp"
-            android:layout_marginTop="565dp"
+            android:layout_marginTop="620dp"
             android:text="Already have an account?"
             android:textSize="15dp" />
 
@@ -154,7 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="245dp"
-            android:layout_marginTop="565dp"
+            android:layout_marginTop="620dp"
             android:text="Login"
             android:textColor="@color/blueBlack"
             android:textSize="15dp"
