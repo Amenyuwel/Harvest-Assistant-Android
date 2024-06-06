@@ -98,6 +98,26 @@
             android:layout_marginBottom="40dp"
             android:background="#6B8C9A99" />
 
+        <TextView
+            android:id="@+id/tvBottomText0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="565dp"
+            android:text="Don't have an account?"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tvBottomTextSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="565dp"
+            android:text="Sign Up"
+            android:textColor="@color/blueBlack"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
 
 
     </androidx.cardview.widget.CardView>
