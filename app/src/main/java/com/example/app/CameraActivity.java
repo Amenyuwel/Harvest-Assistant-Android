@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -19,7 +21,6 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -163,7 +164,20 @@ public class CameraActivity extends AppCompatActivity {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
-                String addressText = address.getLocality() != null ? address.getLocality() : address.getAddressLine(0);
+                String addressText = "";
+                // Add more detailed address information if available
+                if (address.getSubLocality() != null) {
+                    addressText += address.getSubLocality() + ", ";
+                }
+                if (address.getLocality() != null) {
+                    addressText += address.getLocality() + ", ";
+                }
+                if (address.getAdminArea() != null) {
+                    addressText += address.getAdminArea() + ", ";
+                }
+                if (address.getCountryName() != null) {
+                    addressText += address.getCountryName();
+                }
                 locationTextView.setText(addressText);
             } else {
                 locationTextView.setText("No address found for location.");
@@ -173,6 +187,7 @@ public class CameraActivity extends AppCompatActivity {
             locationTextView.setText("Error getting address.");
         }
     }
+
 
     public void classifyImage(Bitmap image) {
         try {
@@ -240,8 +255,7 @@ public class CameraActivity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(CameraActivity.this, "Image sent successfully!", Toast.LENGTH_SHORT).show();
-                            finish();  // Close the activity
+                            Toast.makeText(CameraActivity.this, "Data sent successfully!", Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -266,7 +280,6 @@ public class CameraActivity extends AppCompatActivity {
             Toast.makeText(this, "No image or result available to send.", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private String convertBitmapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
