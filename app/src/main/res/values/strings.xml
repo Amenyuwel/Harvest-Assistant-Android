@@ -7,7 +7,7 @@
     <string name="portraitText">Portrait</string>
     <string name="landscapeText">Landscape</string>
 
-    //Heading
+    <!-- ONBOARDING -->
     <string name="heading_one">CAMERA</string>
     <string name="heading_two">CALENDAR</string>
     <string name="heading_three">CHATBOT</string>
@@ -18,23 +18,36 @@
     <string name="desc_three">Interact with the Harvest Assistant\'s chatbot for more grain farming tips</string>
     <string name="desc_four">"Harvest Assistant provides pest information to combat infestations."</string>
 
-    <string-array name="Pest">
-        <item>Snail</item>
+
+    <!-- ElNino  PEST INFO  -->
+    <string-array name="PestElnino">
+        <item>Aphids</item>
+        <item>Beetle</item>
+        <item>Moths</item>
+        <item>Stem Borer</item>
         <item>Weevil</item>
     </string-array>
 
 
-    <string-array name="description">
-        <item>Snails can be significant pests in paddylands, particularly the Golden Apple Snail. Prefers wet environments like rice paddies, ponds, and irrigation canals. They are notorious for feeding on young rice seedlings, which can severely affect crop yields. </item>
-        <item>The adults feed on rice leaves, while the larvae feed on the roots. Damage to the root system can lead to poor nutrient and water uptake, causing the plants to be less resilient to stress and ultimately reducing the number of grains produced per plant.</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
-        <item>This is a random description</item>
+    <string-array name="elninodescription">
+        <item>Aphids can cause significant damage by sucking the sap from rice plants, leading to reduced vigor and yield. </item>
+        <item>Rice water weevils and rice beetles feed on the roots and stems, causing reduced plant growth and potentially killing young plants.</item>
+
+    </string-array>
+
+    <!-- Lanina PEST INFO   -->
+    <string-array name="PestLanina">
+        <item>Slug</item>
+        <item>Snail</item>
+        <item>Beetle</item>
+        <item>Moths</item>
+        <item>Stem Borer</item>
+        <item>Weevil</item>
+    </string-array>
+
+    <string-array name="laninadescription">
+        <item>Slugs feed on young rice plants, chewing on leaves and stems, which can lead to significant plant damage and reduced crop establishment.</item>
+        <item>Snails, such as the golden apple snail, can devastate rice seedlings by feeding on them.</item>
     </string-array>
 
 
