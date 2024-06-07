@@ -51,15 +51,14 @@
             android:inputType="numberDecimal"
             android:hint="Enter hectares" />
 
-
         <Button
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Submit"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/Mint"
-            android:layout_marginLeft="250dp"/>
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/holo_green_light"
+            android:layout_gravity="center"/>
     </LinearLayout>
 </ScrollView>

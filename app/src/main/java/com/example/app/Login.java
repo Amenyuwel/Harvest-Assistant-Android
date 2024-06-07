@@ -1,6 +1,5 @@
 package com.example.app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,8 +29,6 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
     TextInputEditText etPassword, etID;
-    Button btnLogin;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,96 +37,112 @@ public class Login extends AppCompatActivity {
 
         etPassword = findViewById(R.id.etPassword);
         etID = findViewById(R.id.etID);
-        btnLogin = findViewById(R.id.btnLogin);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("");
         }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        Button loginButton = findViewById(R.id.btnLogin);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Login.this, Dashboard.class);
-                startActivity(i);
+            public void onClick(View v) {
+                // Validate input fields
+                if (validateInputFields()) {
+                    // Perform login if validation passes
+                    String username = etID.getText().toString().trim();
+                    String password = etPassword.getText().toString().trim();
+                    performLogin(username, password);
+                }
             }
         });
-
-//        Button loginButton = findViewById(R.id.btnLogin);
-//        loginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Validate input fields
-//                if (validateInputFields()) {
-//                    // Perform login if validation passes
-//                    String username = etID.getText().toString().trim();
-//                    String password = etPassword.getText().toString().trim();
-//                    performLogin(username, password);
-//                }
-//            }
-//        });
-//    }
-//
-//    private boolean validateInputFields() {
-//        String username = etID.getText().toString().trim();
-//        String password = etPassword.getText().toString().trim();
-//
-//        if (TextUtils.isEmpty(username)) {
-//            etID.setError("Username is required");
-//            return false;
-//        }
-//
-//        if (TextUtils.isEmpty(password)) {
-//            etPassword.setError("Password is required");
-//            return false;
-//        }
-//
-//        // Validation passed
-//        return true;
-//    }
-//
-//    private void performLogin(String username, String password) {
-//        String url = "http://192.168.5.108/HarvestAssistantFinalII/api/login.php"; // Replace with your actual API URL
-//        RequestQueue rq = Volley.newRequestQueue(Login.this);
-//        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-//                response -> {
-//                    try {
-//                        JSONObject jsonResponse = new JSONObject(response);
-//
-//                        String message = jsonResponse.getString("message");
-//                        String token = jsonResponse.getString("remember_token");
-//
-//                        // Save token in SharedPreferences
-//                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString("token", token);
-//                        editor.apply();
-//
-//                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(Login.this, Dashboard.class);
-//                        startActivity(intent);
-//                        finish(); // Finish the login activity
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                },
-//                error -> {
-//                    Toast.makeText(this, "Wrong username or password", Toast.LENGTH_SHORT).show();
-//                    Log.d("Error: ", error.toString());
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("rsbsa_num", username);
-//                params.put("password", password);
-//                return params;
-//            }
-//        };
-//
-//        rq.add(postRequest);
     }
 
+    private boolean validateInputFields() {
+        String username = etID.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (TextUtils.isEmpty(username)) {
+            etID.setError("Username is required");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            etPassword.setError("Password is required");
+            return false;
+        }
+
+        // Validation passed
+        return true;
+    }
+
+    private void performLogin(String username, String password) {
+        String url = "http://192.168.5.108/HarvestAssistantFinalII/api/login.php"; // Replace with your actual API URL
+        RequestQueue rq = Volley.newRequestQueue(Login.this);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+
+                        String message = jsonResponse.getString("message");
+                        String token = jsonResponse.getString("remember_token");
+                        Log.d("message:", message);
+
+                        // Save token to SharedPreferences
+                        saveTokenToSharedPreferences(token);
+
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, Dashboard.class);
+                        startActivity(intent);
+                        finish(); // Finish the login activity
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> {
+                    if (error.networkResponse != null) {
+                        int statusCode = error.networkResponse.statusCode;
+                        Log.d("Error: ", "Status Code: " + statusCode);
+                        if (statusCode == 403) {
+                            Toast.makeText(this, "Forbidden: You do not have permission to access this resource.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Network error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("rsbsa_num", username);
+                params.put("password", password);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
+            }
+        };
+
+        rq.add(postRequest);
+    }
+
+    private void saveTokenToSharedPreferences(String token) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", token);
+        editor.apply();
+    }
+
+    // Method to retrieve the token from SharedPreferences
+    private String getTokenFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getString("token", "");
+    }
 }

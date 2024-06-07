@@ -23,13 +23,6 @@ public class Calendarclass extends AppCompatActivity {
         setContentView(R.layout.calendar_activity);
 
         ivDate = findViewById(R.id.ivDate);
-        calendarBackButton = findViewById(R.id.calendarBackButton);
-        tvSelectedDate = findViewById(R.id.tvSelectedDate);
-        tvCrop = findViewById(R.id.tvCrop);
-        tvVariant = findViewById(R.id.tvVariant);
-        tvHectares = findViewById(R.id.tvHectares);
-        tvEstimatedProduce = findViewById(R.id.tvEstimatedProduce);
-        tvEstimatedIncome = findViewById(R.id.tvEstimatedIncome);
 
         ivDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,31 +32,35 @@ public class Calendarclass extends AppCompatActivity {
             }
         });
 
-        calendarBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Calendarclass.this, Dashboard.class);
-                startActivity(i);
-            }
-        });
+        // Retrieve data from the intent
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String selectedDate = extras.getString("selectedDate");
+            String crop = extras.getString("crop");
+            String variant = extras.getString("variant");
+            String hectares = extras.getString("hectares");
+            // Calculate estimated produce per sack and estimated income per sack
+            double estimatedProducePerSack = Double.parseDouble(hectares) * 5; // Assume 5 tons per hectare
+            double estimatedIncomePerSack = estimatedProducePerSack * 40.50; // 40.50 pesos per kilogram
 
+            // Update TextViews with the retrieved data
+            TextView tvSelectedDate = findViewById(R.id.tvSelectedDate);
+            tvSelectedDate.setText(selectedDate);
 
+            TextView tvCrop = findViewById(R.id.tvCrop);
+            tvCrop.setText(crop);
 
-        Intent intent = getIntent();
-        String selectedDate = intent.getStringExtra("selectedDate");
-        String crop = intent.getStringExtra("crop");
-        String variant = intent.getStringExtra("variant");
-        String hectares = intent.getStringExtra("hectares");
-        double estimatedProduce = intent.getDoubleExtra("estimatedProduce", 0);
-        double estimatedIncome = intent.getDoubleExtra("estimatedIncome", 0);
+            TextView tvVariant = findViewById(R.id.tvVariant);
+            tvVariant.setText(variant);
 
-        tvSelectedDate.setText(selectedDate);
-        tvCrop.setText(crop);
-        tvVariant.setText(variant);
-        tvHectares.setText(hectares);
-        tvEstimatedProduce.setText(String.valueOf(estimatedProduce));
-        tvEstimatedIncome.setText(String.format("%.2f", estimatedIncome));
+            TextView tvHectares = findViewById(R.id.tvHectares);
+            tvHectares.setText(hectares);
 
+            TextView tvEstimatedProduce = findViewById(R.id.tvEstimatedProduce);
+            tvEstimatedProduce.setText(String.format("%.2f tons", estimatedProducePerSack));
 
+            TextView tvEstimatedIncome = findViewById(R.id.tvEstimatedIncome);
+            tvEstimatedIncome.setText(String.format("%.2f PHP", estimatedIncomePerSack));
+        }
     }
 }

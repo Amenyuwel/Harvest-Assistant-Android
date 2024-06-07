@@ -21,14 +21,6 @@
     <string-array name="Pest">
         <item>Snail</item>
         <item>Weevil</item>
-        <item>Pest3</item>
-        <item>Pest4</item>
-        <item>Pest5</item>
-        <item>Pest6</item>
-        <item>Pest7</item>
-        <item>Pest8</item>
-        <item>Pest9</item>
-        <item>Pest10</item>
     </string-array>
 
 
@@ -58,17 +50,11 @@
     <string-array name="crops_array">
         <item>Rice</item>
         <item>Wheat</item>
-        <item>Corn</item>
-        <item>Soybean</item>
-        <item>Barley</item>
     </string-array>
 
-    <string-array name="variants_array">
-        <item>Variant 1</item>
-        <item>Variant 2</item>
-        <item>Variant 3</item>
-        <item>Variant 4</item>
-        <item>Variant 5</item>
+    <string-array name="variance_array">
+        <item>variance1</item>
+        <item>variance2</item>
     </string-array>
 
 
