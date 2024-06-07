@@ -176,7 +176,7 @@ public class CameraActivity extends AppCompatActivity {
         capturedImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
 
-        String url = "http://192.168.5.108/api/pest_report.php"; // Replace with your actual API endpoint
+        String url = "http://192.168.5.108/HarvestAssistantFinalII/api/pest_report.php"; // Replace with your actual API endpoint
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
