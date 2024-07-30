@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/antique"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
@@ -24,7 +25,7 @@
             app:iss_period="1000"
             app:iss_auto_cycle="true"
             app:iss_delay="1000"
-            app:iss_corner_radius="20"
+            app:iss_corner_radius="17"
             app:iss_title_background="@drawable/gradient"/>
 
 
@@ -57,7 +58,7 @@
             android:id="@+id/cvcalendar"
             android:layout_width="300dp"
             android:layout_height="100dp"
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="17dp"
             android:layout_marginTop="280dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
@@ -111,7 +112,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="390dp"
+            android:layout_width="370dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="380dp"
@@ -127,7 +128,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -164,7 +165,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -199,7 +200,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="390dp"
+            android:layout_width="370dp"
             android:layout_height="100dp"
             android:layout_gravity="center|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -215,7 +216,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -253,7 +254,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -289,7 +290,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="390dp"
+            android:layout_width="370dp"
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -304,7 +305,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -341,7 +342,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout

@@ -78,8 +78,10 @@
                     android:id="@+id/etContact"
                     android:layout_width="300dp"
                     android:layout_height="65dp"
+                    android:digits="0123456789"
                     android:hint="Contact Number"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:maxLength="11" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +135,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="60dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/matcha"
             android:text="Sign up"
             android:textColor="@color/white" />
 

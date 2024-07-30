@@ -8,4 +8,7 @@
     <color name="Mint">#9ADBBA</color>
     <color name="blueBlack">#111f28</color>
     <color name="grassgreen">#7CFC00</color>
+    <color name="antique">#F2F3F4</color>
+    <color name="matcha">#8ba888</color>
+    <color name="darker_matcha">#44624a</color>
 </resources>
