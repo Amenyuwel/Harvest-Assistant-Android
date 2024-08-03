@@ -1,9 +1,13 @@
 package com.example.app;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -14,10 +18,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -33,11 +36,15 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.darker_matcha));
         setContentView(R.layout.dashboard_activity);
 
-        //To remove ActionBar Title
+        // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar !=null){
+        if (actionBar != null) {
+            // Set the ActionBar background color
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
+            // Remove ActionBar Title
             actionBar.setTitle("");
         }
 
@@ -48,28 +55,57 @@ public class Dashboard extends AppCompatActivity {
         if (findViewById(R.id.nav_drawer) != null) {
             navigationView = findViewById(R.id.nav_drawer);
 
-            //setting the burger's color to black
-            Drawable drawable = ContextCompat.getDrawable(this,R.drawable.ic_drawerblack);
+            // Set the burger icon color to black
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_drawerblack);
             drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
             drawerLayout.addDrawerListener(drawerToggle);
-            drawerToggle.setHomeAsUpIndicator(drawable);
+            drawerToggle.setHomeAsUpIndicator(drawable); // Set the burger icon
             drawerToggle.syncState();
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable home button
 
+            // Create a ColorStateList programmatically for item text color and icon tint
+            int[][] states = new int[][] {
+                    new int[] { android.R.attr.state_checked }, // Checked state
+                    new int[] { -android.R.attr.state_checked } // Default state
+            };
+
+            int[] colors = new int[] {
+                    ContextCompat.getColor(this, R.color.matcha), // Color for checked state
+                    ContextCompat.getColor(this, R.color.black) // Default color
+            };
+
+            ColorStateList colorStateList = new ColorStateList(states, colors);
+            navigationView.setItemTextColor(colorStateList);
+            navigationView.setItemIconTintList(colorStateList);
+
+            // Set custom background for navigation items
+            navigationView.setItemBackgroundResource(R.color.transparent);
+
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override //boolean for Burger
+                @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Intent intent;
                     int itemId = item.getItemId();
-                    if (itemId == R.id.abtUs || itemId == R.id.support || itemId == R.id.burgerProfile || itemId == R.id.contactUs || itemId == R.id.gmail) {
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        return true;
+
+                    // Handle menu item selection
+                    if (itemId == R.id.burgerProfile) {
+                        replaceFragment(profileFragment);
+                    } else if (itemId == R.id.logout) {
+                        // Toast for logging out
+                        Toast.makeText(Dashboard.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                        // Create an Intent for Login activity
+                        intent = new Intent(Dashboard.this, Login.class);
+                        startActivity(intent);
                     }
-                    return false;
+
+                    // Close the drawer after handling the item
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true;
                 }
             });
         }
 
-        // boolean for bottom navigation
+        // Bottom navigation setup
         if (findViewById(R.id.bottomNavigationView) != null) {
             bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -80,7 +116,6 @@ public class Dashboard extends AppCompatActivity {
                     if (itemId == R.id.navHome) {
                         replaceFragment(homeFragment);
                         return true;
-
                     } else if (itemId == R.id.navProfile) {
                         replaceFragment(profileFragment);
                         return true;
@@ -90,8 +125,7 @@ public class Dashboard extends AppCompatActivity {
                 }
             });
 
-
-            // Initial fragment or start up fragment 
+            // Initial fragment or start up fragment
             replaceFragment(homeFragment);
         }
     }
@@ -99,7 +133,6 @@ public class Dashboard extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(container.getId(), fragment).commit();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

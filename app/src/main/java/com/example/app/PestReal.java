@@ -1,11 +1,15 @@
 package com.example.app;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 public class PestReal extends AppCompatActivity {
 
@@ -15,7 +19,17 @@ public class PestReal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_pest_real);
+
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Set the ActionBar background color
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
+            // Remove ActionBar Title
+            actionBar.setTitle("");
+        }
 
         elNinoCardView = findViewById(R.id.elNinoCardview);
         laNinaCardView = findViewById(R.id.laNinaCardview);

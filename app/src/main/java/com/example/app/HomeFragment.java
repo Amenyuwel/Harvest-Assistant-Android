@@ -42,6 +42,8 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+
+
         cardView = rootView.findViewById(R.id.cvcalendar);
         recoCardView = rootView.findViewById(R.id.card1);
         analyticsCardView = rootView.findViewById(R.id.card2);
@@ -61,11 +63,13 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.grasshopper, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.sawfly, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.slug, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.snail_2, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.snail, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.stemborer, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.weevil, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
+
 
 
         ivCamera.setOnClickListener(new View.OnClickListener() {

@@ -4,85 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/antique"
+    android:background="@color/matcha"
     tools:context=".ProfileFragment">
 
-    <!--Profile CardView-->
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textColor="@color/blueBlack"
-        android:textSize="30dp"
-        android:textStyle="bold"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="505dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055" />
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.cardview.widget.CardView
+            android:alpha="0.9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/antique"
+            app:cardCornerRadius="3dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvLogin"
         android:layout_width="350dp"
         android:layout_height="300dp"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.204">
+        app:layout_constraintVertical_bias="0.167">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userPfp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/person"
-            android:layout_marginTop="30dp"
             android:layout_gravity="center|top"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@android:color/black"/>
+            android:layout_marginTop="30dp"
+            android:src="@drawable/svg_add"
+            app:civ_border_color="@android:color/black"
+            app:civ_border_width="2dp" />
+
 
         <TextView
-            android:id="@+id/pfpUserName"
+            android:fontFamily="@font/ibmbold"
+            android:textColor="@color/blueBlack"
+            android:id="@+id/username_pfp"
+            android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/blueBlack"
             android:layout_gravity="center"
-            android:textSize="25dp"
-            android:text="User Name"/>
+            android:text="Username"/>
 
         <TextView
-            android:id="@+id/pfpEmailAddress"
+            android:fontFamily="@font/imbmedium"
+            android:textColor="@color/blueBlack"
+            android:id="@+id/useremail_pfp"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/blueBlack"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:text="Email Address"/>
+            android:layout_marginTop="50dp"
+            android:text="Email"/>
 
         <TextView
+            android:fontFamily="@font/imbmedium"
+            android:textColor="@color/grey"
+            android:id="@+id/usercontact_pfp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Contact Number"
-            android:textColor="@color/blueBlack"
             android:layout_gravity="center"
-            android:layout_marginTop="70dp"
-            />
+            android:layout_marginTop="80dp"
+            android:text="Contact Number"/>
 
-
+        <TextView
+            android:fontFamily="@font/imbmedium"
+            android:textColor="@color/grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="105dp"
+            android:text="Location"/>
 
 
     </androidx.cardview.widget.CardView>
 
-
-    <!-- General CardView -->
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/pfpSettings"
+        android:backgroundTint="@color/white"
         android:layout_width="350dp"
         android:layout_height="80dp"
         app:cardCornerRadius="16dp"
@@ -91,37 +106,39 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cvLogin"
-        app:layout_constraintVertical_bias="0.095">
+        app:layout_constraintVertical_bias="0.06">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/settings" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/next_nav"
-            android:layout_gravity="end|center"/>
+            android:layout_gravity="end|center"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/next_nav" />
 
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-
-        android:layout_width="350dp"
-        android:layout_height="80dp"
-        app:cardCornerRadius="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:layout_constraintVertical_bias="0.16">
-
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/next_nav"
-            android:layout_gravity="end|center"/>
+            android:layout_gravity="center"
+            android:layout_marginRight="19dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/imbmedium"
+            android:text="Profile Settings"
+            android:textColor="@color/blueBlack"
+            android:textSize="20dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Update and modify your profile"
+            android:textSize="12dp" />
     </androidx.cardview.widget.CardView>
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

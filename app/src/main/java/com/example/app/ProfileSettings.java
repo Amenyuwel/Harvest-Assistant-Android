@@ -2,20 +2,24 @@ package com.example.app;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-public class RecoMainActivity extends AppCompatActivity {
+public class ProfileSettings extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        setContentView(R.layout.recommendations_layout);
+        setContentView(R.layout.activity_profile_settings);
 
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
@@ -26,18 +30,10 @@ public class RecoMainActivity extends AppCompatActivity {
             actionBar.setTitle("");
         }
 
-        ImageView backButton = findViewById(R.id.recommendationsBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Call method to handle back button click
-                onBackButtonClick();
-            }
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
         });
-    }
-
-    private void onBackButtonClick() {
-        // Handle back button click, for example:
-        finish();
     }
 }

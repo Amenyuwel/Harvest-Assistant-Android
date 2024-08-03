@@ -1,9 +1,14 @@
 package com.example.app;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +23,17 @@ public class MainActivityFAQ extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_main_faq);
+
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Set the ActionBar background color
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
+            // Remove ActionBar Title
+            actionBar.setTitle("");
+        }
 
         expandableListView = findViewById(R.id.expandableListView);
 

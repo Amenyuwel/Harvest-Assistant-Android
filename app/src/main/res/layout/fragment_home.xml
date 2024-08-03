@@ -25,11 +25,8 @@
             app:iss_period="1000"
             app:iss_auto_cycle="true"
             app:iss_delay="1000"
-            app:iss_corner_radius="17"
+            app:iss_corner_radius="15"
             app:iss_title_background="@drawable/gradient"/>
-
-
-
 
     </androidx.cardview.widget.CardView>
     
@@ -56,7 +53,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvcalendar"
-            android:layout_width="300dp"
+            android:layout_width="365dp"
             android:layout_height="100dp"
             app:cardCornerRadius="17dp"
             android:layout_marginTop="280dp"
@@ -69,22 +66,33 @@
             <TextView
                 android:gravity="center"
                 android:paddingRight="5dp"
-                android:layout_gravity="right"
-                android:textColor="@color/black"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/blueBlack"
                 android:fontFamily="@font/ibmbold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Calendar Activity"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="35dp"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darker_matcha"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="45dp"
+                android:layout_gravity="center"
+                android:text="Track and manage your farming activities"
+                android:textSize="10dp"
+                android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="60dp"
                     android:src="@drawable/calendar" />
 
 
@@ -99,16 +107,16 @@
 
         <ImageView
             android:id="@+id/ivCamera"
-            android:layout_width="28sp"
-            android:layout_height="28sp"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
             android:layout_gravity="right"
             android:background="@drawable/cam"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.957"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.435" />
+            app:layout_constraintVertical_bias="0.068" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -138,7 +146,7 @@
 
                     <ImageView
                         android:id="@+id/ivRecommendations"
-                        android:src="@drawable/recommendations"
+                        android:src="@drawable/approve"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -226,7 +234,7 @@
 
                     <ImageView
                         android:id="@+id/ivPest"
-                        android:src="@drawable/pestinfo"
+                        android:src="@drawable/bugimage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -263,6 +271,7 @@
 
                     <ImageView
                         android:id="@+id/Crops"
+                        android:src="@drawable/crop"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
