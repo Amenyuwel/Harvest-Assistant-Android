@@ -2,6 +2,7 @@ package com.example.app;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import java.util.Calendar;
 
 public class Calendarclass extends AppCompatActivity {
@@ -20,7 +23,17 @@ public class Calendarclass extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.matcha));
         setContentView(R.layout.calendar_activity);
+
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Set the ActionBar background color
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
+            // Remove ActionBar Title
+            actionBar.setTitle("");
+        }
 
         ivDate = findViewById(R.id.ivDate);
         calendarBackButton = findViewById(R.id.calendarBackButton);
