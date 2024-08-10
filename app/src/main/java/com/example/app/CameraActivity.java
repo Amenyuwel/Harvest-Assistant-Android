@@ -7,9 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
@@ -25,7 +23,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +41,10 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class CameraActivity extends AppCompatActivity {
 
     TextView result, confidence, desc, pestrecom, locationTextView;
     ImageView imageView;
-    Button picture, sendButton;
+    Button picture, sendButton, sendToDbButton;
     int imageSize = 224;
     Bitmap capturedImage;
 
@@ -69,13 +70,10 @@ public class CameraActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.matcha));
         setContentView(R.layout.activity_camera);
 
-
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // Set the ActionBar background color
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
-            // Remove ActionBar Title
             actionBar.setTitle("");
         }
 
@@ -87,6 +85,7 @@ public class CameraActivity extends AppCompatActivity {
         picture = findViewById(R.id.button);
         sendButton = findViewById(R.id.button_send);
         locationTextView = findViewById(R.id.location);
+        sendToDbButton = findViewById(R.id.button_send_to_db);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -108,6 +107,13 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendDataToApi();
+            }
+        });
+
+        sendToDbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendImageToDatabase();
             }
         });
     }
@@ -172,7 +178,6 @@ public class CameraActivity extends AppCompatActivity {
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
                 String addressText = "";
-                // Add more detailed address information if available
                 if (address.getSubLocality() != null) {
                     addressText += address.getSubLocality() + ", ";
                 }
@@ -195,7 +200,6 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-
     public void classifyImage(Bitmap image) {
         try {
             ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
@@ -208,6 +212,9 @@ public class CameraActivity extends AppCompatActivity {
             // get 1D array of 224 * 224 pixels in image
             int[] intValues = new int[imageSize * imageSize];
             image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+
+            // iterate over pixels and extract R, G, and B values. Add
+
 
             // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
             int pixel = 0;
@@ -247,7 +254,8 @@ public class CameraActivity extends AppCompatActivity {
 
             model.close();
         } catch (IOException e) {
-            // TODO Handle the exception
+            e.printStackTrace();
+            Toast.makeText(this, "Error processing image.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -294,5 +302,54 @@ public class CameraActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    private void sendImageToDatabase() {
+        if (capturedImage != null) {
+            String imageString = convertBitmapToBase64(capturedImage);
+            String pestType = result.getText().toString();  // Get the pest type from the result TextView
+
+            String urlString = "http://192.168.68.107:5000/new_classes/";
+
+            new Thread(() -> {
+                try {
+                    URL url = new URL(urlString);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    connection.setDoOutput(true);
+
+                    // Create the POST data string
+                    String postData = "image=" + URLEncoder.encode(imageString, "UTF-8")
+                            + "&pest_type=" + URLEncoder.encode(pestType, "UTF-8");
+
+                    // Send the POST data
+                    OutputStream outputStream = connection.getOutputStream();
+                    outputStream.write(postData.getBytes("UTF-8"));
+                    outputStream.flush();
+                    outputStream.close();
+
+                    // Check the response code
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(CameraActivity.this, "Image saved to database.", Toast.LENGTH_SHORT).show();
+                        });
+                    } else {
+                        runOnUiThread(() -> {
+                            Toast.makeText(CameraActivity.this, "Error saving image: " + responseCode, Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                    connection.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> {
+                        Toast.makeText(CameraActivity.this, "Error saving image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }).start();
+        } else {
+            Toast.makeText(this, "No image available to send.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
