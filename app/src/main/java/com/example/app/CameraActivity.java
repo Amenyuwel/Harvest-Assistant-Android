@@ -1,5 +1,6 @@
 package com.example.app;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,8 +75,12 @@ public class CameraActivity extends AppCompatActivity {
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            // Set the ActionBar background color
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
+            // Remove ActionBar Title
             actionBar.setTitle("");
+            // Show the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         result = findViewById(R.id.result);
@@ -351,5 +357,17 @@ public class CameraActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No image available to send.", Toast.LENGTH_SHORT).show();
         }
+
+    }
+    // This event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
+

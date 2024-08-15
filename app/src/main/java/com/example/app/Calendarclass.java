@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -20,6 +22,7 @@ public class Calendarclass extends AppCompatActivity {
 
     ImageButton ivDate, calendarBackButton;
     private TextView tvSelectedDate, tvCrop, tvVariant, tvHectares, tvEstimatedProduce, tvEstimatedIncome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,8 @@ public class Calendarclass extends AppCompatActivity {
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
             // Remove ActionBar Title
             actionBar.setTitle("");
+            // Show the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         ivDate = findViewById(R.id.ivDate);
@@ -60,8 +65,6 @@ public class Calendarclass extends AppCompatActivity {
             }
         });
 
-
-
         Intent intent = getIntent();
         String selectedDate = intent.getStringExtra("selectedDate");
         String crop = intent.getStringExtra("crop");
@@ -76,7 +79,16 @@ public class Calendarclass extends AppCompatActivity {
         tvHectares.setText(hectares);
         tvEstimatedProduce.setText(String.valueOf(estimatedProduce));
         tvEstimatedIncome.setText(String.format("%.2f", estimatedIncome));
+    }
 
-
+    // This event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -37,6 +39,8 @@ public class TutorialMainActivity extends AppCompatActivity {
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
             // Remove ActionBar Title
             actionBar.setTitle("");
+            // Show the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         nextbtn = findViewById(R.id.nextbtn);
@@ -97,4 +101,17 @@ public class TutorialMainActivity extends AppCompatActivity {
     private int getitem(int i) {
         return mSLideViewPager.getCurrentItem() + i;
     }
+    // This event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
+
+
