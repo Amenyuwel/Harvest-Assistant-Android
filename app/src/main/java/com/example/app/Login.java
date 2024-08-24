@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -29,6 +30,8 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
     TextInputEditText etPassword, etID;
+    TextView tvBottomTextSignup;
+    Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +40,32 @@ public class Login extends AppCompatActivity {
 
         etPassword = findViewById(R.id.etPassword);
         etID = findViewById(R.id.etID);
+        btnLogin = findViewById(R.id.btnLogin);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("");
         }
 
+    btnLogin.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(Login.this, Dashboard.class);
+            startActivity(i);
+        }
+    });
+
+
+        tvBottomTextSignup = findViewById(R.id.tvBottomTextSignup);
+
         Button loginButton = findViewById(R.id.btnLogin);
+
+        tvBottomTextSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Login.this, SignupActivity.class);
+            startActivity(i);}
+        });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +99,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void performLogin(String username, String password) {
-        String url = "http://192.168.5.108/HarvestAssistantFinalII/api/login.php"; // Replace with your actual API URL
+        String url = "https://harvest.dermocura.net/api/login.php";
         RequestQueue rq = Volley.newRequestQueue(Login.this);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
@@ -117,8 +139,8 @@ public class Login extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("rsbsa_num", username);
-                params.put("password", password);
+                params.put("rsbsa_num", username.toString());
+                params.put("password", password.toString());
                 return params;
             }
 

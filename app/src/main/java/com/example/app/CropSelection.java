@@ -26,12 +26,12 @@ public class CropSelection extends AppCompatActivity {
             cardViewRice = findViewById(R.id.cardViewRice);
 
             cardViewCorn.setOnClickListener(v -> {
-                Intent intent = new Intent(CropSelection.this, GrowthStageActivity.class);
+                Intent intent = new Intent(CropSelection.this, GrowthStageActivity2.class);
                 startActivity(intent);
             });
 
             cardViewRice.setOnClickListener(v -> {
-                Intent intent = new Intent(CropSelection.this, GrowthStageActivity2.class);
+                Intent intent = new Intent(CropSelection.this, GrowthStageActivity.class);
                 startActivity(intent);
             });
         }

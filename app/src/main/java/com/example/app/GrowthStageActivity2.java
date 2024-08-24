@@ -56,7 +56,7 @@ public class GrowthStageActivity2 extends AppCompatActivity {
                         "•Pest Control: Pangitaon ang mga peste sama sa corn borers ug himoon ang angay nga mga lakang sa pagkontrol.", R.drawable.leaf_corn));
 
         stages.add(new Stage("V18 Stage (Onse nga Dahon sa Leeg)",
-                " Niining punto, ang tanom sa mais adunay onse ka bug-os nga mga dahon nga mibuto na. Kini nagkaduol na sa katapusan sa yugto sa paglambo ug nag-andam na alang sa reproduktibong paglambo.",
+                "Niining punto, ang tanom sa mais adunay onse ka bug-os nga mga dahon nga mibuto na. Kini nagkaduol na sa katapusan sa yugto sa paglambo ug nag-andam na alang sa reproduktibong paglambo.",
                 "•Nutrient Support: Padayon nga balanse ang suplay sa nutrisyon, sigurohon ang pagkaanaa sa potassium ug phosphorus.\n" +
                         "•Disease Monitoring: Bantayan ang mga sakit sa dahon sama sa northern corn leaf blight ug i-aplikar ang fungicide kung kinahanglan.\n" +
                         "•Water Management: Padayon nga hatagan og igong tubig, likayan ang stress sa tubig.", R.drawable.leaf_corn));
@@ -81,7 +81,7 @@ public class GrowthStageActivity2 extends AppCompatActivity {
                         "•Irrigation: Sigurohon ang padayon nga kaumog sa yuta aron suportahan ang malampuson nga polinasyon ug paglambo sa kernel.", R.drawable.pollination_corn));
 
         stages.add(new Stage("Pagpuno sa Lug",
-                " Ang tanom sa mais nag-abot sa physiological maturity human ang mga kernel nakab-ot na ang ilang maximum nga dry weight ug ang kantidad sa kahumon nagkunhod ngadto sa optimal nga lebel alang sa pag-ani.",
+                "Ang tanom sa mais nag-abot sa physiological maturity human ang mga kernel nakab-ot na ang ilang maximum nga dry weight ug ang kantidad sa kahumon nagkunhod ngadto sa optimal nga lebel alang sa pag-ani.",
                 "•Nutrient Application: Ibutang ang potassium aron suportahan ang pagpuno sa kernel ug kinatibuk-ang kalidad sa lugas.\n" +
                         "•Water Management: Hatagan og igong tubig aron malikayan ang stress ug masiguro ang husto nga pagpuno sa lugas.\n" +
                         "•Disease Monitoring: Bantayan ang mga sakit sa dalunggan ug punoan ug pagdumala sumala niana.", R.drawable.grainfill_corn));
