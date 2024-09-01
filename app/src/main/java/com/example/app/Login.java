@@ -99,7 +99,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void performLogin(String username, String password) {
-        String url = "https://harvest.dermocura.net/api/login.php";
+        String url = "http://harvestassistantfinalii/api/login.php";
         RequestQueue rq = Volley.newRequestQueue(Login.this);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
@@ -126,16 +126,21 @@ public class Login extends AppCompatActivity {
                 error -> {
                     if (error.networkResponse != null) {
                         int statusCode = error.networkResponse.statusCode;
-                        Log.d("Error: ", "Status Code: " + statusCode);
-                        if (statusCode == 403) {
-                            Toast.makeText(this, "Forbidden: You do not have permission to access this resource.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                        }
+                        String responseData = new String(error.networkResponse.data);
+                        Log.e("Network Error", "Status Code: " + statusCode);
+                        Log.e("Network Error", "Response Data: " + responseData);
+                        Toast.makeText(this, "Error: " + responseData, Toast.LENGTH_SHORT).show();
                     } else {
+                        Log.e("Network Error", "Network error: " + error.toString());
                         Toast.makeText(this, "Network error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
-                }) {
+
+
+        })
+
+        {
+
+
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
@@ -154,6 +159,8 @@ public class Login extends AppCompatActivity {
 
         rq.add(postRequest);
     }
+
+
 
     private void saveTokenToSharedPreferences(String token) {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
