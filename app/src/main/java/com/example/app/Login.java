@@ -99,66 +99,79 @@ public class Login extends AppCompatActivity {
     }
 
     private void performLogin(String username, String password) {
-        String url = "http://harvestassistantfinalii/api/login.php";
-        RequestQueue rq = Volley.newRequestQueue(Login.this);
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                response -> {
-                    try {
-                        JSONObject jsonResponse = new JSONObject(response);
+    String url = "http://harvestassistantfinalii/api/login.php";
+    RequestQueue rq = Volley.newRequestQueue(Login.this);
+    StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+            response -> {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    String message = jsonResponse.getString("message");
 
-                        String message = jsonResponse.getString("message");
-                        String token = jsonResponse.getString("remember_token");
-                        Log.d("message:", message);
+                    if (success) {
+                        // Extract the userData object
+                        JSONObject userDataJson = jsonResponse.getJSONObject("userData");
 
-                        // Save token to SharedPreferences
-                        saveTokenToSharedPreferences(token);
+                        // Assuming your user data class matches these fields:
+                        UserData userData = new UserData(
+                                userDataJson.getString("rsbsa_num"),
+                                userDataJson.getInt("farmerID"),
+                                userDataJson.getString("firstName"),
+                                userDataJson.getString("lastName"),
+                                userDataJson.getString("contactNumber"),
+                                userDataJson.getString("area")
+                        );
+
+                        // Save token or any other relevant data to SharedPreferences
+                        saveUserDataToSharedPreferences(userData);
 
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Login.this, Dashboard.class);
                         startActivity(intent);
                         finish(); // Finish the login activity
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-                    }
-                },
-                error -> {
-                    if (error.networkResponse != null) {
-                        int statusCode = error.networkResponse.statusCode;
-                        String responseData = new String(error.networkResponse.data);
-                        Log.e("Network Error", "Status Code: " + statusCode);
-                        Log.e("Network Error", "Response Data: " + responseData);
-                        Toast.makeText(this, "Error: " + responseData, Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.e("Network Error", "Network error: " + error.toString());
-                        Toast.makeText(this, "Network error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                        // Login failed
+                        Log.e("Login Error", message);
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                     }
 
-
-        })
-
-        {
-
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("rsbsa_num", username.toString());
-                params.put("password", password.toString());
-                return params;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error processing login", Toast.LENGTH_SHORT).show();
+                }
+            },
+            error -> {
+                if (error.networkResponse != null) {
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseData = new String(error.networkResponse.data);
+                    Log.e("Network Error", "Status Code: " + statusCode);
+                    Log.e("Network Error", "Response Data: " + responseData);
+                    Toast.makeText(this, "Error: " + responseData, Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("Network Error", "Network error: " + error.toString());
+                    Toast.makeText(this, "Network error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
+    ) {
+        @Override
+        protected Map<String, String> getParams() {
+            Map<String, String> params = new HashMap<>();
+            params.put("rsbsa_num", username);
+            params.put("password", password);
+            return params;
+        }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                return headers;
-            }
-        };
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Content-Type", "application/json");
+            return headers;
+        }
+    };
 
-        rq.add(postRequest);
-    }
+    rq.add(postRequest);
+}
+
 
 
 
