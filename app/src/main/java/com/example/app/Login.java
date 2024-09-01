@@ -156,6 +156,8 @@ public class Login extends AppCompatActivity {
         @Override
         protected Map<String, String> getParams() {
             Map<String, String> params = new HashMap<>();
+            Log.i("LOGIN-CRED", "username" + username);
+            Log.i("LOGIN-CRED", "password" + password);
             params.put("rsbsa_num", username);
             params.put("password", password);
             return params;
