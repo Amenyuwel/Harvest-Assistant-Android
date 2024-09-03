@@ -28,6 +28,9 @@
             android:name=".DisplayPlanted"
             android:exported="false" />
         <activity
+            android:name=".SignupActivity"
+            android:exported="true" />
+        <activity
             android:name=".CropSelection"
             android:exported="false" />
         <activity
@@ -62,10 +65,10 @@
         </activity> <!-- Calendar Activity -->
         <activity android:name=".RecoMainActivity" /> <!-- Analytics Activity -->
         <activity android:name=".AnalyticMainActivity" /> <!-- PestMainActivity -->
-        <activity android:name=".PestMainActivity" /> <!-- Harvest Volume Activity -->
+        <activity android:name=".PestReal" /> <!-- Harvest Volume Activity -->
         <activity android:name=".HarvestVolMainActivity" /> <!-- Tutorial Activity -->
         <activity android:name=".TutorialMainActivity" /> <!-- Chatbot Activity -->
-        <activity android:name=".ChatbotMainActivity" />
+        <activity android:name=".MainActivityFAQ" />
         <activity
             android:name=".FormActivity"
             android:exported="true">

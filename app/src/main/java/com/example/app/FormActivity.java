@@ -1,47 +1,35 @@
 package com.example.app;
 
-import android.content.Intent;
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Calendar;
 
 public class FormActivity extends AppCompatActivity {
 
     private static final String TAG = "FormActivity";
-    private static final String VARIANCE_API_URL = "http://192.168.5.108/HarvestAssistantFinalII/api/display_variance.php";
     private CalendarView calendarView;
-    private Spinner spinnerCrops, spinnerVariants;
-    private EditText editTextHectares;
-    private Button submitButton;
-    private String selectedDate;
-    private static final double PRODUCE_PER_HECTARE = 5; // in tons
-    private static final double INCOME_PER_KILOGRAM = 1800; // in PHP (per kilogram)
     private RequestQueue requestQueue;
+    private ImageButton pickDateButton;
+
+    private int farmerId = 1;  // Placeholder - make sure you retrieve this dynamically
+    private int cropId = 1;    // Placeholder - make sure you retrieve this dynamically
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,126 +38,70 @@ public class FormActivity extends AppCompatActivity {
 
         // Initialize views
         calendarView = findViewById(R.id.calendarView);
-        spinnerCrops = findViewById(R.id.spinnerCrops);
-        spinnerVariants = findViewById(R.id.spinnerVariants);
-        editTextHectares = findViewById(R.id.editTextHectares);
-        submitButton = findViewById(R.id.submitButton);
+        pickDateButton = findViewById(R.id.pickDateButton);
 
-        // Initialize the RequestQueue
+        // Initialize the request queue for network operations
         requestQueue = Volley.newRequestQueue(this);
 
-        // Populate spinnerCrops
-        ArrayAdapter<CharSequence> cropsAdapter = ArrayAdapter.createFromResource(this,
-                R.array.crops_array, android.R.layout.simple_spinner_item);
-        cropsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCrops.setAdapter(cropsAdapter);
+        // Get the current date using java.util.Calendar
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Fetch and populate spinnerVariants
-        ArrayAdapter<CharSequence> variantsAdapter = ArrayAdapter.createFromResource(this,
-                R.array.variance_array, android.R.layout.simple_spinner_item);
-        cropsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerVariants.setAdapter(variantsAdapter);
+        // Initialize DatePickerDialog to let user pick a planting date
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
+            // Format the selected date as needed (e.g., "yyyy-MM-dd")
+            String selectedDate = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
 
-        // Set CalendarView date change listener
-        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+            // Call the function to schedule the planting date
+            schedulePlantingDate(farmerId, cropId, selectedDate);
+        }, year, month, day);
+
+        // Show the DatePickerDialog when the user clicks on the CalendarView or a button
+        calendarView.setOnDateChangeListener((view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
+            datePickerDialog.updateDate(selectedYear, selectedMonth, selectedDayOfMonth);
+            datePickerDialog.show();
         });
 
-        // Set submit button click listener
-        submitButton.setOnClickListener(v -> {
-            try {
-                String crop = spinnerCrops.getSelectedItem().toString();
-                String variant = spinnerVariants.getSelectedItem().toString();
-                String hectaresStr = editTextHectares.getText().toString();
-                double hectares = Double.parseDouble(hectaresStr);
-
-                // Calculate the estimated produce in tons
-                double estimatedProduceTons = hectares * PRODUCE_PER_HECTARE;
-
-                // Convert tons to kilograms (1 ton = 1000 kg)
-                double estimatedProduceKilograms = estimatedProduceTons * 1000;
-
-                // Divide kilograms by 50 to get the number of sacks
-                double estimatedSacks = estimatedProduceKilograms / 50;
-
-                // Calculate estimated income (sacks * 1800)
-                double estimatedIncome = estimatedSacks * INCOME_PER_KILOGRAM;
-
-                Intent intent = new Intent(FormActivity.this, Calendarclass.class);
-                intent.putExtra("selectedDate", selectedDate);
-                intent.putExtra("crop", crop);
-                intent.putExtra("variant", variant);
-                intent.putExtra("hectares", hectaresStr);
-                intent.putExtra("estimatedProduce", estimatedProduceTons);
-                intent.putExtra("estimatedIncome", estimatedIncome);
-                startActivity(intent);
-            } catch (NumberFormatException e) {
-                Toast.makeText(FormActivity.this, "Please enter a valid number for hectares.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-//
-//    private void fetchVarianceData() {
-//        StringRequest request = new StringRequest(Request.Method.GET, VARIANCE_API_URL,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            // Check if the response is a JSON object (error message) or JSON array (variance data)
-//                            JSONObject jsonResponse = new JSONObject(response);
-//
-//                            // Check for an error message
-//                            if (jsonResponse.has("message")) {
-//                                String message = jsonResponse.getString("message");
-//                                Toast.makeText(FormActivity.this, message, Toast.LENGTH_SHORT).show();
-//                                return;
-//                            }
-//
-//                            // If no error message, assume it's the expected JSON array
-//                            JSONArray jsonArray = jsonResponse.getJSONArray("data");
-//                            List<String> varianceList = new ArrayList<>();
-//                            for (int i = 0; i < jsonArray.length(); i++) {
-//                                varianceList.add(jsonArray.getString(i));
-//                            }
-//
-//                            // Populate the Spinner with the variance data
-//                            ArrayAdapter<String> adapter = new ArrayAdapter<>(FormActivity.this, android.R.layout.simple_spinner_item, varianceList);
-//                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                            spinnerVariants.setAdapter(adapter);
-//                        } catch (JSONException e) {
-//                            Log.e(TAG, "Error parsing variance data", e);
-//                            Toast.makeText(FormActivity.this, "Error parsing variance data", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.e(TAG, "Error fetching variance data", error);
-//                        Toast.makeText(FormActivity.this, "Error fetching variance data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> headers = new HashMap<>();
-//                String token = getTokenFromSharedPreferences();
-//                headers.put("Authorization", "Bearer " + token);
-//                return headers;
-//            }
-//        };
-//        requestQueue.add(request);
-//    }
-//
-//    private String getTokenFromSharedPreferences() {
-//        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-//        return sharedPreferences.getString("token", "");
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (requestQueue != null) {
-//            requestQueue.stop();
-//        }
+        // Alternatively, if you have a button to trigger DatePickerDialog
+        pickDateButton = findViewById(R.id.pickDateButton);
+        pickDateButton.setOnClickListener(v -> datePickerDialog.show());
     }
 
+    // Function to schedule planting date
+    private void schedulePlantingDate(int farmerId, int cropId, String datePlanted) {
+        String url = "https://harvest.dermocura.net/PHP_API/calendar.php"; // Replace with your server URL
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("farmer_id", farmerId);
+            jsonBody.put("crop_id", cropId);
+            jsonBody.put("planting_date", datePlanted);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        String message = response.getString("message");
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+                        if (success) {
+                            // Handle successful planting date scheduling (e.g., navigate to a different screen)
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    // Handle error
+                    Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+        // Add the request to the RequestQueue
+        requestQueue.add(request);
+    }
+}
