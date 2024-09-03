@@ -25,7 +25,16 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".DisplayPlanted"
+            android:name=".AccInfoCV"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePassCV"
+            android:exported="false" />
+        <activity
+            android:name=".CityValid"
+            android:exported="false" />
+        <activity
+            android:name=".SignNext"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"

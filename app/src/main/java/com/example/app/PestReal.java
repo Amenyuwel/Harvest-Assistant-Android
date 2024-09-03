@@ -1,11 +1,18 @@
 package com.example.app;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 public class PestReal extends AppCompatActivity {
 
@@ -16,6 +23,20 @@ public class PestReal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pest_real);
+
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.darker_matcha));
+
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Set the ActionBar background color
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
+            // Remove ActionBar Title
+            actionBar.setTitle("");
+            // Show the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         elNinoCardView = findViewById(R.id.elNinoCardview);
         laNinaCardView = findViewById(R.id.laNinaCardview);
@@ -35,6 +56,19 @@ public class PestReal extends AppCompatActivity {
                 Intent intent = new Intent(PestReal.this, LaninaMain.class); // Start La Nina activity
                 startActivity(intent);
             }
+
         });
+
+    }
+    // This event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
+

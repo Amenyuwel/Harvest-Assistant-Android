@@ -1,9 +1,17 @@
 package com.example.app;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +27,20 @@ public class MainActivityFAQ extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_faq);
+
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.darker_matcha));
+
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Set the ActionBar background color
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
+            // Remove ActionBar Title
+            actionBar.setTitle("");
+            // Show the back button in action bar
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         expandableListView = findViewById(R.id.expandableListView);
 
@@ -61,7 +83,6 @@ public class MainActivityFAQ extends AppCompatActivity {
         listDataHeader.add("How can crop yield be enhanced through improved planting practices?");
 
 
-
         listDataChild.put(listDataHeader.get(0), "Traditional breeding is a time-tested method that involves selecting plants with desirable traits, like high yield or disease resistance, and crossing them to create new generations with those traits. This method has been used for centuries and is still a valuable tool for crop improvement.");
         listDataChild.put(listDataHeader.get(1), "Researchers are exploring several strategies for drought resistance in corn. Some varieties have deeper root systems to access more water from the soil. Others have genes that allow them to tolerate drier conditions by closing their stomata (leaf pores) to reduce water loss. Additionally, scientists are investigating genes that regulate stress response and osmoprotectant production, molecules that help plants maintain cell function during drought.");
         listDataChild.put(listDataHeader.get(2), "Yes, there is. Hybrid rice varieties are created by crossing two different, high-performing rice lines. This allows them to \"combine\" desirable traits from each parent, leading to increased yield potential. Genetically modified (GM) rice, on the other hand, involves directly modifying the genes of a rice plant to introduce a specific trait, such as herbicide tolerance or insect resistance. Hybrid rice does not involve altering the plant's DNA, while GM rice does.");
@@ -88,4 +109,15 @@ public class MainActivityFAQ extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(23), "Precision Agriculture integrates GPS, sensors, and drones to monitor crop health, soil conditions, and growth patterns, facilitating precise input application. Variable Rate Technology (VRT) further enhances resource utilization by applying inputs like fertilizers and water at rates customized to individual field conditions. Leveraging data analysis through digital tools and platforms enables informed decision-making regarding planting, fertilization, and pest management, fostering efficient and sustainable agricultural practices.");
         listDataChild.put(listDataHeader.get(24), "Utilizing high-quality seeds that are certified, high-yielding, and disease-resistant constitutes the foundation of successful agriculture. Pairing this with proper planting techniques, including accurate depth and spacing to optimize root development and nutrient absorption, further enhances crop performance. Additionally, adjusting planting density to minimize inter-plant competition and provide ample room for growth is essential for maximizing yield potential and overall crop health.");
     }
+    // This event will enable the back function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

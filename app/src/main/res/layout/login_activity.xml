@@ -7,6 +7,8 @@
     android:background="@drawable/abs"
     tools:context=".Login">
 
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvLogin"
         android:layout_width="350dp"
@@ -14,7 +16,7 @@
         android:layout_marginBottom="30dp"
         android:alpha="0.9"
         app:cardBackgroundColor="@color/dirty_white"
-        app:cardCornerRadius="60dp"
+        app:cardCornerRadius="17dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -87,7 +89,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="70dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/darker_matcha"
             android:text="Log In"
             android:textColor="@color/white" />
 

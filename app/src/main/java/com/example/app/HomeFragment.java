@@ -27,7 +27,6 @@ public class HomeFragment extends Fragment {
     CardView recoCardView;
     CardView analyticsCardView;
     CardView pestCardView;
-    CardView cropCardView;
     CardView tutorialCardView;
     CardView chatbotCardView;
     ImageSlider imageSlider;
@@ -42,11 +41,11 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+
+
         cardView = rootView.findViewById(R.id.cvcalendar);
         recoCardView = rootView.findViewById(R.id.card1);
-        analyticsCardView = rootView.findViewById(R.id.card2);
         pestCardView = rootView.findViewById(R.id.card3);
-        cropCardView = rootView.findViewById(R.id.card4);
         tutorialCardView = rootView.findViewById(R.id.card5);
         chatbotCardView = rootView.findViewById(R.id.card6);
         imageSlider = rootView.findViewById(R.id.imageSlider);
@@ -61,11 +60,13 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.grasshopper, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.sawfly, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.slug, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.snail_2, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.snail, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.stemborer, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.weevil, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
+
 
 
         ivCamera.setOnClickListener(new View.OnClickListener() {
@@ -92,24 +93,11 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        analyticsCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AnalyticMainActivity.class);
-                startActivity(intent);
-            }
-        });
+
         pestCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PestReal.class);
-                startActivity(intent);
-            }
-        });
-        cropCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CropSelection.class);
                 startActivity(intent);
             }
         });

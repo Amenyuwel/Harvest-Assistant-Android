@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/antique"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
@@ -16,7 +17,7 @@
         android:layout_marginStart="20dp"
         app:cardElevation="20dp"
         app:cardCornerRadius="20dp">
-        
+
         <com.denzcoskun.imageslider.ImageSlider
             android:layout_width="match_parent"
             android:layout_height="160dp"
@@ -24,15 +25,12 @@
             app:iss_period="1000"
             app:iss_auto_cycle="true"
             app:iss_delay="1000"
-            app:iss_corner_radius="20"
+            app:iss_corner_radius="15"
             app:iss_title_background="@drawable/gradient"/>
 
-
-
-
     </androidx.cardview.widget.CardView>
-    
-    
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,9 +53,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvcalendar"
-            android:layout_width="300dp"
+            android:layout_width="365dp"
             android:layout_height="100dp"
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="17dp"
             android:layout_marginTop="280dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
@@ -68,50 +66,53 @@
             <TextView
                 android:gravity="center"
                 android:paddingRight="5dp"
-                android:layout_gravity="right"
-                android:textColor="@color/black"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/blueBlack"
                 android:fontFamily="@font/ibmbold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Calendar Activity"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="35dp"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darker_matcha"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="45dp"
+                android:layout_gravity="center"
+                android:text="Track and manage your farming activities"
+                android:textSize="10dp"
+                android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="60dp"
                     android:src="@drawable/calendar" />
-
-
-
         </androidx.cardview.widget.CardView>
-
-
-
-
-        <!--ID - ivCamera-->
 
 
         <ImageView
             android:id="@+id/ivCamera"
-            android:layout_width="28sp"
-            android:layout_height="28sp"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
             android:layout_gravity="right"
             android:background="@drawable/cam"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.957"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.435" />
+            app:layout_constraintVertical_bias="0.068" />
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="390dp"
+            android:layout_width="380dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="380dp"
@@ -127,7 +128,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -137,7 +138,7 @@
 
                     <ImageView
                         android:id="@+id/ivRecommendations"
-                        android:src="@drawable/recommendations"
+                        android:src="@drawable/approve"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -158,145 +159,7 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <ImageView
-                        android:id="@+id/ivAnalytics"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp" />
-
-                    <TextView
-                        android:id="@+id/card2text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ivAnalytics"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="3dp"
-                        android:fontFamily="@font/imbmedium"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="390dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center|bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
-            app:layout_constraintVertical_bias="0.0">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <ImageView
-                        android:id="@+id/ivPest"
-                        android:src="@drawable/pestinfo"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp" />
-
-                    <TextView
-                        android:id="@+id/tv3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ivPest"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="3dp"
-                        android:fontFamily="@font/imbmedium"
-                        android:text="Pest Information"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="5dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/Crops"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp" />
-
-                    <TextView
-                        android:id="@+id/card4text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/Crops"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="3dp"
-                        android:text="Crops"
-                        android:fontFamily="@font/imbmedium"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="390dp"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintVertical_bias="0.0">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card5"
@@ -304,7 +167,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -334,6 +197,61 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="380dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center|bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="17dp"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/ivPest"
+                        android:src="@drawable/bugimage"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp" />
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivPest"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="@font/imbmedium"
+                        android:text="Pest Information"
+                        android:textColor="@color/black"
+                        android:textSize="10dp" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card6"
@@ -341,7 +259,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="17dp"
                 app:cardElevation="5dp">
 
                 <RelativeLayout
@@ -351,7 +269,7 @@
 
                     <ImageView
                         android:id="@+id/ivChatbot"
-                        android:src="@drawable/chatbot"
+                        android:src="@drawable/faq_20"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -365,23 +283,12 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:fontFamily="@font/imbmedium"
-                        android:text="Chatbot"
+                        android:text="FAQ"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
                 </RelativeLayout>
-
-
-
             </androidx.cardview.widget.CardView>
-
-
         </LinearLayout>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </FrameLayout>
