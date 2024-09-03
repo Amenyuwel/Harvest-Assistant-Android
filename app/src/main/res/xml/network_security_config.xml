@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">https://harvest.dermocura.net/</domain>
+        <domain includeSubdomains="true">192.168.224.1</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">harvestassistantfinalii.local/</domain>
+        <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">192.168.5.108</domain>
         <domain includeSubdomains="true">192.168.68.105</domain>
         <domain includeSubdomains="true">194.233.71.60</domain>

@@ -185,45 +185,17 @@
                 android:textColor="@color/black"/>
         </RelativeLayout>
 
-            <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/tvGrowthStage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/tvStageDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/tvStageSuggestions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-
     </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Done"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/Mint"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/Mint"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"/>
 
 
 </RelativeLayout>

@@ -19,47 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <ImageButton
+            android:id="@+id/pickDateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crop" />
-
-        <Spinner
-            android:id="@+id/spinnerCrops"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Crop Variant" />
-
-        <Spinner
-            android:id="@+id/spinnerVariants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hectares" />
-
-        <EditText
-            android:id="@+id/editTextHectares"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Enter hectares" />
-
-
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Submit"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:text="Done"
             android:textColor="@color/black"
-            android:backgroundTint="@color/Mint"
-            android:layout_marginLeft="250dp"/>
+            android:backgroundTint="@color/Mint"/>
+
+
     </LinearLayout>
+
+
 </ScrollView>

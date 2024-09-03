@@ -1,77 +1,107 @@
 package com.example.app;
 
-import android.content.Intent;
+import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
 
 public class FormActivity extends AppCompatActivity {
 
+    private static final String TAG = "FormActivity";
     private CalendarView calendarView;
-    private Button submitButton;
-    private String selectedDate;
-    private static final String API_URL = "http://192.168.5.108/HarvestAssistantFinalII/api/farmer_planted.php";
+    private RequestQueue requestQueue;
+    private ImageButton pickDateButton;
+
+    private int farmerId = 1;  // Placeholder - make sure you retrieve this dynamically
+    private int cropId = 1;    // Placeholder - make sure you retrieve this dynamically
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form);
+        setContentView(R.layout.activity_form); // Ensure this matches your XML layout file name
 
+        // Initialize views
         calendarView = findViewById(R.id.calendarView);
-        submitButton = findViewById(R.id.submitButton);
+        pickDateButton = findViewById(R.id.pickDateButton);
 
-        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+        // Initialize the request queue for network operations
+        requestQueue = Volley.newRequestQueue(this);
+
+        // Get the current date using java.util.Calendar
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Initialize DatePickerDialog to let user pick a planting date
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
+            // Format the selected date as needed (e.g., "yyyy-MM-dd")
+            String selectedDate = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+
+            // Call the function to schedule the planting date
+            schedulePlantingDate(farmerId, cropId, selectedDate);
+        }, year, month, day);
+
+        // Show the DatePickerDialog when the user clicks on the CalendarView or a button
+        calendarView.setOnDateChangeListener((view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
+            datePickerDialog.updateDate(selectedYear, selectedMonth, selectedDayOfMonth);
+            datePickerDialog.show();
         });
 
-        submitButton.setOnClickListener(v -> {
-            if (selectedDate != null && !selectedDate.isEmpty()) {
-                // Send the selected date to the API endpoint
-                sendSelectedDate(selectedDate);
-            } else {
-                Toast.makeText(FormActivity.this, "Please select a date", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Alternatively, if you have a button to trigger DatePickerDialog
+        pickDateButton = findViewById(R.id.pickDateButton);
+        pickDateButton.setOnClickListener(v -> datePickerDialog.show());
     }
 
-    private void sendSelectedDate(String date) {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, API_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Handle the API response if needed
-                        Toast.makeText(FormActivity.this, "Date sent successfully", Toast.LENGTH_SHORT).show();
+    // Function to schedule planting date
+    private void schedulePlantingDate(int farmerId, int cropId, String datePlanted) {
+        String url = "https://harvest.dermocura.net/PHP_API/calendar.php"; // Replace with your server URL
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("farmer_id", farmerId);
+            jsonBody.put("crop_id", cropId);
+            jsonBody.put("planting_date", datePlanted);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        String message = response.getString("message");
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+                        if (success) {
+                            // Handle successful planting date scheduling (e.g., navigate to a different screen)
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle errors
-                        Toast.makeText(FormActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                // Parameters to be sent to the API
-                Map<String, String> params = new HashMap<>();
-                params.put("datePlanted", date);
-                return params;
-            }
-        };
-        queue.add(request);
+                error -> {
+                    // Handle error
+                    Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+        // Add the request to the RequestQueue
+        requestQueue.add(request);
     }
 }
