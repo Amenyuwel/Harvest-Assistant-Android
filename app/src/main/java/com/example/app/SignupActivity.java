@@ -25,14 +25,14 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.matcha));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.darker_matcha));
         setContentView(R.layout.activity_signup);
 
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Set the ActionBar background color
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
             // Remove ActionBar Title
             actionBar.setTitle("");
         }

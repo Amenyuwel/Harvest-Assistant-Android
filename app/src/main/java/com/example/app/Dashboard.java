@@ -36,15 +36,13 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.darker_matcha));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.darker_matcha));
         setContentView(R.layout.dashboard_activity);
 
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // Set the ActionBar background color
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
-            // Remove ActionBar Title
             actionBar.setTitle("");
         }
 
@@ -90,10 +88,12 @@ public class Dashboard extends AppCompatActivity {
                     // Handle menu item selection
                     if (itemId == R.id.burgerProfile) {
                         replaceFragment(profileFragment);
+                        // Set the BottomNavigationView to profile
+                        if (bottomNavigationView != null) {
+                            bottomNavigationView.setSelectedItemId(R.id.navProfile);
+                        }
                     } else if (itemId == R.id.logout) {
-                        // Toast for logging out
                         Toast.makeText(Dashboard.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                        // Create an Intent for Login activity
                         intent = new Intent(Dashboard.this, Login.class);
                         startActivity(intent);
                     }
@@ -111,7 +111,7 @@ public class Dashboard extends AppCompatActivity {
 
             bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
                 @Override
-                public boolean onNavigationItemSelected(MenuItem item) {
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     int itemId = item.getItemId();
                     if (itemId == R.id.navHome) {
                         replaceFragment(homeFragment);
@@ -125,13 +125,25 @@ public class Dashboard extends AppCompatActivity {
                 }
             });
 
-            // Initial fragment or start up fragment
-            replaceFragment(homeFragment);
+            // Set initial fragment or start up fragment
+            if (savedInstanceState == null) {
+                replaceFragment(homeFragment);
+                bottomNavigationView.setSelectedItemId(R.id.navHome);
+            }
         }
     }
 
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(container.getId(), fragment).commit();
+
+        // Reset NavigationView item selection
+        if (navigationView != null) {
+            if (fragment instanceof ProfileFragment) {
+                navigationView.setCheckedItem(R.id.burgerProfile);
+            } else {
+                navigationView.setCheckedItem(-1); // Deselect all items
+            }
+        }
     }
 
     @Override

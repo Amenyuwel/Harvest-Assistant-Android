@@ -1,38 +1,35 @@
 package com.example.app;
 
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.WindowManager;
-
+import android.view.Window;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class CropSelection extends AppCompatActivity {
+public class ChangePassCV extends AppCompatActivity {
 
-
-    private CardView cardViewCorn;
-    private CardView cardViewRice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        setContentView(R.layout.activity_crop_selection);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.darker_matcha));
+        setContentView(R.layout.activity_change_passwordcv);
+
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.darker_matcha));
 
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Set the ActionBar background color
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
             // Remove ActionBar Title
             actionBar.setTitle("");
             // Show the back button in action bar
@@ -40,19 +37,14 @@ public class CropSelection extends AppCompatActivity {
         }
 
 
-            cardViewCorn = findViewById(R.id.cardViewCorn);
-            cardViewRice = findViewById(R.id.cardViewRice);
 
-            cardViewCorn.setOnClickListener(v -> {
-                Intent intent = new Intent(CropSelection.this, GrowthStageActivity.class);
-                startActivity(intent);
-            });
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-            cardViewRice.setOnClickListener(v -> {
-                Intent intent = new Intent(CropSelection.this, GrowthStageActivity2.class);
-                startActivity(intent);
-            });
-        }
+    }
     // This event will enable the back function to the button on press
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -64,4 +56,5 @@ public class CropSelection extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
 

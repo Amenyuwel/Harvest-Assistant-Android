@@ -7,172 +7,61 @@
     tools:context=".CameraActivity">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="370dp"
-        android:background="@color/white"
         android:layout_height="370dp"
+        android:background="@color/white"
         android:elevation="20dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageView"
-        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        />
-
+        android:layout_marginTop="10dp" />
 
     <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/ll1">
+        android:layout_marginTop="10dp">
 
         <TextView
+            android:id="@+id/pestrecom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CLASSIFIED AS: "
             android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/classified"
-            />
+            android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="#C30000"
             android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/result"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/ll1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/ll2">
+        android:layout_marginTop="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CONFIDENCES: "
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/confidencesText"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:id="@+id/confidence"
-            />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/ll3">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DESCRIPTION: "
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/description"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#C30000"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/desc"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/ll4">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PESTICIDES: "
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/pests"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/pestrecom"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/ll5">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LOCATION: "
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/locationLabel"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/location"
-            />
-    </LinearLayout>
-
-
-
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnTakePicture"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="116dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/matcha"
         android:text="Take Picture"
         android:textAllCaps="true"
@@ -180,23 +69,46 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button_send"
-        android:layout_width="170dp"
-        android:layout_height="40dp"
-        android:layout_above="@id/button"
+        android:id="@+id/btnAnalyze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnTakePicture"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="1dp"
-        android:backgroundTint="@color/blueBlack"
-        android:text="Send Image"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Analyze"
         android:textAllCaps="true"
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button_send_to_db"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_above="@id/button_send"
-        android:layout_marginLeft="120dp"/>
+    <TextView
+        android:id="@+id/location"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnAnalyze"
+        android:layout_below="@+id/ll2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="133dp"
+        android:text="LOCATION: "
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/confidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnAnalyze"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="95dp"
+        android:text="CONFIDENCE: "
+        android:textSize="15sp"
+        android:textStyle="bold" />
 </RelativeLayout>

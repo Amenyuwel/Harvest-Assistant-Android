@@ -17,7 +17,7 @@
         android:layout_marginStart="20dp"
         app:cardElevation="20dp"
         app:cardCornerRadius="20dp">
-        
+
         <com.denzcoskun.imageslider.ImageSlider
             android:layout_width="match_parent"
             android:layout_height="160dp"
@@ -29,8 +29,8 @@
             app:iss_title_background="@drawable/gradient"/>
 
     </androidx.cardview.widget.CardView>
-    
-    
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -94,15 +94,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="60dp"
                     android:src="@drawable/calendar" />
-
-
-
         </androidx.cardview.widget.CardView>
-
-
-
-
-        <!--ID - ivCamera-->
 
 
         <ImageView
@@ -120,7 +112,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="370dp"
+            android:layout_width="380dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="380dp"
@@ -167,8 +159,10 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
+
+
             <androidx.cardview.widget.CardView
-                android:id="@+id/card2"
+                android:id="@+id/card5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -182,33 +176,35 @@
 
 
                     <ImageView
-                        android:id="@+id/ivAnalytics"
+                        android:id="@+id/ivTutorial"
+                        android:src="@drawable/tutorial"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp" />
 
                     <TextView
-                        android:id="@+id/card2text"
+                        android:id="@+id/card5text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ivAnalytics"
+                        android:layout_below="@+id/ivTutorial"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:fontFamily="@font/imbmedium"
+                        android:text="Onboarding"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
-
                 </RelativeLayout>
-
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
+
+
+
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="370dp"
+            android:layout_width="380dp"
             android:layout_height="100dp"
             android:layout_gravity="center|bottom"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -251,99 +247,11 @@
                         android:text="Pest Information"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
-
-
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="17dp"
-                app:cardElevation="5dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/Crops"
-                        android:src="@drawable/crop"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp" />
-
-                    <TextView
-                        android:id="@+id/card4text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/Crops"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="3dp"
-                        android:text="Crops"
-                        android:fontFamily="@font/imbmedium"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="370dp"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintVertical_bias="0.0">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="17dp"
-                app:cardElevation="5dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <ImageView
-                        android:id="@+id/ivTutorial"
-                        android:src="@drawable/tutorial"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp" />
-
-                    <TextView
-                        android:id="@+id/card5text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ivTutorial"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="3dp"
-                        android:fontFamily="@font/imbmedium"
-                        android:text="Onboarding"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card6"
@@ -361,7 +269,7 @@
 
                     <ImageView
                         android:id="@+id/ivChatbot"
-                        android:src="@drawable/chatbot"
+                        android:src="@drawable/faq_20"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
@@ -375,23 +283,12 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:fontFamily="@font/imbmedium"
-                        android:text="Chatbot"
+                        android:text="FAQ"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
                 </RelativeLayout>
-
-
-
             </androidx.cardview.widget.CardView>
-
-
         </LinearLayout>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </FrameLayout>

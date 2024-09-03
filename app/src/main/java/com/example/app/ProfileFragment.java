@@ -2,7 +2,6 @@ package com.example.app;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,7 +26,8 @@ public class ProfileFragment extends Fragment {
     private static final int TAKE_PHOTO = 101;
     private static final int CAMERA_PERMISSION_CODE = 102;
     ImageView profileImageView;
-    CardView cardView;
+    CardView accInfoCV;
+    CardView changePasswordCV;
 
     @Nullable
     @Override
@@ -37,13 +37,21 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         profileImageView = rootView.findViewById(R.id.userPfp);
-        cardView = rootView.findViewById(R.id.pfpSettings);
-
+        accInfoCV = rootView.findViewById(R.id.pfp_Acc_Settings);
+        changePasswordCV = rootView.findViewById(R.id.Change_Password);
         profileImageView.setOnClickListener(v -> showPictureDialog());
-        cardView.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ProfileSettings.class);
+
+        accInfoCV.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AccInfoCV.class);
             startActivity(intent);
         });
+
+        // Set OnClickListener for change password action
+        changePasswordCV.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ChangePassCV.class);
+            startActivity(intent);
+        });
+
 
         return rootView;
     }

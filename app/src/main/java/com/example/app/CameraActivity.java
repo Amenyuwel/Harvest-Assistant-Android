@@ -3,28 +3,35 @@ package com.example.app;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,23 +39,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.app.ml.ModelUnquant;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import org.tensorflow.lite.DataType;
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,105 +56,98 @@ import java.util.Map;
 
 public class CameraActivity extends AppCompatActivity {
 
-    TextView result, confidence, desc, pestrecom, locationTextView;
-    ImageView imageView;
-    Button picture, sendButton, sendToDbButton;
-    int imageSize = 224;
-    Bitmap capturedImage;
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int LOCATION_REQUEST_CODE = 101;
 
-    FusedLocationProviderClient fusedLocationClient;
-    double latitude;
-    double longitude;
+    // UI Elements
+    private TextView result, confidence, pestrecom, locationTextView;
+    private ImageView imageView;
+    private Button picture, sendButton;
+
+    // Variables
+    private Bitmap capturedImage;
+    private FusedLocationProviderClient fusedLocationClient;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.matcha));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.darker_matcha));
         setContentView(R.layout.activity_camera);
 
         // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // Set the ActionBar background color
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.matcha)));
-            // Remove ActionBar Title
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
             actionBar.setTitle("");
-            // Show the back button in action bar
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // Initialize UI elements
         result = findViewById(R.id.result);
         confidence = findViewById(R.id.confidence);
-        desc = findViewById(R.id.desc);
         pestrecom = findViewById(R.id.pestrecom);
         imageView = findViewById(R.id.imageView);
-        picture = findViewById(R.id.button);
-        sendButton = findViewById(R.id.button_send);
+        picture = findViewById(R.id.btnTakePicture);
         locationTextView = findViewById(R.id.location);
-        sendToDbButton = findViewById(R.id.button_send_to_db);
+        sendButton = findViewById(R.id.btnAnalyze);
 
+        // Initialize Location Client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Launch camera if we have permission
-                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, 1);
+        // Check location services
+        checkLocationServices();
+
+        // Set up onClick listeners
+        picture.setOnClickListener(view -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+            }
+        });
+
+        sendButton.setOnClickListener(view -> {
+            if (capturedImage != null) {
+                // Check if location permission is granted before sending data
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    getLastLocation();
                 } else {
-                    // Request camera permission if we don't have it.
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
                 }
-            }
-        });
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendDataToApi();
-            }
-        });
-
-        sendToDbButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendImageToDatabase();
+            } else {
+                Toast.makeText(CameraActivity.this, "No image captured", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == CAMERA_REQUEST_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, 1);
-        } else if (requestCode == 101 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        } else if (requestCode == LOCATION_REQUEST_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             getLastLocation();
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            int dimension = Math.min(image.getWidth(), image.getHeight());
-            image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
-            imageView.setImageBitmap(image);
-
-            image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-            classifyImage(image);
-            capturedImage = image;
-
-            // Get location if permission granted
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null && data.getExtras() != null) {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                if (image != null) {
+                    int dimension = Math.min(image.getWidth(), image.getHeight());
+                    image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
+                    imageView.setImageBitmap(image);
+                    capturedImage = Bitmap.createScaledBitmap(image, 224, 224, false);
+                }
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void getLastLocation() {
@@ -163,16 +156,13 @@ public class CameraActivity extends AppCompatActivity {
             return;
         }
         Task<Location> locationTask = fusedLocationClient.getLastLocation();
-        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                    getAddressFromLocation(latitude, longitude);
-                } else {
-                    locationTextView.setText("Location not available");
-                }
+        locationTask.addOnSuccessListener(location -> {
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                getAddressFromLocation(latitude, longitude);
+            } else {
+                locationTextView.setText("Location not available");
             }
         });
     }
@@ -183,20 +173,9 @@ public class CameraActivity extends AppCompatActivity {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
-                String addressText = "";
-                if (address.getSubLocality() != null) {
-                    addressText += address.getSubLocality() + ", ";
-                }
-                if (address.getLocality() != null) {
-                    addressText += address.getLocality() + ", ";
-                }
-                if (address.getAdminArea() != null) {
-                    addressText += address.getAdminArea() + ", ";
-                }
-                if (address.getCountryName() != null) {
-                    addressText += address.getCountryName();
-                }
-                locationTextView.setText(addressText);
+                String addressText = address.getAddressLine(0);
+                locationTextView.setText("Location: " + addressText);
+                sendImageToPredict(capturedImage, latitude, longitude, addressText);
             } else {
                 locationTextView.setText("No address found for location.");
             }
@@ -206,168 +185,81 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    public void classifyImage(Bitmap image) {
-        try {
-            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+    private void sendImageToPredict(Bitmap image, double latitude, double longitude, String address) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
-            // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
-            byteBuffer.order(ByteOrder.nativeOrder());
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://194.233.71.60:5001/predict"; // Ensure this URL is correct
 
-            // get 1D array of 224 * 224 pixels in image
-            int[] intValues = new int[imageSize * imageSize];
-            image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        String classifiedAs = jsonResponse.optString("class", "Unknown");
+                        String confidenceValue = jsonResponse.optString("confidence", "N/A");
 
-            // iterate over pixels and extract R, G, and B values. Add
+                        result.setText(classifiedAs);
+                        confidence.setText("Confidence: " + confidenceValue);
+                        locationTextView.setText("Location: " + address);
 
-
-            // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
-            int pixel = 0;
-            for (int i = 0; i < imageSize; i++) {
-                for (int j = 0; j < imageSize; j++) {
-                    int val = intValues[pixel++]; // RGB
-                    byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f / 255.f));
-                    byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f / 255.f));
-                    byteBuffer.putFloat((val & 0xFF) * (1.f / 255.f));
-                }
-            }
-
-            inputFeature0.loadBuffer(byteBuffer);
-
-            // Runs model inference and gets result.
-            ModelUnquant.Outputs outputs = model.process(inputFeature0);
-            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-            float[] confidences = outputFeature0.getFloatArray();
-            // find the index of the class with the biggest confidence.
-            int maxPos = 0;
-            float maxConfidence = 0;
-            for (int i = 0; i < confidences.length; i++) {
-                if (confidences[i] > maxConfidence) {
-                    maxConfidence = confidences[i];
-                    maxPos = i;
-                }
-            }
-            String[] classes = {"Snail", "Weevil", "No Pest Detected"};
-            result.setText(classes[maxPos]);
-
-            String s = "";
-            for (int i = 0; i < classes.length; i++) {
-                s += String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
-            }
-            confidence.setText(s);
-
-            model.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error processing image.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void sendDataToApi() {
-        if (capturedImage != null && result.getText() != null) {
-            String pestType = result.getText().toString();
-            String imageString = convertBitmapToBase64(capturedImage);
-
-            String url = "https://your-api-endpoint.com/pest/";
-
-            StringRequest request = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(CameraActivity.this, "Image sent to city agriculturist.", Toast.LENGTH_SHORT).show();
-                            finish(); // Close the current activity
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(CameraActivity.this, "Error sending data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("pestType", pestType);
-                    params.put("latitude", String.valueOf(latitude));
-                    params.put("longitude", String.valueOf(longitude));
-                    params.put("image", imageString);
-                    return params;
-                }
-            };
-
-            RequestQueue queue = Volley.newRequestQueue(this);
-            queue.add(request);
-        } else {
-            Toast.makeText(this, "No image or result available to send.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private String convertBitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
-    private void sendImageToDatabase() {
-        if (capturedImage != null) {
-            String imageString = convertBitmapToBase64(capturedImage);
-            String pestType = result.getText().toString();  // Get the pest type from the result TextView
-
-            String urlString = "http://192.168.68.107:5000/new_classes/";
-
-            new Thread(() -> {
-                try {
-                    URL url = new URL(urlString);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    connection.setDoOutput(true);
-
-                    // Create the POST data string
-                    String postData = "image=" + URLEncoder.encode(imageString, "UTF-8")
-                            + "&pest_type=" + URLEncoder.encode(pestType, "UTF-8");
-
-                    // Send the POST data
-                    OutputStream outputStream = connection.getOutputStream();
-                    outputStream.write(postData.getBytes("UTF-8"));
-                    outputStream.flush();
-                    outputStream.close();
-
-                    // Check the response code
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(CameraActivity.this, "Image saved to database.", Toast.LENGTH_SHORT).show();
-                        });
-                    } else {
-                        runOnUiThread(() -> {
-                            Toast.makeText(CameraActivity.this, "Error saving image: " + responseCode, Toast.LENGTH_SHORT).show();
-                        });
+                        Toast.makeText(CameraActivity.this, "Prediction sent successfully", Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(CameraActivity.this, "Error parsing response", Toast.LENGTH_SHORT).show();
                     }
-                    connection.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    runOnUiThread(() -> {
-                        Toast.makeText(CameraActivity.this, "Error saving image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }).start();
-        } else {
-            Toast.makeText(this, "No image available to send.", Toast.LENGTH_SHORT).show();
-        }
+                },
+                error -> {
+                    Log.e("Error", error.toString());
+                    Toast.makeText(CameraActivity.this, "Failed to send prediction", Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("image", encodedImage);
+                params.put("latitude", String.valueOf(latitude));
+                params.put("longitude", String.valueOf(longitude));
+                params.put("address", address);
+                return params;
+            }
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                return headers;
+            }
+        };
+
+        queue.add(stringRequest);
     }
-    // This event will enable the back function to the button on press
+
+    private void checkLocationServices() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (!gpsEnabled && !networkEnabled) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Enable Location Services")
+                    .setMessage("Location services are required for this app. Please enable them.")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 }
-
