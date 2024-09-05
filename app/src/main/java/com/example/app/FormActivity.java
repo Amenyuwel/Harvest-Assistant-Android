@@ -53,6 +53,7 @@ public class FormActivity extends AppCompatActivity {
         pickDateButton.setOnClickListener(v -> {
             if (selectedDate != null) {
                 // Call the function to schedule the planting date
+                Log.i("CalendarniBilly", selectedDate);
                 schedulePlantingDate(farmerId, cropId, selectedDate);
             } else {
                 // No date was selected
@@ -67,6 +68,13 @@ public class FormActivity extends AppCompatActivity {
 
         // Create JSON object for API request
         JSONObject jsonBody = new JSONObject();
+        String farmer_id = String.valueOf(farmerId);
+        String crop_id = String.valueOf(cropId);
+
+        Log.i("BillyBayot", "Sent to PHP " + farmer_id);
+        Log.i("BillyBayot", "Sent to PHP " + crop_id);
+        Log.i("BillyBayot", "Sent to PHP " + datePlanted);
+
         try {
             jsonBody.put("farmer_id", farmerId);
             jsonBody.put("crop_id", cropId);
@@ -82,6 +90,7 @@ public class FormActivity extends AppCompatActivity {
                         boolean success = response.getBoolean("success");
                         String message = response.getString("message");
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                        Log.e("BillyBayot", "Error " + message);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -94,6 +103,7 @@ public class FormActivity extends AppCompatActivity {
                         Log.e("APIErrorResponse", "Error response: " + errorResponse);
                     }
                     Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("BillyBayot", "Error " + error.getMessage());
                 }
         );
 
