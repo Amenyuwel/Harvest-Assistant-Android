@@ -70,7 +70,7 @@ public class Calendarclass extends AppCompatActivity {
     }
 
     private void fetchPlantingData(int farmerId, int cropId) {
-        String url = "https://harvest.dermocura.net/PHP_API/get_planting_data.php";  // Replace with actual API endpoint
+        String url = "https://harvest.dermocura.net/PHP_API/fetch_calendar.php";  // Replace with actual API endpoint
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -87,16 +87,17 @@ public class Calendarclass extends AppCompatActivity {
                 response -> {
                     try {
                         if (response.getBoolean("success")) {
-                            // Extract data from response
-                            String plantingDate = response.getString("planting_date");
-                            String crop = response.getString("crop");
-                            String cropVariant = response.getString("crop_variant");
-                            double area = response.getDouble("area");
-                            double estimatedProduce = response.getDouble("estimated_produce");
-                            double estimatedIncome = response.getDouble("estimated_income");
+                            JSONObject data = response.getJSONObject("data");
 
-                            // Now, set the data to your UI components
-                            updateUI(plantingDate, crop, cropVariant, area, estimatedProduce, estimatedIncome);
+                            // Extract data from response
+                            String plantingDate = data.getString("date_planted");
+                            String crop = data.getString("crop");
+                            double area = data.getDouble("hectares");
+                            double estimatedProduce = data.getDouble("estimated_produce");
+                            double estimatedIncome = data.getDouble("estimated_income");
+
+                            // Update the UI with the fetched data
+                            updateUI(plantingDate, crop, area, estimatedProduce, estimatedIncome);
                         } else {
                             Toast.makeText(this, "Error fetching data: " + response.getString("message"), Toast.LENGTH_SHORT).show();
                         }
@@ -106,6 +107,11 @@ public class Calendarclass extends AppCompatActivity {
                 },
                 error -> {
                     // Handle error
+                    Log.e("APIError", "Request failed: " + error.toString());
+                    if (error.networkResponse != null) {
+                        String errorResponse = new String(error.networkResponse.data);
+                        Log.e("APIErrorResponse", "Error response: " + errorResponse);
+                    }
                     Toast.makeText(this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
@@ -113,11 +119,10 @@ public class Calendarclass extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void updateUI(String plantingDate, String crop, String cropVariant, double area, double estimatedProduce, double estimatedIncome) {
+    private void updateUI(String plantingDate, String crop, double area, double estimatedProduce, double estimatedIncome) {
         // Find your TextViews in the layout
         TextView tvSelectedDate = findViewById(R.id.tvSelectedDate);
         TextView tvCrop = findViewById(R.id.tvCrop);
-        TextView tvVariant = findViewById(R.id.tvVariant);
         TextView tvHectares = findViewById(R.id.tvHectares);
         TextView tvEstimatedProduce = findViewById(R.id.tvEstimatedProduce);
         TextView tvEstimatedIncome = findViewById(R.id.tvEstimatedIncome);
@@ -125,7 +130,6 @@ public class Calendarclass extends AppCompatActivity {
         // Set the data to the TextViews
         tvSelectedDate.setText(plantingDate);
         tvCrop.setText(crop);
-        tvVariant.setText(cropVariant);
         tvHectares.setText(String.valueOf(area));
         tvEstimatedProduce.setText(String.valueOf(estimatedProduce));
         tvEstimatedIncome.setText(String.valueOf(estimatedIncome));
@@ -140,71 +144,3 @@ public class Calendarclass extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-//
-//    // This event will enable the back function to the button on press
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                this.finish();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//}
-//
-//        // Retrieve data from the intent
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            String selectedDate = extras.getString("selectedDate");
-//            String selectedCrop = extras.getString("crop");
-//            String variant = extras.getString("variant");
-//            String hectares = extras.getString("hectares");
-//            // Calculate estimated produce per sack and estimated income per sack
-//            double estimatedProducePerSack = Double.parseDouble(hectares) * 5; // Assume 5 tons per hectare
-//            double estimatedIncomePerSack = estimatedProducePerSack * 40.50; // 40.50 pesos per kilogram
-//
-//            // Update TextViews with the retrieved data
-//            TextView tvSelectedDate = findViewById(R.id.tvSelectedDate);
-//            tvSelectedDate.setText(selectedDate);
-//
-//            TextView tvCrop = findViewById(R.id.tvCrop);
-//            tvCrop.setText(selectedCrop);
-//
-//            TextView tvVariant = findViewById(R.id.tvVariant);
-//            tvVariant.setText(variant);
-//
-//            TextView tvHectares = findViewById(R.id.tvHectares);
-//            tvHectares.setText(hectares);
-//
-//            TextView tvEstimatedProduce = findViewById(R.id.tvEstimatedProduce);
-//            tvEstimatedProduce.setText(String.format("%.2f tons", estimatedProducePerSack));
-//
-//            TextView tvEstimatedIncome = findViewById(R.id.tvEstimatedIncome);
-//            tvEstimatedIncome.setText(String.format("%.2f PHP", estimatedIncomePerSack));
-//
-//            int weeksSincePlanting = calculateWeeksSince(selectedDate);
-//            GrowthStageData.GrowthStage growthStage = GrowthStageData.getGrowthStage(selectedCrop, weeksSincePlanting);
-//
-//            tvGrowthStage.setText("Stage: " + growthStage.stage);
-//            tvStageDescription.setText("Description: " + growthStage.description);
-//            tvStageSuggestions.setText("Suggestions: " + growthStage.suggestions);
-//        }
-//    }
-//
-//    private int calculateWeeksSince(String date) {
-//        // (Implementation of date difference calculation from previous code)
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        try {
-//            Date plantingDate = sdf.parse(date);
-//            long diffInMillis = new Date().getTime() - plantingDate.getTime();
-//            long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-//            return (int) (diffInDays / 7);  // Convert days to weeks
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return 0;
-//        }
-//    }
-
-

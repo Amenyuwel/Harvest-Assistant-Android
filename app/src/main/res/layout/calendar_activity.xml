@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".calendar_ctivity">
+    tools:context=".calendar_activity">
 
     <!-- Title -->
     <TextView
@@ -93,31 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/tvLabelCrop"
-                android:layout_marginStart="8dp"
-                android:textSize="18sp"
-                android:textColor="@color/black" />
-        </RelativeLayout>
-
-        <!-- Crop Variant -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
-
-            <TextView
-                android:id="@+id/tvLabelVariant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Crop Variant: "
-                android:textSize="18sp"
-                android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tvVariant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tvLabelVariant"
                 android:layout_marginStart="8dp"
                 android:textSize="18sp"
                 android:textColor="@color/black" />
