@@ -3,57 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".calendar_ctivity">
 
-
+    <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ibmbold"
         android:text="Calendar Activity"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp" />
 
-
-    <ImageButton
-        android:id="@+id/ivDate"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/add"
-        android:backgroundTint="@color/design_default_color_surface"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"/>
-
+    <!-- Back Button -->
     <ImageButton
         android:id="@+id/calendarBackButton"
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:src="@drawable/back"
-        android:backgroundTint="@color/design_default_color_surface"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"/>
+        android:background="@null"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp" />
 
+    <!-- Add Button -->
+    <ImageButton
+        android:id="@+id/ivDate"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/add"
+        android:background="@null"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Data Fields in Vertical Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="150dp">
+        android:layout_below="@id/calendarBackButton"
+        android:layout_marginTop="50dp"
+        android:padding="16dp">
 
+        <!-- Planting Date -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tvLabelSelectedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Planting Date: "
+                android:textSize="18sp"
                 android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvSelectedDate"
@@ -62,9 +70,10 @@
                 android:textSize="18sp"
                 android:layout_toEndOf="@id/tvLabelSelectedDate"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
         </RelativeLayout>
 
+        <!-- Crop -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,21 +83,22 @@
                 android:id="@+id/tvLabelCrop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Crop: "
+                android:textSize="18sp"
                 android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvCrop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_toEndOf="@id/tvLabelCrop"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
+        <!-- Crop Variant -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,21 +108,22 @@
                 android:id="@+id/tvLabelVariant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Crop Variant: "
+                android:textSize="18sp"
                 android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvVariant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_toEndOf="@id/tvLabelVariant"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
+        <!-- Hectares -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,21 +133,22 @@
                 android:id="@+id/tvLabelHectares"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Hectares: "
+                android:textSize="18sp"
                 android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvHectares"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_toEndOf="@id/tvLabelHectares"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
+        <!-- Estimated Produce -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,21 +158,22 @@
                 android:id="@+id/tvLabelEstimatedProduce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Estimated Produce (tons): "
+                android:textSize="18sp"
                 android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvEstimatedProduce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_toEndOf="@id/tvLabelEstimatedProduce"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
+        <!-- Estimated Income -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,60 +183,58 @@
                 android:id="@+id/tvLabelEstimatedIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:text="Estimated Income (PHP): "
+                android:textSize="18sp"
                 android:fontFamily="@font/ibmbold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tvEstimatedIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:layout_toEndOf="@id/tvLabelEstimatedIncome"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
-            <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/tvGrowthStage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/tvStageDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:layout_marginTop="16dp"
-                android:id="@+id/tvStageSuggestions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-
-    </LinearLayout>
-
-        <Button
+        <!-- Growth Stage, Stage Description, and Suggestions -->
+        <TextView
+            android:id="@+id/tvGrowthStage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:textSize="18sp"
             android:textColor="@color/black"
-            android:backgroundTint="@color/Mint"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginTop="16dp" />
 
+        <TextView
+            android:id="@+id/tvStageDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvStageSuggestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+
+    <!-- Done Button -->
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/Mint"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@id/ivDate"/>
 
 </RelativeLayout>

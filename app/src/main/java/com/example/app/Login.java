@@ -39,6 +39,7 @@ public class Login extends AppCompatActivity {
     String URL = "https://harvest.dermocura.net/PHP_API/login.php";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,81 +108,6 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
-//     private void performLogin(String username, String password) {
-//     String url = "http://harvestassistantfinalii/api/login.php";
-//     RequestQueue rq = Volley.newRequestQueue(Login.this);
-//     StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-//             response -> {
-//                 try {
-//                     JSONObject jsonResponse = new JSONObject(response);
-//                     boolean success = jsonResponse.getBoolean("success");
-//                     String message = jsonResponse.getString("message");
-
-//                     if (success) {
-//                         // Extract the userData object
-//                         JSONObject userDataJson = jsonResponse.getJSONObject("userData");
-
-//                         // Assuming your user data class matches these fields:
-//                         UserData userData = new UserData(
-//                                 userDataJson.getString("rsbsa_num"),
-//                                 userDataJson.getInt("farmerID"),
-//                                 userDataJson.getString("firstName"),
-//                                 userDataJson.getString("lastName"),
-//                                 userDataJson.getString("contactNumber"),
-//                                 userDataJson.getString("area")
-//                         );
-
-//                         // Save token or any other relevant data to SharedPreferences
-//                         saveUserDataToSharedPreferences(userData);
-
-//                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//                         Intent intent = new Intent(Login.this, Dashboard.class);
-//                         startActivity(intent);
-//                         finish(); // Finish the login activity
-//                     } else {
-//                         // Login failed
-//                         Log.e("Login Error", message);
-//                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//                     }
-
-//                 } catch (Exception e) {
-//                     e.printStackTrace();
-//                     Toast.makeText(this, "Error processing login", Toast.LENGTH_SHORT).show();
-//                 }
-//             },
-//             error -> {
-//                 if (error.networkResponse != null) {
-//                     int statusCode = error.networkResponse.statusCode;
-//                     String responseData = new String(error.networkResponse.data);
-//                     Log.e("Network Error", "Status Code: " + statusCode);
-//                     Log.e("Network Error", "Response Data: " + responseData);
-//                     Toast.makeText(this, "Error: " + responseData, Toast.LENGTH_SHORT).show();
-//                 } else {
-//                     Log.e("Network Error", "Network error: " + error.toString());
-//                     Toast.makeText(this, "Network error: " + error.toString(), Toast.LENGTH_SHORT).show();
-//                 }
-//             }
-//     ) {
-//         @Override
-//         protected Map<String, String> getParams() {
-//             Map<String, String> params = new HashMap<>();
-//             Log.i("LOGIN-CRED", "username" + username);
-//             Log.i("LOGIN-CRED", "password" + password);
-//             params.put("rsbsa_num", username);
-//             params.put("password", password);
-//             return params;
-//         }
-
-//         @Override
-//         public Map<String, String> getHeaders() throws AuthFailureError {
-//             Map<String, String> headers = new HashMap<>();
-//             headers.put("Content-Type", "application/json");
-//             return headers;
-//         }
-//     };
-
-//     rq.add(postRequest);
-// }
 
     private void makeHTTPRequest(String username, String password) {
         // Define keys for the JSON request body

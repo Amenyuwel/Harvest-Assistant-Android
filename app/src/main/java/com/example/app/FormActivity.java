@@ -1,40 +1,38 @@
 package com.example.app;
 
-import android.app.DatePickerDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
-
 public class FormActivity extends AppCompatActivity {
 
-    private static final String TAG = "FormActivity";
     private CalendarView calendarView;
+    private Button pickDateButton;
     private RequestQueue requestQueue;
-    private ImageButton pickDateButton;
 
-    private int farmerId = 1;  // Placeholder - make sure you retrieve this dynamically
-    private int cropId = 1;    // Placeholder - make sure you retrieve this dynamically
+    private int farmerId = 1;  // Placeholder - Retrieve dynamically
+    private int cropId = 1;    // Placeholder - Retrieve dynamically
+
+    // Store the selected date
+    private String selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form); // Ensure this matches your XML layout file name
+        setContentView(R.layout.activity_form);
 
         // Initialize views
         calendarView = findViewById(R.id.calendarView);
@@ -43,36 +41,31 @@ public class FormActivity extends AppCompatActivity {
         // Initialize the request queue for network operations
         requestQueue = Volley.newRequestQueue(this);
 
-        // Get the current date using java.util.Calendar
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        // Initialize DatePickerDialog to let user pick a planting date
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
+        // Set a listener on the CalendarView
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             // Format the selected date as needed (e.g., "yyyy-MM-dd")
-            String selectedDate = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-
-            // Call the function to schedule the planting date
-            schedulePlantingDate(farmerId, cropId, selectedDate);
-        }, year, month, day);
-
-        // Show the DatePickerDialog when the user clicks on the CalendarView or a button
-        calendarView.setOnDateChangeListener((view, selectedYear, selectedMonth, selectedDayOfMonth) -> {
-            datePickerDialog.updateDate(selectedYear, selectedMonth, selectedDayOfMonth);
-            datePickerDialog.show();
+            String formattedMonth = String.format("%02d", month + 1);
+            String formattedDay = String.format("%02d", dayOfMonth);
+            selectedDate = year + "-" + formattedMonth + "-" + formattedDay;
         });
 
-        // Alternatively, if you have a button to trigger DatePickerDialog
-        pickDateButton = findViewById(R.id.pickDateButton);
-        pickDateButton.setOnClickListener(v -> datePickerDialog.show());
+        // Set up the button click listener
+        pickDateButton.setOnClickListener(v -> {
+            if (selectedDate != null) {
+                // Call the function to schedule the planting date
+                schedulePlantingDate(farmerId, cropId, selectedDate);
+            } else {
+                // No date was selected
+                Toast.makeText(FormActivity.this, "Please select a date", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Function to schedule planting date
     private void schedulePlantingDate(int farmerId, int cropId, String datePlanted) {
-        String url = "https://harvest.dermocura.net/PHP_API/calendar.php"; // Replace with your server URL
+        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";  // Replace with your server URL
 
+        // Create JSON object for API request
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("farmer_id", farmerId);
@@ -84,22 +77,25 @@ public class FormActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 response -> {
+                    Log.d("APIResponse", response.toString());
                     try {
                         boolean success = response.getBoolean("success");
                         String message = response.getString("message");
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
-                        if (success) {
-                            // Handle successful planting date scheduling (e.g., navigate to a different screen)
-                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
                 error -> {
                     // Handle error
+                    Log.e("APIError", "Error: " + error.toString());
+                    if (error.networkResponse != null) {
+                        String errorResponse = new String(error.networkResponse.data);
+                        Log.e("APIErrorResponse", "Error response: " + errorResponse);
+                    }
                     Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                }
+        );
 
         // Add the request to the RequestQueue
         requestQueue.add(request);
