@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -74,50 +75,114 @@ public class FormActivity extends AppCompatActivity {
             String selectedCrop = cropSpinner.getSelectedItem().toString();
             int cropId = getCropId(selectedCrop);
 
-            if (selectedDate != null && !area.isEmpty() && farmerId != -1) {
-                // Call the function to schedule the planting date
-                schedulePlantingDate(farmerId, cropId, Double.parseDouble(area), selectedDate);
-            } else {
-                // No date or area was selected or farmerId is not found
-                Toast.makeText(FormActivity.this, "Please select a date, enter the area, and ensure you're logged in", Toast.LENGTH_SHORT).show();
-            }
+            Log.i("PondsTambok", "area" + area);
+            Log.i("PondsTambok", "selectedCrop" + selectedCrop);
+            Log.i("PondsTambok", "cropId" + cropId);
+            Log.i("PondsTambok", "farmerId" + selectedDate);
+
+            schedulePlantingDate(farmerId, cropId, Double.parseDouble(area), selectedDate);
         });
     }
 
     // Function to schedule planting date
-    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
-        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";  // Replace with your server URL
+//    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
+//        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";  // Replace with your server URL
+//
+//        // Create JSON object for API request
+//        JSONObject jsonBody = new JSONObject();
+//        try {
+//            jsonBody.put("farmer_id", farmerId);
+//            jsonBody.put("crop_id", cropId);
+//            jsonBody.put("area", area);
+//            jsonBody.put("planting_date", datePlanted);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+//                response -> {
+//                    try {
+//                        boolean success = response.getBoolean("success");
+//                        String message = response.getString("message");
+//                        Log.e("APIResponse", "Success:" + success + ", Message:" + message);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                },
+//                error -> {
+//                    // Handle error
+//                    Log.e("APIError", "Error: " + error.toString());
+//                }
+//        );
+//
+//        // Add the request to the RequestQueue
+//        requestQueue.add(request);
+//    }
 
-        // Create JSON object for API request
-        JSONObject jsonBody = new JSONObject();
+    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
+        // Define keys for the JSON request body
+        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";
+
+        // Create a JSON object for the request body
+        JSONObject requestBody = new JSONObject();
+
+        // Create a Volley request queue
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String datedate = datePlanted.toString();
+        int farmer_id = 1;
+
+        // Populate the JSON request body
         try {
-            jsonBody.put("farmer_id", farmerId);
-            jsonBody.put("crop_id", cropId);
-            jsonBody.put("area", area);
-            jsonBody.put("planting_date", datePlanted);
+            requestBody.put("farmer_id", farmer_id);
+            requestBody.put("crop_id", cropId);
+            requestBody.put("area", area);
+            requestBody.put("planting_date", datedate);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("EmmanBayot" + " makeHTTPRequest", String.valueOf(e));
+            return;
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        String message = response.getString("message");
-                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                error -> {
-                    // Handle error
-                    Log.e("APIError", "Error: " + error.toString());
-                    Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        // Create a JsonObjectRequest for a POST request to the specified URL
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                requestBody,
+                this::onRequestSuccess,
+                this::onRequestError
         );
 
-        // Add the request to the RequestQueue
-        requestQueue.add(request);
+        // Log the JSON request body for debugging
+        String stringJSON = requestBody.toString();
+        Log.i("EmmanBayot" + " makeHTTPRequest", stringJSON);
+
+        // Add the request to the Volley request queue
+        queue.add(request);
+    }
+
+    private void onRequestSuccess(JSONObject response) {
+        try {
+            // Extract success status and message from the JSON response
+            boolean success = response.getBoolean("success");
+            String message = response.getString("message");
+
+            if (success) {
+                // Login successful
+                Log.d("EmmanBayot" + " onRequestSuccess", "Message Response: " + message);
+                Log.d("EmmanBayot" + " onRequestSuccess", "JSON Received: " + response);
+            } else {
+                // Login failed
+                Log.e("EmmanBayot" + " onRequestSuccess", "Message Response: " + message);
+            }
+        } catch (JSONException e) {
+            Log.e("EmmanBayot" + " onRequestSuccess", String.valueOf(e));
+            Log.e("EmmanBayot" + " onRequestSuccess", "Error parsing JSON response");
+        }
+    }
+
+    private void onRequestError(VolleyError error) {
+        // Log and highlight entry
+        Log.e("EmmanBayot" + " onRequestError", "Error Response: " + error.getMessage());
     }
 
     // Helper method to map crop names to crop IDs
