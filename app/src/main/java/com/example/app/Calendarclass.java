@@ -37,7 +37,7 @@ public class Calendarclass extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+      super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.darker_matcha));
         setContentView(R.layout.calendar_activity);
 
@@ -70,35 +70,31 @@ public class Calendarclass extends AppCompatActivity {
     }
 
     private void fetchPlantingData(int farmerId, int cropId) {
-        String url = "https://harvest.dermocura.net/PHP_API/fetch_calendar.php";  // Replace with actual API endpoint
+        // Construct the URL with farmer_id and crop_id as GET parameters
+        String url = "https://harvest.dermocura.net/PHP_API/get_planting_data.php?farmer_id=" + farmerId + "&crop_id=" + cropId;
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        // Create a JSONObject to send as parameters
-        JSONObject params = new JSONObject();
-        try {
-            params.put("farmer_id", farmerId);
-            params.put("crop_id", cropId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+        // Send a GET request to the server to fetch planting data
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
                         if (response.getBoolean("success")) {
+                            // Extract data from the response
                             JSONObject data = response.getJSONObject("data");
 
-                            // Extract data from response
+                            // Get the fields
                             String plantingDate = data.getString("date_planted");
-                            String crop = data.getString("crop");
-                            double area = data.getDouble("hectares");
+                            double area = data.getDouble("area");
+
+                            // The estimated produce and income are calculated based on the area and received from the server
                             double estimatedProduce = data.getDouble("estimated_produce");
                             double estimatedIncome = data.getDouble("estimated_income");
 
-                            // Update the UI with the fetched data
-                            updateUI(plantingDate, crop, area, estimatedProduce, estimatedIncome);
+                            // Now, update the UI with the fetched data
+                            updateUI(plantingDate, area, estimatedProduce, estimatedIncome);
                         } else {
+                            // If the server returns an error
                             Toast.makeText(this, "Error fetching data: " + response.getString("message"), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
@@ -106,12 +102,7 @@ public class Calendarclass extends AppCompatActivity {
                     }
                 },
                 error -> {
-                    // Handle error
-                    Log.e("APIError", "Request failed: " + error.toString());
-                    if (error.networkResponse != null) {
-                        String errorResponse = new String(error.networkResponse.data);
-                        Log.e("APIErrorResponse", "Error response: " + errorResponse);
-                    }
+                    // Handle any network or server errors
                     Toast.makeText(this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
@@ -119,21 +110,20 @@ public class Calendarclass extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void updateUI(String plantingDate, String crop, double area, double estimatedProduce, double estimatedIncome) {
+    private void updateUI(String plantingDate, double area, double estimatedProduce, double estimatedIncome) {
         // Find your TextViews in the layout
         TextView tvSelectedDate = findViewById(R.id.tvSelectedDate);
-        TextView tvCrop = findViewById(R.id.tvCrop);
         TextView tvHectares = findViewById(R.id.tvHectares);
         TextView tvEstimatedProduce = findViewById(R.id.tvEstimatedProduce);
         TextView tvEstimatedIncome = findViewById(R.id.tvEstimatedIncome);
 
         // Set the data to the TextViews
         tvSelectedDate.setText(plantingDate);
-        tvCrop.setText(crop);
         tvHectares.setText(String.valueOf(area));
-        tvEstimatedProduce.setText(String.valueOf(estimatedProduce));
-        tvEstimatedIncome.setText(String.valueOf(estimatedIncome));
+        tvEstimatedProduce.setText(String.valueOf(estimatedProduce));  // Set from server response
+        tvEstimatedIncome.setText(String.valueOf(estimatedIncome));    // Set from server response
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

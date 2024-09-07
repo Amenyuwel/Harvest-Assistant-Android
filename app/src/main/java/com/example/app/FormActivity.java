@@ -1,16 +1,19 @@
 package com.example.app;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -20,14 +23,16 @@ import org.json.JSONObject;
 public class FormActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
+    private EditText areaEditText;
+    private Spinner cropSpinner;
     private Button pickDateButton;
     private RequestQueue requestQueue;
 
-    private int farmerId = 1;  // Placeholder - Retrieve dynamically
-    private int cropId = 1;    // Placeholder - Retrieve dynamically
-
     // Store the selected date
     private String selectedDate;
+
+    // SharedPreferences to store and retrieve farmer_id
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,24 @@ public class FormActivity extends AppCompatActivity {
 
         // Initialize views
         calendarView = findViewById(R.id.calendarView);
+        areaEditText = findViewById(R.id.areaEditText);
+        cropSpinner = findViewById(R.id.cropSpinner);
         pickDateButton = findViewById(R.id.pickDateButton);
 
         // Initialize the request queue for network operations
         requestQueue = Volley.newRequestQueue(this);
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+        // Get farmerId from SharedPreferences (assuming it's stored during login)
+        int farmerId = sharedPreferences.getInt("farmer_id", -1);
+
+        // Populate the spinner with crop options
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.crop_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cropSpinner.setAdapter(adapter);
 
         // Set a listener on the CalendarView
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
@@ -51,33 +70,30 @@ public class FormActivity extends AppCompatActivity {
 
         // Set up the button click listener
         pickDateButton.setOnClickListener(v -> {
-            if (selectedDate != null) {
+            String area = areaEditText.getText().toString().trim();
+            String selectedCrop = cropSpinner.getSelectedItem().toString();
+            int cropId = getCropId(selectedCrop);
+
+            if (selectedDate != null && !area.isEmpty() && farmerId != -1) {
                 // Call the function to schedule the planting date
-                Log.i("CalendarniBilly", selectedDate);
-                schedulePlantingDate(farmerId, cropId, selectedDate);
+                schedulePlantingDate(farmerId, cropId, Double.parseDouble(area), selectedDate);
             } else {
-                // No date was selected
-                Toast.makeText(FormActivity.this, "Please select a date", Toast.LENGTH_SHORT).show();
+                // No date or area was selected or farmerId is not found
+                Toast.makeText(FormActivity.this, "Please select a date, enter the area, and ensure you're logged in", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     // Function to schedule planting date
-    private void schedulePlantingDate(int farmerId, int cropId, String datePlanted) {
+    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
         String url = "https://harvest.dermocura.net/PHP_API/calendar.php";  // Replace with your server URL
 
         // Create JSON object for API request
         JSONObject jsonBody = new JSONObject();
-        String farmer_id = String.valueOf(farmerId);
-        String crop_id = String.valueOf(cropId);
-
-        Log.i("BillyBayot", "Sent to PHP " + farmer_id);
-        Log.i("BillyBayot", "Sent to PHP " + crop_id);
-        Log.i("BillyBayot", "Sent to PHP " + datePlanted);
-
         try {
             jsonBody.put("farmer_id", farmerId);
             jsonBody.put("crop_id", cropId);
+            jsonBody.put("area", area);
             jsonBody.put("planting_date", datePlanted);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -85,12 +101,10 @@ public class FormActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 response -> {
-                    Log.d("APIResponse", response.toString());
                     try {
                         boolean success = response.getBoolean("success");
                         String message = response.getString("message");
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-                        Log.e("BillyBayot", "Error " + message);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -98,16 +112,23 @@ public class FormActivity extends AppCompatActivity {
                 error -> {
                     // Handle error
                     Log.e("APIError", "Error: " + error.toString());
-                    if (error.networkResponse != null) {
-                        String errorResponse = new String(error.networkResponse.data);
-                        Log.e("APIErrorResponse", "Error response: " + errorResponse);
-                    }
                     Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("BillyBayot", "Error " + error.getMessage());
                 }
         );
 
         // Add the request to the RequestQueue
         requestQueue.add(request);
+    }
+
+    // Helper method to map crop names to crop IDs
+    private int getCropId(String cropName) {
+        switch (cropName.toLowerCase()) {
+            case "rice":
+                return 1;
+            case "corn":
+                return 2;
+            default:
+                return -1;  // Unknown crop
+        }
     }
 }
