@@ -65,6 +65,26 @@
         <item>Corn</item>
     </string-array>
 
+    <string-array name="brgy_array">
+        <item>Lagao</item>
+        <item>San Isidro</item>
+        <item>Bula</item>
+        <item>Apopong</item>
+        <item>Baluan</item>
+        <item>City Heights</item>
+        <item>Conel</item>
+        <item>Dadiangas East</item>
+        <item>Dadiangas West</item>
+        <item>Dadiangas South</item>
+        <item>Fatima</item>
+        <item>Katangawan</item>
+        <item>Ligaya</item>
+        <item>Mabuhay</item>
+        <item>Olympog</item>
+        <item>San Jose</item>
+        <item>Tinagacan</item>
+    </string-array>
+
     <string-array name="variance_array">
         <item>variance1</item>
         <item>variance2</item>

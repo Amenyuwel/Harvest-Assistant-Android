@@ -53,7 +53,7 @@ public class FormActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
         // Get farmerId from SharedPreferences (assuming it's stored during login)
-        int farmerId = sharedPreferences.getInt("farmer_id", -1);
+        int farmerId = sharedPreferences.getInt("farmer_id", - 1);
 
         // Populate the spinner with crop options
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -129,15 +129,15 @@ public class FormActivity extends AppCompatActivity {
         // Create a Volley request queue
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String datedate = datePlanted.toString();
-        int farmer_id = 1;
+//        String datedate = datePlanted.toString();
+//        int farmer_id = 1;
 
         // Populate the JSON request body
         try {
-            requestBody.put("farmer_id", farmer_id);
+            requestBody.put("farmer_id", farmerId);
             requestBody.put("crop_id", cropId);
             requestBody.put("area", area);
-            requestBody.put("planting_date", datedate);
+            requestBody.put("planting_date", datePlanted);
         } catch (JSONException e) {
             Log.e("EmmanBayot" + " makeHTTPRequest", String.valueOf(e));
             return;
