@@ -153,10 +153,19 @@ public class Login extends AppCompatActivity {
             String message = response.getString("message");
 
             if (success) {
+                // Get the farmerID from the userData
+                JSONObject userData = response.getJSONObject("userData");
+                int farmerID = userData.getInt("farmerID");
+
+                // Store farmerID in SharedPreferences
+                SharedPreferenceManager.getInstance(this).saveFarmerID(farmerID);
+
                 // Login successful
                 Log.d(TAG + " onRequestSuccess", "Message Response: " + message);
                 Log.d(TAG + " onRequestSuccess", "JSON Received: " + response);
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+                // Redirect to Dashboard
                 Intent intent = new Intent(Login.this, Dashboard.class);
                 startActivity(intent);
                 finish();
@@ -173,13 +182,6 @@ public class Login extends AppCompatActivity {
     private void onRequestError(VolleyError error) {
         // Log and highlight entry
         Log.e(TAG + " onRequestError", "Error Response: " + error.getMessage());
-    }
-
-    private void saveTokenToSharedPreferences(String token) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token", token);
-        editor.apply();
     }
 
     // Method to retrieve the token from SharedPreferences

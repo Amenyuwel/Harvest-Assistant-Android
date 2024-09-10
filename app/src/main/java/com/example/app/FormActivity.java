@@ -50,10 +50,10 @@ public class FormActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
         // Get farmerId from SharedPreferences (assuming it's stored during login)
-        int farmerId = sharedPreferences.getInt("farmer_id", - 1);
+        int farmerID = SharedPreferenceManager.getInstance(this).getFarmerID();
+        Log.i("ZhakBayot", "farmerID from sharedpref: " + farmerID);
 
         // Populate the spinner with crop options
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -80,44 +80,9 @@ public class FormActivity extends AppCompatActivity {
             Log.i("PondsTambok", "cropId" + cropId);
             Log.i("PondsTambok", "farmerId" + selectedDate);
 
-            schedulePlantingDate(farmerId, cropId, Double.parseDouble(area), selectedDate);
+            schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), selectedDate);
         });
     }
-
-    // Function to schedule planting date
-//    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
-//        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";  // Replace with your server URL
-//
-//        // Create JSON object for API request
-//        JSONObject jsonBody = new JSONObject();
-//        try {
-//            jsonBody.put("farmer_id", farmerId);
-//            jsonBody.put("crop_id", cropId);
-//            jsonBody.put("area", area);
-//            jsonBody.put("planting_date", datePlanted);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
-//                response -> {
-//                    try {
-//                        boolean success = response.getBoolean("success");
-//                        String message = response.getString("message");
-//                        Log.e("APIResponse", "Success:" + success + ", Message:" + message);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                },
-//                error -> {
-//                    // Handle error
-//                    Log.e("APIError", "Error: " + error.toString());
-//                }
-//        );
-//
-//        // Add the request to the RequestQueue
-//        requestQueue.add(request);
-//    }
 
     private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
         // Define keys for the JSON request body
@@ -129,8 +94,11 @@ public class FormActivity extends AppCompatActivity {
         // Create a Volley request queue
         RequestQueue queue = Volley.newRequestQueue(this);
 
-//        String datedate = datePlanted.toString();
-//        int farmer_id = 1;
+        // log input
+        Log.i("phpLog", "FarmerID" + farmerId);
+        Log.i("phpLog", "crop_id" + cropId);
+        Log.i("phpLog", "area" + area);
+        Log.i("phpLog", "planting_date" + datePlanted);
 
         // Populate the JSON request body
         try {

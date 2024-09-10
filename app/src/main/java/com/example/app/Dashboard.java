@@ -68,8 +68,8 @@ public class Dashboard extends AppCompatActivity {
             };
 
             int[] colors = new int[] {
-                    ContextCompat.getColor(this, R.color.matcha), // Color for checked state
-                    ContextCompat.getColor(this, R.color.black) // Default color
+                    ContextCompat.getColor(this, R.color.matcha),
+                    ContextCompat.getColor(this, R.color.black)
             };
 
             ColorStateList colorStateList = new ColorStateList(states, colors);
