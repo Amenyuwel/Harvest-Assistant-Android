@@ -42,12 +42,7 @@ public class Calendarclass extends AppCompatActivity {
         setContentView(R.layout.calendar_activity);
 
         // Set the ActionBar background color
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
-            actionBar.setTitle(""); // Remove ActionBar Title
-            actionBar.setDisplayHomeAsUpEnabled(true); // Show the back button in action bar
-        }
+
 
         ivDate = findViewById(R.id.ivDate);
         calendarBackButton = findViewById(R.id.calendarBackButton);

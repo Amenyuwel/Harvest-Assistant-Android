@@ -20,7 +20,7 @@
     <ImageButton
         android:id="@+id/calendarBackButton"
         android:layout_width="30dp"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:src="@drawable/back"
         android:background="@null"
         android:layout_marginTop="50dp"
