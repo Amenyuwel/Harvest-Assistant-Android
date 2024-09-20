@@ -50,6 +50,7 @@ public class FormActivity extends AppCompatActivity {
         areaEditText = findViewById(R.id.areaEditText);
         cropSpinner = findViewById(R.id.cropSpinner);
         pickDateButton = findViewById(R.id.pickDateButton);
+        formBackButton = findViewById(R.id.formBackButton);
 
         formBackButton.setOnClickListener(view -> {
             Intent i = new Intent(FormActivity.this, Calendarclass.class);
@@ -59,10 +60,7 @@ public class FormActivity extends AppCompatActivity {
         // Initialize the request queue for network operations
         requestQueue = Volley.newRequestQueue(this);
 
-
-
         // Initialize SharedPreferences
-
         // Get farmerId from SharedPreferences (assuming it's stored during login)
         int farmerID = SharedPreferenceManager.getInstance(this).getFarmerID();
         Log.i("ZhakBayot", "farmerID from sharedpref: " + farmerID);
@@ -92,7 +90,12 @@ public class FormActivity extends AppCompatActivity {
             Log.i("PondsTambok", "cropId" + cropId);
             Log.i("PondsTambok", "farmerId" + selectedDate);
 
+            // Schedule the planting date with the backend
             schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), selectedDate);
+
+            // Once the button is clicked and the data is sent, transition to Calendarclass
+            Intent intent = new Intent(FormActivity.this, Calendarclass.class);
+            startActivity(intent);
         });
     }
 
@@ -147,11 +150,11 @@ public class FormActivity extends AppCompatActivity {
             String message = response.getString("message");
 
             if (success) {
-                // Login successful
+                // Log successful response
                 Log.d("EmmanBayot" + " onRequestSuccess", "Message Response: " + message);
                 Log.d("EmmanBayot" + " onRequestSuccess", "JSON Received: " + response);
             } else {
-                // Login failed
+                // Log failure
                 Log.e("EmmanBayot" + " onRequestSuccess", "Message Response: " + message);
             }
         } catch (JSONException e) {
@@ -161,7 +164,7 @@ public class FormActivity extends AppCompatActivity {
     }
 
     private void onRequestError(VolleyError error) {
-        // Log and highlight entry
+        // Log and highlight error
         Log.e("EmmanBayot" + " onRequestError", "Error Response: " + error.getMessage());
     }
 

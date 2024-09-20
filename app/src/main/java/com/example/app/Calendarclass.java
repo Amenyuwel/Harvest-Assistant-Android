@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +26,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Calendarclass extends AppCompatActivity {
 
     ImageButton ivDate, calendarBackButton;
     private TextView tvGrowthStage, tvStageDescription, tvStageSuggestions;
     private SharedPreferences sharedPreferences;
     private ProgressDialog progressDialog;
+    Button btnDone;
 
     String TAG = "EmmanKissZhak";
     String URL = "https://harvest.dermocura.net/PHP_API/fetch_calendar.php";
@@ -49,6 +54,7 @@ public class Calendarclass extends AppCompatActivity {
         tvGrowthStage = findViewById(R.id.tvGrowthStage);
         tvStageDescription = findViewById(R.id.tvStageDescription);
         tvStageSuggestions = findViewById(R.id.tvStageSuggestions);
+        btnDone = findViewById(R.id.btnDone);
 
         ivDate.setOnClickListener(view -> {
             Intent i = new Intent(Calendarclass.this, FormActivity.class);
@@ -59,6 +65,25 @@ public class Calendarclass extends AppCompatActivity {
             Intent i = new Intent(Calendarclass.this, Dashboard.class);
             startActivity(i);
         });
+
+        btnDone.setOnClickListener(view -> {
+            // Get the current date in the format you need (e.g., YYYY-MM-DD)
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String currentDate = sdf.format(Calendar.getInstance().getTime());
+
+            // Assuming you have the farmerID and cropID already available
+            int farmerID = SharedPreferenceManager.getInstance(this).getFarmerID();
+            int cropID = 1; // Get the actual crop ID based on the data
+
+            if (farmerID != -1 && cropID != -1) {
+                postHarvestDate(farmerID, cropID, currentDate);
+            } else {
+                Toast.makeText(this, "Farmer ID or Crop ID not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
@@ -108,6 +133,52 @@ public class Calendarclass extends AppCompatActivity {
         queue.add(request);
     }
 
+    private void postHarvestDate(int farmerID, int cropID, String dateHarvested) {
+        String postURL = "https://harvest.dermocura.net/PHP_API/update_harvest.php"; // Adjust URL if needed
+
+        // Create a JSON object for the request body
+        JSONObject requestBody = new JSONObject();
+
+        // Populate the JSON request body
+        try {
+            requestBody.put("farmer_id", farmerID);
+            requestBody.put("crop_id", cropID);
+            requestBody.put("date_harvested", dateHarvested);
+        } catch (JSONException e) {
+            Log.e(TAG + " postHarvestDate", "Error creating JSON body: " + e.getMessage());
+            return;
+        }
+
+        // Use Volley to send a POST request
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                postURL,
+                requestBody,
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        if (success) {
+                            Toast.makeText(Calendarclass.this, "Harvest date successfully updated!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String message = response.optString("message", "Failed to update harvest date");
+                            Toast.makeText(Calendarclass.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG + " postHarvestDate", "Error parsing response: " + e.getMessage());
+                    }
+                },
+                error -> {
+                    Log.e(TAG + " postHarvestDate", "Volley error: " + error.getMessage());
+                    Toast.makeText(Calendarclass.this, "Failed to update harvest date", Toast.LENGTH_SHORT).show();
+                }
+        );
+
+        // Add the request to the Volley queue
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+
+
     private void onRequestSuccess(JSONObject response) {
         try {
             // Extract success status from the JSON response
@@ -154,52 +225,6 @@ public class Calendarclass extends AppCompatActivity {
         // Log and highlight entry
         Log.e(TAG + " onRequestError", "Error Response: " + error.getMessage());
     }
-
-//    private void fetchPlantingData(int farmerId, int cropId) {
-//        String url = "https://harvest.dermocura.net/PHP_API/fetch_calendar.php?farmer_id=" + farmerId + "&crop_id=" + cropId;
-//
-//        Log.d("Calendarclass", "Starting to fetch planting data for farmer_id: " + farmerId + ", crop_id: " + cropId);
-//
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setMessage("Fetching data...");
-//        progressDialog.show();
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-//                response -> {
-//                    if (progressDialog.isShowing()) {
-//                        progressDialog.dismiss();
-//                    }
-//                    Log.d("Calendarclass", "Data fetch successful.");
-//                    try {
-//                        if (response.getBoolean("success")) {
-//                            JSONObject data = response.getJSONObject("data");
-//                            String plantingDate = data.getString("date_planted");
-//                            double area = data.getDouble("area");
-//                            double estimatedProduce = data.getDouble("estimated_produce");
-//                            double estimatedIncome = data.getDouble("estimated_income");
-//
-//                            updateUI(plantingDate, area, estimatedProduce, estimatedIncome);
-//                        } else {
-//                            Log.e("Calendarclass", "Error: " + response.getString("message"));
-//                            Toast.makeText(this, "Error: " + response.getString("message"), Toast.LENGTH_SHORT).show();
-//                        }
-//                    } catch (JSONException e) {
-//                        Log.e("Calendarclass", "JSON parsing error: " + e.getMessage());
-//                        e.printStackTrace();
-//                    }
-//                },
-//                error -> {
-//                    if (progressDialog.isShowing()) {
-//                        progressDialog.dismiss();
-//                    }
-//                    Log.e("Calendarclass", "Request failed: " + error.getMessage());
-//                    Toast.makeText(this, "Network request failed. Please try again.", Toast.LENGTH_SHORT).show();
-//                });
-//
-//        requestQueue.add(jsonObjectRequest);
-//    }
 
     private void updateUI(String plantingDate, double area, double estimatedProduce, double estimatedIncome, String cropname) {
         TextView tvSelectedDate = findViewById(R.id.tvSelectedDate);
