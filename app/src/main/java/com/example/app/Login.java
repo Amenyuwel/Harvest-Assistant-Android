@@ -33,7 +33,7 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
 
     TextInputEditText etPassword, etID;
-    TextView tvBottomTextSignup;
+    TextView btnSignup;
     Button btnLogin;
     String TAG = "BillyBayot";
     String URL = "https://harvest.dermocura.net/PHP_API/login.php";
@@ -66,11 +66,11 @@ public class Login extends AppCompatActivity {
         });
 
 
-        tvBottomTextSignup = findViewById(R.id.tvBottomTextSignup);
+        btnSignup = findViewById(R.id.btnSignup);
 
         Button loginButton = findViewById(R.id.btnLogin);
 
-        tvBottomTextSignup.setOnClickListener(new View.OnClickListener() {
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Login.this, SignupActivity.class);
