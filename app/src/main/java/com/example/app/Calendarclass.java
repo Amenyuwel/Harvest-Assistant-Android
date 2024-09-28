@@ -2,7 +2,6 @@ package com.example.app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,7 +30,7 @@ public class Calendarclass extends AppCompatActivity {
     ImageButton ivDate, calendarBackButton;
     private TextView tvGrowthStage, tvStageDescription, tvStageSuggestions;
     private ProgressDialog progressDialog;
-    Button btnDone;
+    Button btnDone, btnReset;
 
     String TAG = "CalendarActivity";
     String URL = "https://harvest.dermocura.net/PHP_API/fetch_calendar.php";
@@ -49,6 +47,7 @@ public class Calendarclass extends AppCompatActivity {
         tvStageDescription = findViewById(R.id.tvStageDescription);
         tvStageSuggestions = findViewById(R.id.tvStageSuggestions);
         btnDone = findViewById(R.id.btnDone);
+        btnReset = findViewById(R.id.btnReset);
 
         // Open FormActivity for date selection
         ivDate.setOnClickListener(view -> {
@@ -76,6 +75,17 @@ public class Calendarclass extends AppCompatActivity {
             }
         });
 
+        // Handle Reset button press (reset harvest data)
+        btnReset.setOnClickListener(view -> {
+            int farmerID = SharedPreferenceManager.getInstance(this).getFarmerID();
+            if (farmerID != -1) {
+                resetHarvestData(farmerID);  // Call the reset function
+            } else {
+                Toast.makeText(this, "Farmer ID not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Fetch the data on activity load
         int farmerID = SharedPreferenceManager.getInstance(this).getFarmerID();
         if (farmerID != -1) {
             makeHTTPRequest(farmerID);
@@ -127,8 +137,6 @@ public class Calendarclass extends AppCompatActivity {
                     try {
                         if (response.getBoolean("success")) {
                             Toast.makeText(Calendarclass.this, "Harvest completed!", Toast.LENGTH_SHORT).show();
-
-                            // Refresh the CalendarClass activity
                             recreate();  // This will refresh the entire activity
                         } else {
                             String message = response.optString("message", "Failed to update harvest");
@@ -145,6 +153,45 @@ public class Calendarclass extends AppCompatActivity {
         );
 
         // Add the request to the Volley request queue
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+
+    // Function to reset harvest data (set is_active to 0)
+    private void resetHarvestData(int farmerID) {
+        String resetURL = "https://harvest.dermocura.net/PHP_API/reset_harvest.php"; // Update with the correct URL
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("farmer_id", farmerID);
+        } catch (JSONException e) {
+            Log.e(TAG, "resetHarvestData: Error creating JSON body", e);
+            return;
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                resetURL,
+                requestBody,
+                response -> {
+                    try {
+                        if (response.getBoolean("success")) {
+                            Toast.makeText(Calendarclass.this, "Harvest data reset successfully!", Toast.LENGTH_SHORT).show();
+                            recreate();  // Refresh the activity
+                        } else {
+                            String message = response.optString("message", "Failed to reset harvest data");
+                            Toast.makeText(Calendarclass.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, "resetHarvestData: Error parsing response", e);
+                    }
+                },
+                error -> {
+                    Log.e(TAG, "resetHarvestData: Volley error", error);
+                    Toast.makeText(Calendarclass.this, "Failed to reset harvest data", Toast.LENGTH_SHORT).show();
+                }
+        );
+
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
@@ -204,6 +251,4 @@ public class Calendarclass extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
