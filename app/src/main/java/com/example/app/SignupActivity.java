@@ -20,9 +20,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,9 +99,6 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        // Hash the password before sending it to the server
-        String hashedPassword = hashPassword(password);
-
         // Log the input values
         Log.d(TAG, "First Name: " + firstName);
         Log.d(TAG, "Middle Name: " + middleName);
@@ -112,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Contact: " + contact);
         Log.d(TAG, "Area: " + area);
         Log.d(TAG, "RSBSA Number: " + rsbsaNum);
-        Log.d(TAG, "Hashed Password: " + hashedPassword);
+        Log.d(TAG, "Password: " + password);
         Log.d(TAG, "Crop: " + crop);
         Log.d(TAG, "Barangay: " + barangay);
 
@@ -165,34 +159,19 @@ public class SignupActivity extends AppCompatActivity {
                 params.put("contact_number", contact);  // Use "contact_number" instead of "contact"
                 params.put("area", area);
                 params.put("rsbsa_num", rsbsaNum);
-                params.put("password", hashedPassword);  // Use the hashed password here
+                params.put("password", password);
                 params.put("crop_id", String.valueOf(getCropId(crop)));
                 params.put("barangay_id", String.valueOf(getBrgyId(barangay)));
                 params.put("role_id", "1");  // Ensure role_id is sent as "1" for farmers
                 return params;
+
+
             }
+
         };
 
         // Add request to the RequestQueue
         Volley.newRequestQueue(this).add(stringRequest);
-    }
-
-    // Example using SHA-256 (for demonstration purposes)
-    private String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return password; // Fallback (not recommended)
-        }
     }
 
     private int getCropId(String cropName) {

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/abs"
+    tools:context=".Login">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvRegister"
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:alpha="0.9"
+        app:cardBackgroundColor="@color/dirty_white"
+        app:cardCornerRadius="17dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/harvest_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="130dp"
+            android:font="@font/ibmbold"
+            android:text="Register"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+
+
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/eCV"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="17dp"
+            android:layout_marginTop="250dp"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Existing Farmer"
+                android:textAllCaps="true"
+                android:fontFamily="@font/ibmbold"
+                android:textSize="25dp"
+                android:layout_gravity="center"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/nCV"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="17dp"
+            android:layout_marginTop="340dp"
+            android:layout_gravity="center_horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Farmer"
+                android:textAllCaps="true"
+                android:fontFamily="@font/ibmbold"
+                android:textSize="25dp"
+                android:layout_gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="40dp"
+            android:background="#6B8C9A99" />
+
+        <TextView
+            android:id="@+id/tvBottomText0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="565dp"
+            android:text="Already have an account?"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="235dp"
+            android:layout_marginTop="552dp"
+            android:text="Login"
+            android:textColor="@color/blueBlack"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:background="@null"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>
+
