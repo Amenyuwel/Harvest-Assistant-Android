@@ -1,8 +1,11 @@
 package com.example.app;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,22 +29,22 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "HAHA";
 
-    private EditText etFirstName, etMiddleName, etLastName, etContact, etArea, etRsbsaNum, etPassword, etConfirmPassword;
+    private EditText etFirstName, etMiddleName, etLastName, etContact, etArea, etPassword, etConfirmPassword;
     private Spinner cropSpinner, brgySpinner;
     private Button btnSignup;
+    Dialog dialog;
+    Button btnDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
         etFirstName = findViewById(R.id.etFirstName);
         etMiddleName = findViewById(R.id.etMiddleName);
         etLastName = findViewById(R.id.etLastName);
         etContact = findViewById(R.id.etContact);
         etArea = findViewById(R.id.etArea);
-        etRsbsaNum = findViewById(R.id.etRsbsaNum);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         cropSpinner = findViewById(R.id.cropSpinner);
@@ -52,10 +55,33 @@ public class SignupActivity extends AppCompatActivity {
         setupCropSpinner();
         setupBrgySpinner();
 
+        dialog = new Dialog(SignupActivity.this);
+        dialog.setContentView(R.layout.register_dialog_box);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
+        dialog.setCancelable(false);
+
+        btnDialog = dialog.findViewById(R.id.btnDialog);
+
+        btnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Dismiss the dialog once the user clicks "Yes"
+                dialog.dismiss();
+
+                // Optionally, you can navigate or perform other actions here
+                Intent i = new Intent(SignupActivity.this, Login.class);
+                startActivity(i);
+            }
+        });
+
+        // Set up the click listener for btnSignup
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Directly call registerUser() when "Sign Up" is clicked
                 registerUser();
+                dialog.show();
             }
         });
     }
@@ -82,7 +108,6 @@ public class SignupActivity extends AppCompatActivity {
         final String lastName = etLastName.getText().toString().trim();
         final String contact = etContact.getText().toString().trim();
         final String area = etArea.getText().toString().trim();
-        final String rsbsaNum = etRsbsaNum.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
         final String confirmPassword = etConfirmPassword.getText().toString().trim();
         final String crop = cropSpinner.getSelectedItem().toString();
@@ -105,13 +130,12 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Last Name: " + lastName);
         Log.d(TAG, "Contact: " + contact);
         Log.d(TAG, "Area: " + area);
-        Log.d(TAG, "RSBSA Number: " + rsbsaNum);
         Log.d(TAG, "Password: " + password);
         Log.d(TAG, "Crop: " + crop);
         Log.d(TAG, "Barangay: " + barangay);
 
         // API endpoint URL
-        String url = "https://harvest.dermocura.net/PHP_API/register.php";
+        String url = "https://harvest.dermocura.net/PHP_API/new_register.php";
 
         // Create a POST request using Volley
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -158,16 +182,12 @@ public class SignupActivity extends AppCompatActivity {
                 params.put("last_name", lastName);
                 params.put("contact_number", contact);  // Use "contact_number" instead of "contact"
                 params.put("area", area);
-                params.put("rsbsa_num", rsbsaNum);
                 params.put("password", password);
                 params.put("crop_id", String.valueOf(getCropId(crop)));
                 params.put("barangay_id", String.valueOf(getBrgyId(barangay)));
                 params.put("role_id", "1");  // Ensure role_id is sent as "1" for farmers
                 return params;
-
-
             }
-
         };
 
         // Add request to the RequestQueue

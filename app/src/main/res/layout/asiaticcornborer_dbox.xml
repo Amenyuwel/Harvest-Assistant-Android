@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="16dp">
+
+    <!-- Image representing the pest -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/asiaticcornborer" />
+
+    <ImageButton
+        android:id="@+id/cornbtn03"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:background="@drawable/cvgradient">
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="Asiatic Corn Borer"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibmbold" />
+
+
+        <TextView
+            android:id="@+id/tv_intro"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="9dp"
+            android:text="The Asiatic corn borer is a caterpillar that bores into corn stalks, ears, and leaves, damaging the crop.
+"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/tv_intro"
+            android:layout_marginTop="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Impact:"
+                android:textSize="17dp"
+                android:layout_marginStart="35dp"
+                android:fontFamily="@font/imbmedium"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="•Main Target: Corn stalks, ears, and leaves. These borers tunnel into the stalks and ears, disrupting nutrient flow and grain development, which leads to structural weakness and yield loss."
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="60dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="•The larvae bore into the plant, causing stem breakage, reducing plant vigor, and leading to poor grain development. In severe cases, it can cause up to 80% crop loss by damaging the plant's structure and reducing yield."
+                android:textSize="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="60dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

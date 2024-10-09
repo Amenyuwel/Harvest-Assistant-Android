@@ -65,6 +65,7 @@ dependencies {
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
     implementation("androidx.camera:camera-extensions:${camerax_version}")
+    implementation ("com.google.android.material:material:1.8.0")
 
 
     implementation ("com.android.volley:volley:1.2.0")

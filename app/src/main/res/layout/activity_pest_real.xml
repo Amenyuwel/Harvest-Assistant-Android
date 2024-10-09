@@ -1,45 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/antique"
+    android:background="@drawable/abs"
     tools:context=".PestReal">
 
-    <androidx.cardview.widget.CardView
+    <ImageButton
+        android:id="@+id/btBack1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp" />
 
-        android:id="@+id/laNinaCardview"
+
+    <androidx.cardview.widget.CardView
         android:layout_width="350dp"
-        android:layout_height="100dp"
+        android:layout_height="500dp"
         app:cardCornerRadius="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092">
+        app:cardElevation="10dp"
+        android:layout_centerInParent="true"
+        >
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pest Information"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:fontFamily="@font/imbmedium"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+
+            />
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="#6B8C9A99" />
+
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/laNinaCardview"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            app:cardCornerRadius="17dp"
+            app:cardElevation="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
+
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/raining"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="70dp"
+                    android:background="#6B8C9A99"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="la Niña"
+                    android:textSize="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center"/>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/elNinoCardview"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="252dp"
+            app:cardCornerRadius="17dp"
+            app:cardElevation="10dp"
+            android:layout_below="@id/laNinaCardview"
+            android:layout_gravity="center_horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/sun"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="70dp"
+                    android:background="#6B8C9A99"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="el Niño"
+                    android:textSize="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center"/>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
 
     </androidx.cardview.widget.CardView>
 
 
 
-    <androidx.cardview.widget.CardView
 
-        android:id="@+id/elNinoCardview"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/laNinaCardview"
-        app:layout_constraintVertical_bias="0.0">
-
-    </androidx.cardview.widget.CardView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

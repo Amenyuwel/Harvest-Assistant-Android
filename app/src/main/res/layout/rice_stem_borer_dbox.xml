@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="16dp">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/rice_stem_borer"
+        android:scaleType="fitXY" />
+
+    <ImageButton
+        android:id="@+id/ricebtn1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="250dp"
+                android:background="@drawable/cvgradient">
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30dp"
+                    android:text="Rice Stem Borer"
+                    android:textColor="@color/black"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/ibmbold" />
+
+                <TextView
+                    android:id="@+id/tv_intro"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="These are moth larvae that feed inside rice stems, causing the plant to wilt and reduce grain production. The most common species include the yellow, striped, and white stem borers."
+                    android:layout_marginStart="35dp"
+                    android:textAlignment="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv1"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/tv_intro"
+                    android:layout_marginTop="10dp">
+
+                    <!-- Impact Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Impact:"
+                        android:textSize="17dp"
+                        android:layout_marginStart="35dp"
+                        android:fontFamily="@font/imbmedium"/>
+
+
+                    <TextView
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:text="•Main Target: The rice stem. Stem borers burrow into the lower and middle portions of rice stems, disrupting water and nutrient flow."
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="60dp" />
+
+                    <TextView
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:text="•Stem borers cause significant damage by boring into the rice stems, which interrupts the flow of water and nutrients within the plant. This leads to weakened plants, lodging (falling over), and ultimately reduced grain yields."
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="60dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

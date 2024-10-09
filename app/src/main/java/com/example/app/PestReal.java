@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -18,6 +19,7 @@ public class PestReal extends AppCompatActivity {
 
     CardView elNinoCardView;
     CardView laNinaCardView;
+    ImageView btBack1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +42,12 @@ public class PestReal extends AppCompatActivity {
 
         elNinoCardView = findViewById(R.id.elNinoCardview);
         laNinaCardView = findViewById(R.id.laNinaCardview);
+        btBack1 = findViewById(R.id.btBack1);
 
         elNinoCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PestReal.this, ElninoMain.class); // Start new activity for El Nino
+                Intent intent = new Intent(PestReal.this, elNino.class); // Start new activity for El Nino
                 startActivity(intent);
             }
 
@@ -53,10 +56,18 @@ public class PestReal extends AppCompatActivity {
         laNinaCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PestReal.this, LaninaMain.class); // Start La Nina activity
+                Intent intent = new Intent(PestReal.this, laNina.class); // Start La Nina activity
                 startActivity(intent);
             }
 
+        });
+
+        btBack1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(PestReal.this, Dashboard.class);
+                startActivity(i);
+            }
         });
 
     }

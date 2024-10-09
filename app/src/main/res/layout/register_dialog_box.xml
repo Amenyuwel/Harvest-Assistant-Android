@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="10dp"
+>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/rl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/imbmedium"
+            android:text="Paano magparehistro"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:textSize="28sp"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/steps_boarder"
+            android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="50dp"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:text="Step 1:"
+            android:fontFamily="@font/imbmedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Sagutan ang RSBSA Form mula sa tanggapan ng City Agriculturist. Gumamit ng blue ink ballpen sa pagsagot ng form.\n"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/steps_boarder"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="50dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Step 2:"
+                android:fontFamily="@font/imbmedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Palagdaan ang form sa Barangay Captain ng inyong tinitirahang barangay.\n"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/steps_boarder"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="50dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Step 3:"
+                android:fontFamily="@font/imbmedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Dikitan ng larawan ang form (2x2 ID picture-latest, colored w/ white background).\n"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/steps_boarder"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="50dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Step 4:"
+                android:fontFamily="@font/imbmedium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="Isumite a City Agriculturist's Office ang kumpletong form at ipakita ang iba pang mga kailangang dokumento tulad ng government-issued ID, titulo ng lupa, kasunduan ng renta sa may-ari o iba pang katunayan.\n"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/imbmedium"
+            android:text="Mga dapat dalhin kapag magparehistro"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="28sp"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/steps_boarder"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="•Government Issued ID"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:text="•Titulo ng Lupa, Kasunduan ng renta \n  sa may-ari o iba pang katunayan\n"/>
+        </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btnDialog"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:text="Yes"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:background="@color/blue"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                />
+
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>

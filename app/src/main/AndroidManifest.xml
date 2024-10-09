@@ -27,6 +27,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".laNina"
+            android:exported="false" />
+        <activity
+            android:name=".elNino"
+            android:exported="false" />
+        <activity
             android:name=".register"
             android:exported="false" />
         <activity
