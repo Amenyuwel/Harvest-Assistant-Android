@@ -1,9 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/antique"
+    android:background="@color/darker_matcha"
     tools:context=".CameraActivity">
 
     <ImageView
@@ -12,103 +12,118 @@
         android:layout_height="370dp"
         android:background="@color/white"
         android:elevation="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
 
-    <LinearLayout
-        android:id="@+id/ll1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="325dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="1.0">
 
-        <TextView
-            android:id="@+id/pestrecom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CLASSIFIED AS: "
-            android:textStyle="bold"
-            android:textSize="15sp" />
+        <androidx.cardview.widget.CardView
+            android:backgroundTint="@color/antique"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#C30000"
-            android:textStyle="bold"
-            android:textSize="15sp" />
-    </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="ExtraText">
 
-    <LinearLayout
-        android:id="@+id/ll2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Pest: "
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/location"
+                    app:layout_constraintVertical_bias="0.037" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/confidence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recommendation: "
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/result"
+                    app:layout_constraintVertical_bias="0.054" />
 
-    <Button
-        android:id="@+id/btnTakePicture"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/matcha"
-        android:text="Take Picture"
-        android:textAllCaps="true"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="LOCATION: "
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.052" />
 
-    <Button
-        android:id="@+id/btnAnalyze"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btnTakePicture"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Analyze"
-        android:textAllCaps="true"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnAnalyze"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:text="Analyze"
+                    android:textAllCaps="true"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/confidence" />  <!-- Changed to confidence -->
 
-    <TextView
-        android:id="@+id/location"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btnAnalyze"
-        android:layout_below="@+id/ll2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="133dp"
-        android:text="LOCATION: "
-        android:textSize="15sp"
-        android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnTakePicture"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/matcha"
+                    android:text="Take Picture"
+                    android:textAllCaps="true"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.93"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.941"/>
 
-    <TextView
-        android:id="@+id/confidence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnAnalyze"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="95dp"
-        android:text="CONFIDENCE: "
-        android:textSize="15sp"
-        android:textStyle="bold" />
-</RelativeLayout>
+                <Button
+                    android:id="@+id/uploadImage"
+                    android:text="Upload"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.069"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.941" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

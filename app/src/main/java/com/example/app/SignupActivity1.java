@@ -141,6 +141,7 @@ public class SignupActivity1 extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_CODE) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
