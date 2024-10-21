@@ -15,6 +15,13 @@ import androidx.fragment.app.Fragment;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.app.Calendarclass;
+import com.example.app.CameraActivity;
+import com.example.app.MainActivityFAQ;
+import com.example.app.PestReal;
+import com.example.app.R;
+import com.example.app.RecoMainActivity;
+import com.example.app.TutorialMainActivity;
 
 import java.util.ArrayList;
 
@@ -39,8 +46,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-
 
 
         cardView = rootView.findViewById(R.id.cvcalendar);

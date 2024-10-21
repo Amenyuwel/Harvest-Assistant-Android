@@ -4,6 +4,7 @@
     package="com.example.app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Add this line -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -26,6 +27,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".PestSeverity"
+            android:exported="false" />
+        <activity
+            android:name=".Option"
+            android:exported="false" /> <!-- Your activities here -->
         <activity
             android:name=".laNina"
             android:exported="false" />
@@ -70,10 +77,10 @@
             android:exported="false" />
         <activity
             android:name=".CameraActivity"
-            android:exported="false" /> <!-- Set Dashboard activity -->
+            android:exported="false" />
         <activity
             android:name=".Dashboard"
-            android:exported="true" /> <!-- Set Login activity as the main activity -->
+            android:exported="true" />
         <activity
             android:name=".Login"
             android:exported="true">
@@ -82,12 +89,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Calendar Activity -->
-        <activity android:name=".RecoMainActivity" /> <!-- Analytics Activity -->
-        <activity android:name=".AnalyticMainActivity" /> <!-- PestMainActivity -->
-        <activity android:name=".PestReal" /> <!-- Harvest Volume Activity -->
-        <activity android:name=".HarvestVolMainActivity" /> <!-- Tutorial Activity -->
-        <activity android:name=".TutorialMainActivity" /> <!-- Chatbot Activity -->
+        </activity>
+        <activity android:name=".RecoMainActivity" />
+        <activity android:name=".PestReal" />
+        <activity android:name=".HarvestVolMainActivity" />
+        <activity android:name=".TutorialMainActivity" />
         <activity android:name=".MainActivityFAQ" />
         <activity
             android:name=".FormActivity"
@@ -99,6 +105,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".Calendarclass" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -23,9 +24,13 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
@@ -52,11 +57,11 @@ public class CameraActivity extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int LOCATION_REQUEST_CODE = 101;
-    private static final int GALLERY_REQUEST_CODE = 2; // New request code for gallery
+    private static final int GALLERY_REQUEST_CODE = 2;
 
     private TextView result, recommendationTextView, locationTextView;
     private ImageView imageView;
-    private Button picture, sendButton, uploadImage; // Added uploadImage button
+    private Button picture, sendButton, uploadImage;
 
     private Bitmap capturedImage;
     private FusedLocationProviderClient fusedLocationClient;
@@ -66,21 +71,26 @@ public class CameraActivity extends AppCompatActivity {
     // Class member variables for encoded image and address
     private String encodedImage;
     private String address;
-    private int farmerID;
+    private int farmerID; // Class-level variable for farmer ID
+    private String severity; // Added severity here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        // Set ActionBar color
+        // Set the ActionBar background color
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            // Set the ActionBar background color
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
+            // Remove ActionBar Title
+            actionBar.setTitle("");
+            // Show the back button in action bar
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // Initialize UI elements
+
         // Initialize UI elements
         result = findViewById(R.id.result);
         recommendationTextView = findViewById(R.id.confidence);
@@ -88,7 +98,9 @@ public class CameraActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.btnTakePicture);
         sendButton = findViewById(R.id.btnAnalyze);
-        uploadImage = findViewById(R.id.uploadImage); // Initialize new button
+        uploadImage = findViewById(R.id.uploadImage);
+        ImageView showDialogButton = findViewById(R.id.getRate);
+
 
         // Initialize location client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -96,14 +108,20 @@ public class CameraActivity extends AppCompatActivity {
         checkLocationServices();
 
         // Retrieve the farmer_id from SharedPreferences
-        int farmerID = SharedPreferenceManager.getInstance(this).getFarmerID();
+        farmerID = SharedPreferenceManager.getInstance(this).getFarmerID(); // Update to class-level variable
 
-        // Check if the farmerID was successfully retrieved
-        if (farmerID == -1) {
-            // Handle the case where no farmerID is found
-            Toast.makeText(CameraActivity.this, "No farmer ID found. Please log in again.", Toast.LENGTH_LONG).show();
-            // Optionally redirect the user to login or handle the error as needed
+        // Check if the farmerID is valid
+        if (farmerID <= 0) {
+            Toast.makeText(CameraActivity.this, "No valid farmer ID found. Please log in again.", Toast.LENGTH_LONG).show();
+            finish(); // Close activity or redirect to login
+            return;
         }
+
+        // Upload image button
+        uploadImage.setOnClickListener(view -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        });
 
         // Capture image button
         picture.setOnClickListener(view -> {
@@ -114,12 +132,50 @@ public class CameraActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
             }
         });
-
-        // Upload image button
-        uploadImage.setOnClickListener(view -> {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        showDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(); // Call the method to show the dialog
+            }
         });
+    }
+
+    private void showDialog() {
+        // Inflate the dialog layout
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_radio_group, null);
+
+        // Create the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(CameraActivity.this);
+        builder.setTitle("SELECT CROP DAMAGE SEVERITY")
+                .setView(dialogView)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    RadioGroup radioGroup = dialogView.findViewById(R.id.radioGroup);
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                    if (selectedId != -1) {
+                        RadioButton selectedRadioButton = dialogView.findViewById(selectedId);
+                        severity = selectedRadioButton.getText().toString();
+                        Toast.makeText(CameraActivity.this, "Selected: " + severity, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CameraActivity.this, "No selection made", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        // Show the dialog
+        builder.create().show();
+
+
+        recommendationTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent to open a new activity
+                Intent intent = new Intent(CameraActivity.this, RecoMainActivity.class);
+                startActivity(intent); // Start the new activity
+            }
+        });
+
 
         // Send image button
         sendButton.setOnClickListener(view -> {
@@ -148,7 +204,7 @@ public class CameraActivity extends AppCompatActivity {
                     capturedImage = Bitmap.createScaledBitmap(image, 224, 224, false);
                 }
             }
-        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) { // Handle image selection from gallery
+        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
                 try {
                     Bitmap image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
@@ -175,7 +231,7 @@ public class CameraActivity extends AppCompatActivity {
                 getAddressFromLocation(latitude, longitude);
             } else {
                 locationTextView.setText("Location not available");
-                locationTextView.setVisibility(View.VISIBLE); // Show message if location is null
+                locationTextView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -192,13 +248,14 @@ public class CameraActivity extends AppCompatActivity {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
-                this.address = address.getAddressLine(0); // Save address to class variable
+                this.address = address.getAddressLine(0);
+                Log.d("Address Debug", "Fetched Address: " + this.address); // Log the fetched address
                 locationTextView.setText("Location: " + this.address);
-                locationTextView.setVisibility(View.VISIBLE); // Make it visible
-                sendImageToPredict(capturedImage, latitude, longitude, this.address);
+                locationTextView.setVisibility(View.VISIBLE);
+                sendImageToPredict(capturedImage, latitude, longitude, this.address); // Send address
             } else {
                 locationTextView.setText("No address found for location.");
-                locationTextView.setVisibility(View.VISIBLE); // Show even if no address is found
+                locationTextView.setVisibility(View.VISIBLE);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -207,16 +264,17 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+    // Sending image and other details to PHP
     private void sendImageToPredict(Bitmap image, double latitude, double longitude, String address) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        encodedImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT); // Save encoded image to class variable
+        encodedImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://desktop-3mj7q7f.tail98551e.ts.net/predict"; // Update with your Flask server URL
+        String url = "https://desktop-3mj7q7f.tail98551e.ts.net/predict"; // Update with your PHP URL
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                this::handleFlaskResponse,
+                response -> handleFlaskResponse(response, image),
                 error -> {
                     Log.e("Error", error.toString());
                     Toast.makeText(CameraActivity.this, "Failed to send prediction", Toast.LENGTH_SHORT).show();
@@ -227,8 +285,8 @@ public class CameraActivity extends AppCompatActivity {
                 params.put("image", encodedImage);
                 params.put("latitude", String.valueOf(latitude));
                 params.put("longitude", String.valueOf(longitude));
-                params.put("address", address);
-                params.put("farmer_id", String.valueOf(farmerID));  // Add farmer_id to the request
+                params.put("address", address); // Pass the address
+                params.put("farmer_id", String.valueOf(farmerID)); // Add farmer ID to the request
                 return params;
             }
 
@@ -248,13 +306,12 @@ public class CameraActivity extends AppCompatActivity {
             return pestType; // Return as is if null or empty
         }
 
-        // Replace underscores with spaces and capitalize
         String formatted = pestType.replace('_', ' ').toLowerCase();
         String[] words = formatted.split(" ");
         StringBuilder capitalized = new StringBuilder();
         for (String word : words) {
             if (capitalized.length() > 0) {
-                capitalized.append(" "); // Add space before the next word
+                capitalized.append(" ");
             }
             capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
         }
@@ -262,49 +319,74 @@ public class CameraActivity extends AppCompatActivity {
         return capitalized.toString();
     }
 
-    private void handleFlaskResponse(String response) {
+    private void handleFlaskResponse(String response, Bitmap imageBitmap) {
         Log.d("Response", response); // Log the response for debugging
 
         try {
             JSONObject jsonObject = new JSONObject(response);
             String pestType = jsonObject.getString("pest_type");
-            String recommendation = jsonObject.getString("recommendation");
 
-            // Format the pest type for display
             String formattedPestType = formatPestType(pestType);
 
-            // Update the TextViews with the classification result
-            result.setText("Pest Type: " + formattedPestType);
-            recommendationTextView.setText("Recommendation: " + recommendation);
+            result.setText(" " + formattedPestType);
 
-            // Make the TextViews visible
             result.setVisibility(View.VISIBLE);
             recommendationTextView.setVisibility(View.VISIBLE);
 
-            // Send the data to your PHP server for storage
-            sendPredictionToPhpServer(encodedImage, formattedPestType, latitude, longitude, address);
+            // Send the prediction to the PHP server
+            sendPredictionToPhpServer(encodedImage, formattedPestType, latitude, longitude, address, farmerID);
         } catch (JSONException e) {
-            e.printStackTrace();
             Log.e("JSONError", "Failed to parse JSON: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private void sendPredictionToPhpServer(String image, String pestType, double latitude, double longitude, String address) {
+    private void sendPredictionToPhpServer(String encodedImage, String pestType, double latitude, double longitude, String address, int farmerID) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://harvest.dermocura.net/retreive_prediction.php"; // Update with your PHP server URL
+        String url = "https://harvest.dermocura.net/PHP_API/receive_prediction.php";
+
+        Log.d("Sending to PHP", "Encoded Image Length: " + (encodedImage != null ? encodedImage.length() : "null"));
+        Log.d("Sending to PHP", "Pest Type: " + pestType);
+        Log.d("Sending to PHP", "Latitude: " + latitude);
+        Log.d("Sending to PHP", "Longitude: " + longitude);
+        Log.d("Sending to PHP", "Address: " + address); // Log address to ensure it's not null
+        Log.d("Sending to PHP", "Farmer ID: " + farmerID);
+        Log.d("Sending to PHP", "Severity: " + severity); // Log severity for debugging
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                response -> Log.d("PHP Response", response),
-                error -> Log.e("Error", error.toString())) {
+                response -> {
+                    Log.d("PHP Response", response); // Log the PHP response for debugging
+
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        boolean success = jsonResponse.getBoolean("success");
+                        String message = jsonResponse.getString("message");
+
+                        if (success) {
+                            Toast.makeText(this, "Pest report added successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e("PHP Insert Error", "Error message from PHP: " + message);
+                            Toast.makeText(this, "Error: " + message, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        Log.e("JSON Error", "Failed to parse JSON: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Log.e("Volley Error", "Failed to send data: " + error.getMessage());
+                    Toast.makeText(this, "Failed to send data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("image", image);
+                params.put("image", encodedImage);
                 params.put("pest_type", pestType);
                 params.put("latitude", String.valueOf(latitude));
                 params.put("longitude", String.valueOf(longitude));
-                params.put("address", address);
-                params.put("farmer_id", String.valueOf(farmerID)); // Pass farmer_id to PHP server
+                params.put("address", address); // Address being sent to PHP
+                params.put("farmer_id", String.valueOf(farmerID));
+                params.put("severity", severity); // Add severity to parameters
                 return params;
             }
 
@@ -317,6 +399,15 @@ public class CameraActivity extends AppCompatActivity {
         };
 
         queue.add(stringRequest);
+    }
+
+
+    // Method to encode Bitmap to Base64
+    private String encodeImage(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     private void checkLocationServices() {
@@ -335,5 +426,16 @@ public class CameraActivity extends AppCompatActivity {
                     .setNegativeButton("Cancel", null)
                     .show();
         }
+
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
