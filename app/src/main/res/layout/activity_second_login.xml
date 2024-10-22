@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondLogin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/abs"
+        tools:context=".Login">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvLogin"
+            android:layout_width="350dp"
+            android:layout_height="600dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.9"
+            app:cardBackgroundColor="@color/dirty_white"
+            app:cardCornerRadius="17dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/harvest_icon" />
+
+
+
+            <!--Input layout for etID editText Field-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="100dp"
+                android:paddingLeft="10dp"
+                >
+
+                <!--User ID-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsernameD"
+                    android:layout_width="300dp"
+                    android:layout_height="65dp"
+                    android:hint="Enter a username" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+            <Button
+                android:id="@+id/btnSet"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/darker_matcha"
+                android:text="Set"
+                android:textColor="@color/white" />
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="40dp"
+                android:background="#6B8C9A99" />
+
+            <TextView
+                android:id="@+id/tvBottomText0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="565dp"
+                android:text="Don't have an account?"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btnSignup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="230dp"
+                android:layout_marginTop="555dp"
+                android:background="@null"
+                android:text="Sign Up"
+                android:textColor="@color/blueBlack"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

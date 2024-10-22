@@ -85,10 +85,10 @@ public class FormActivity extends AppCompatActivity {
             String selectedCrop = cropSpinner.getSelectedItem().toString();
             int cropId = getCropId(selectedCrop);
 
-            Log.i("PondsTambok", "area" + area);
-            Log.i("PondsTambok", "selectedCrop" + selectedCrop);
-            Log.i("PondsTambok", "cropId" + cropId);
-            Log.i("PondsTambok", "farmerId" + selectedDate);
+            Log.i("pickDate", "area" + area);
+            Log.i("pickDate", "selectedCrop" + selectedCrop);
+            Log.i("pickDate", "cropId" + cropId);
+            Log.i("pickDate", "farmerId" + selectedDate);
 
             // Schedule the planting date with the backend
             schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), selectedDate);
@@ -122,7 +122,7 @@ public class FormActivity extends AppCompatActivity {
             requestBody.put("area", area);
             requestBody.put("planting_date", datePlanted);
         } catch (JSONException e) {
-            Log.e("EmmanBayot" + " makeHTTPRequest", String.valueOf(e));
+            Log.e("request" + " makeHTTPRequest", String.valueOf(e));
             return;
         }
 
@@ -137,7 +137,7 @@ public class FormActivity extends AppCompatActivity {
 
         // Log the JSON request body for debugging
         String stringJSON = requestBody.toString();
-        Log.i("EmmanBayot" + " makeHTTPRequest", stringJSON);
+        Log.i("request" + " makeHTTPRequest", stringJSON);
 
         // Add the request to the Volley request queue
         queue.add(request);
@@ -151,29 +151,29 @@ public class FormActivity extends AppCompatActivity {
 
             if (success) {
                 // Log successful response
-                Log.d("EmmanBayot" + " onRequestSuccess", "Message Response: " + message);
-                Log.d("EmmanBayot" + " onRequestSuccess", "JSON Received: " + response);
+                Log.d("request" + " onRequestSuccess", "Message Response: " + message);
+                Log.d("request" + " onRequestSuccess", "JSON Received: " + response);
             } else {
                 // Log failure
-                Log.e("EmmanBayot" + " onRequestSuccess", "Message Response: " + message);
+                Log.e("request" + " onRequestSuccess", "Message Response: " + message);
             }
         } catch (JSONException e) {
-            Log.e("EmmanBayot" + " onRequestSuccess", String.valueOf(e));
-            Log.e("EmmanBayot" + " onRequestSuccess", "Error parsing JSON response");
+            Log.e("request" + " onRequestSuccess", String.valueOf(e));
+            Log.e("request" + " onRequestSuccess", "Error parsing JSON response");
         }
     }
 
     private void onRequestError(VolleyError error) {
         // Log and highlight error
-        Log.e("EmmanBayot" + " onRequestError", "Error Response: " + error.getMessage());
+        Log.e("request" + " onRequestError", "Error Response: " + error.getMessage());
     }
 
     // Helper method to map crop names to crop IDs
     private int getCropId(String cropName) {
         switch (cropName.toLowerCase()) {
-            case "rice":
-                return 1;
             case "corn":
+                return 1;
+            case "rice":
                 return 2;
             default:
                 return -1;  // Unknown crop

@@ -299,9 +299,9 @@ public class SignupActivity1 extends AppCompatActivity {
 
     private int getCropId(String cropName) {
         switch (cropName.toLowerCase()) {
-            case "rice":
-                return 1;
             case "corn":
+                return 1;
+            case "rice":
                 return 2;
             // Add more crops as needed
             default:

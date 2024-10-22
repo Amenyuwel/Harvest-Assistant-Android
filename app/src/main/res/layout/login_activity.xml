@@ -51,8 +51,8 @@
                 android:id="@+id/etID"
                 android:layout_width="300dp"
                 android:layout_height="65dp"
-                android:drawableStart="@drawable/number_icon"
-                android:hint="RSBSA" />
+                android:drawableStart="@drawable/person"
+                android:hint="RSBSA/Username" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

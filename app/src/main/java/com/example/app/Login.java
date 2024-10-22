@@ -35,10 +35,8 @@ public class Login extends AppCompatActivity {
     TextInputEditText etPassword, etID;
     TextView btnSignup;
     Button btnLogin;
-    String TAG = "BillyBayot";
+    String TAG = "Login";
     String URL = "https://harvest.dermocura.net/PHP_API/login.php";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +55,6 @@ public class Login extends AppCompatActivity {
             actionBar.setTitle("");
         }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Login.this, Dashboard.class);
-                startActivity(i);
-            }
-        });
-
-
         btnSignup = findViewById(R.id.btnSignup);
 
         Button loginButton = findViewById(R.id.btnLogin);
@@ -73,8 +62,9 @@ public class Login extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Login.this, register.class);
-                startActivity(i);}
+                Intent i = new Intent(Login.this, SignupActivity.class);
+                startActivity(i);
+            }
         });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +97,6 @@ public class Login extends AppCompatActivity {
         // Validation passed
         return true;
     }
-
 
     private void makeHTTPRequest(String username, String password) {
         // Define keys for the JSON request body
@@ -153,9 +142,10 @@ public class Login extends AppCompatActivity {
             String message = response.getString("message");
 
             if (success) {
-                // Get the farmerID from the userData
+                // Get the farmer data from the userData
                 JSONObject userData = response.getJSONObject("userData");
                 int farmerID = userData.getInt("farmerID");
+                int sessionKey = userData.getInt("session_key");
 
                 // Store farmerID in SharedPreferences
                 SharedPreferenceManager.getInstance(this).saveFarmerID(farmerID);
@@ -165,13 +155,23 @@ public class Login extends AppCompatActivity {
                 Log.d(TAG + " onRequestSuccess", "JSON Received: " + response);
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
-                // Redirect to Dashboard
-                Intent intent = new Intent(Login.this, Dashboard.class);
-                startActivity(intent);
-                finish();
+                if (sessionKey == 0) {
+                    // Redirect to SecondLogin to set username and update session key
+                    Intent intent = new Intent(Login.this, SecondLogin.class);
+                    intent.putExtra("farmerID", farmerID);
+                    startActivity(intent);
+                    finish();
+                } else if (sessionKey == 1) {
+                    // Redirect to Dashboard
+                    Intent intent = new Intent(Login.this, Dashboard.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             } else {
                 // Login failed
                 Log.e(TAG + " onRequestSuccess", "Message Response: " + message);
+                Toast.makeText(this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             Log.e(TAG + " onRequestSuccess", String.valueOf(e));
