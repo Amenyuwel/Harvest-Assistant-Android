@@ -2,7 +2,6 @@ package com.example.app;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -10,11 +9,8 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -88,7 +84,7 @@ public class FormActivity extends AppCompatActivity {
             Log.i("pickDate", "area" + area);
             Log.i("pickDate", "selectedCrop" + selectedCrop);
             Log.i("pickDate", "cropId" + cropId);
-            Log.i("pickDate", "farmerId" + selectedDate);
+            Log.i("pickDate", "plant_date" + selectedDate);
 
             // Schedule the planting date with the backend
             schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), selectedDate);
@@ -99,28 +95,25 @@ public class FormActivity extends AppCompatActivity {
         });
     }
 
-    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
+    private void schedulePlantingDate(int farmerId, int cropId, double area, String plantDate) {
         // Define keys for the JSON request body
         String url = "https://harvest.dermocura.net/PHP_API/calendarbayot.php";
 
         // Create a JSON object for the request body
         JSONObject requestBody = new JSONObject();
 
-        // Create a Volley request queue
-        RequestQueue queue = Volley.newRequestQueue(this);
-
         // log input
         Log.i("phpLog", "FarmerID:" + farmerId);
         Log.i("phpLog", "crop_id:" + cropId);
         Log.i("phpLog", "area:" + area);
-        Log.i("phpLog", "planting_date:" + datePlanted);
+        Log.i("phpLog", "plant_date:" + plantDate);
 
         // Populate the JSON request body
         try {
             requestBody.put("farmer_id", farmerId);
             requestBody.put("crop_id", cropId);
             requestBody.put("area", area);
-            requestBody.put("planting_date", datePlanted);
+            requestBody.put("plant_date", plantDate);  // Changed from "planting_date" to "plant_date"
         } catch (JSONException e) {
             Log.e("request" + " makeHTTPRequest", String.valueOf(e));
             return;
@@ -140,7 +133,7 @@ public class FormActivity extends AppCompatActivity {
         Log.i("request" + " makeHTTPRequest", stringJSON);
 
         // Add the request to the Volley request queue
-        queue.add(request);
+        requestQueue.add(request);
     }
 
     private void onRequestSuccess(JSONObject response) {
