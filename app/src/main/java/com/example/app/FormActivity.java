@@ -2,6 +2,7 @@ package com.example.app;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -9,8 +10,11 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +35,7 @@ public class FormActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
 
     // Store the selected date
-    private String selectedDate;
+    private String selectedDate, sDate;
 
     // SharedPreferences to store and retrieve farmer_id
     private SharedPreferences sharedPreferences;
@@ -73,6 +77,7 @@ public class FormActivity extends AppCompatActivity {
             String formattedMonth = String.format("%02d", month + 1);
             String formattedDay = String.format("%02d", dayOfMonth);
             selectedDate = year + "-" + formattedMonth + "-" + formattedDay;
+            sDate = selectedDate.toString();
         });
 
         // Set up the button click listener
@@ -84,10 +89,10 @@ public class FormActivity extends AppCompatActivity {
             Log.i("pickDate", "area" + area);
             Log.i("pickDate", "selectedCrop" + selectedCrop);
             Log.i("pickDate", "cropId" + cropId);
-            Log.i("pickDate", "plant_date" + selectedDate);
+            Log.i("pickDate", "farmerId" + selectedDate);
 
             // Schedule the planting date with the backend
-            schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), selectedDate);
+            schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), sDate);
 
             // Once the button is clicked and the data is sent, transition to Calendarclass
             Intent intent = new Intent(FormActivity.this, Calendarclass.class);
@@ -95,25 +100,28 @@ public class FormActivity extends AppCompatActivity {
         });
     }
 
-    private void schedulePlantingDate(int farmerId, int cropId, double area, String plantDate) {
+    private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
         // Define keys for the JSON request body
         String url = "https://harvest.dermocura.net/PHP_API/calendarbayot.php";
 
         // Create a JSON object for the request body
         JSONObject requestBody = new JSONObject();
 
+        // Create a Volley request queue
+        RequestQueue queue = Volley.newRequestQueue(this);
+
         // log input
         Log.i("phpLog", "FarmerID:" + farmerId);
         Log.i("phpLog", "crop_id:" + cropId);
         Log.i("phpLog", "area:" + area);
-        Log.i("phpLog", "plant_date:" + plantDate);
+        Log.i("phpLog", "planting_date:" + datePlanted);
 
         // Populate the JSON request body
         try {
             requestBody.put("farmer_id", farmerId);
             requestBody.put("crop_id", cropId);
             requestBody.put("area", area);
-            requestBody.put("plant_date", plantDate);  // Changed from "planting_date" to "plant_date"
+            requestBody.put("plant_date", datePlanted);
         } catch (JSONException e) {
             Log.e("request" + " makeHTTPRequest", String.valueOf(e));
             return;
@@ -133,7 +141,7 @@ public class FormActivity extends AppCompatActivity {
         Log.i("request" + " makeHTTPRequest", stringJSON);
 
         // Add the request to the Volley request queue
-        requestQueue.add(request);
+        queue.add(request);
     }
 
     private void onRequestSuccess(JSONObject response) {
