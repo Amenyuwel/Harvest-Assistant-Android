@@ -171,7 +171,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Intent to open a new activity
-                Intent intent = new Intent(CameraActivity.this, RecoMainActivity.class);
+                Intent intent = new Intent(CameraActivity.this, PestReal.class);
                 startActivity(intent); // Start the new activity
             }
         });
@@ -180,6 +180,13 @@ public class CameraActivity extends AppCompatActivity {
         // Send image button
         sendButton.setOnClickListener(view -> {
             if (capturedImage != null) {
+                // Check if severity is selected
+                if (severity == null || severity.isEmpty()) {
+                    Toast.makeText(CameraActivity.this, "Input pest damage severity", Toast.LENGTH_SHORT).show();
+                    return; // Prevent further execution
+                }
+
+                // Check for location permissions and proceed
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     getLastLocation();
                 } else {
@@ -352,6 +359,7 @@ public class CameraActivity extends AppCompatActivity {
         Log.d("Sending to PHP", "Address: " + address); // Log address to ensure it's not null
         Log.d("Sending to PHP", "Farmer ID: " + farmerID);
         Log.d("Sending to PHP", "Severity: " + severity); // Log severity for debugging
+        //time and date
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> {

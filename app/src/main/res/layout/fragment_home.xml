@@ -152,7 +152,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:fontFamily="@font/imbmedium"
-                        android:text="Recommendations"
+                        android:text="History"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
