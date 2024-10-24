@@ -14,21 +14,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
@@ -37,6 +31,7 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
     String TAG = "Login";
     String URL = "https://harvest.dermocura.net/PHP_API/login.php";
+    int sessionKey = 0;  // This can be dynamically updated after fetching from server if required
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,26 +61,31 @@ public class Login extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Validate input fields
-                if (validateInputFields()) {
-                    // Perform login if validation passes
-                    String username = etID.getText().toString().trim();
+                // Validate input fields based on sessionKey
+                if (validateInputFields(sessionKey)) {
+                    String loginValue = etID.getText().toString().trim();
                     String password = etPassword.getText().toString().trim();
-                    makeHTTPRequest(username, password);
+                    makeHTTPRequest(loginValue, password, sessionKey);
                 }
             }
         });
     }
 
-    private boolean validateInputFields() {
-        String username = etID.getText().toString().trim();
+    private boolean validateInputFields(int sessionKey) {
+        String loginValue = etID.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(username)) {
-            etID.setError("Username is required");
+        // Validate loginValue based on sessionKey (either rsbsa_num or username)
+        if (TextUtils.isEmpty(loginValue)) {
+            if (sessionKey == 0) {
+                etID.setError("RSBSA number is required");
+            } else {
+                etID.setError("Username is required");
+            }
             return false;
         }
 
@@ -98,9 +98,9 @@ public class Login extends AppCompatActivity {
         return true;
     }
 
-    private void makeHTTPRequest(String username, String password) {
+    private void makeHTTPRequest(String loginValue, String password, int sessionKey) {
         // Define keys for the JSON request body
-        String keyEmail = "rsbsa_num";
+        String keyEmail = (sessionKey == 0) ? "rsbsa_num" : "username"; // Use rsbsa_num if sessionKey == 0
         String keyPassword = "password";
 
         // Create a JSON object for the request body
@@ -111,7 +111,7 @@ public class Login extends AppCompatActivity {
 
         // Populate the JSON request body
         try {
-            requestBody.put(keyEmail, username);
+            requestBody.put(keyEmail, loginValue); // Use rsbsa_num or username based on sessionKey
             requestBody.put(keyPassword, password);
         } catch (JSONException e) {
             Log.e(TAG + " makeHTTPRequest", String.valueOf(e));
@@ -159,6 +159,7 @@ public class Login extends AppCompatActivity {
                     // Redirect to SecondLogin to set username and update session key
                     Intent intent = new Intent(Login.this, SecondLogin.class);
                     intent.putExtra("farmerID", farmerID);
+                    intent.putExtra("rsbsa_num", etID.getText().toString().trim()); // pass RSBSA number
                     startActivity(intent);
                     finish();
                 } else if (sessionKey == 1) {

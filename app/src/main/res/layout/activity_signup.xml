@@ -83,7 +83,6 @@
 
                     <!-- First Name -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/firstNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -96,23 +95,37 @@
                             android:inputType="textPersonName" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Middle Name -->
+                    <!-- First Name -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/middleNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp">
 
-                    <!-- Last Name -->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etMiddlename"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Middle Name"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- First Name -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/lastNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etLastname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Last Name"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <!--                                                   -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/extNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -163,7 +176,6 @@
 
                     <!-- Contact Number -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/contactNumberEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
@@ -181,7 +193,6 @@
 
                     <!--                                                   -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/areaEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -203,7 +214,6 @@
                     <!--                                                   -->
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/purokEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -219,7 +229,6 @@
                     <!--                                                   -->
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/streetEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -251,7 +260,6 @@
                     <!--                                                -->
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/cityEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -267,7 +275,6 @@
                     <!--                                                -->
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/provEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -283,7 +290,6 @@
                     <!--                                                -->
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/regionEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -338,7 +344,6 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/pobMunEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
@@ -362,7 +367,6 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/relEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
@@ -374,14 +378,6 @@
                             android:hint="Religion"
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                    <!--                    -->
-
-
-
-
 
 
                     <!-- Crop and Barangay Spinners -->
@@ -409,7 +405,6 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/usernameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp">
@@ -426,7 +421,6 @@
 
                     <!-- Password -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/passwordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -443,7 +437,6 @@
 
                     <!-- Confirm Password -->
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/confirmPasswordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

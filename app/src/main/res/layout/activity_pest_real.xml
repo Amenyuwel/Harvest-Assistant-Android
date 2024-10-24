@@ -8,16 +8,6 @@
     android:background="@drawable/abs"
     tools:context=".PestReal">
 
-    <ImageButton
-        android:id="@+id/btBack1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/back"
-        android:background="@null"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp" />
-
 
     <androidx.cardview.widget.CardView
         android:layout_width="350dp"

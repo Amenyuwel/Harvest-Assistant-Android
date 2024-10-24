@@ -19,7 +19,7 @@ public class PestReal extends AppCompatActivity {
 
     CardView elNinoCardView;
     CardView laNinaCardView;
-    ImageView btBack1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class PestReal extends AppCompatActivity {
 
         elNinoCardView = findViewById(R.id.elNinoCardview);
         laNinaCardView = findViewById(R.id.laNinaCardview);
-        btBack1 = findViewById(R.id.btBack1);
+
 
         elNinoCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,13 +62,6 @@ public class PestReal extends AppCompatActivity {
 
         });
 
-        btBack1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(PestReal.this, Dashboard.class);
-                startActivity(i);
-            }
-        });
 
     }
     // This event will enable the back function to the button on press

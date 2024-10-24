@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,7 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "signing";
 
-    private EditText etFirstName, etMiddleName, etLastName, etExtname, etContact, etArea, etPurok, etStreet, etCity, etProv, etRegion, etpobMun, etRel, etUsername, etPassword, etConfirmPassword;
+    private TextInputEditText etFirstname, etMiddlename, etLastname, etExtname, etContact, etArea, etPurok, etStreet, etCity, etProv, etRegion, etpobMun, etRel, etUsername, etPassword, etConfirmPassword;
     private Spinner cropSpinner, brgySpinner;
     private RadioGroup rgSex;
     private Button btnSignup;
@@ -51,9 +52,9 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         // Initialize UI components
-        etFirstName = findViewById(R.id.etFirstname);
-        etMiddleName = findViewById(R.id.middleNameEditText);
-        etLastName = findViewById(R.id.lastNameEditText);
+        etFirstname = findViewById(R.id.etFirstname);
+        etMiddlename = findViewById(R.id.etMiddlename);
+        etLastname = findViewById(R.id.etLastname);
         etExtname = findViewById(R.id.etExtname);
         etContact = findViewById(R.id.etContact);
         etArea = findViewById(R.id.etArea);
@@ -126,9 +127,9 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        final String firstName = etFirstName.getText().toString().trim();
-        final String middleName = etMiddleName.getText().toString().trim();
-        final String lastName = etLastName.getText().toString().trim();
+        final String firstName = etFirstname.getText().toString().trim();
+        final String middleName = etMiddlename.getText().toString().trim();
+        final String lastName = etLastname.getText().toString().trim();
         final String extName = etExtname.getText().toString().trim();
         final String contact = etContact.getText().toString().trim();
         final String area = etArea.getText().toString().trim();
@@ -147,6 +148,28 @@ public class SignupActivity extends AppCompatActivity {
         final int selectedSexId = rgSex.getCheckedRadioButtonId();
         final String sex = selectedSexId == -1 ? "" : ((RadioButton) findViewById(selectedSexId)).getText().toString();
 
+        // Log the input values
+        Log.d(TAG, "First Name: " + firstName);
+        Log.d(TAG, "Middle Name: " + middleName);
+        Log.d(TAG, "Last Name: " + lastName);
+        Log.d(TAG, "Extension Name: " + extName);
+        Log.d(TAG, "Contact: " + contact);
+        Log.d(TAG, "Area: " + area);
+        Log.d(TAG, "Purok: " + purok);
+        Log.d(TAG, "Street: " + street);
+        Log.d(TAG, "City: " + city);
+        Log.d(TAG, "Province: " + province);
+        Log.d(TAG, "Region: " + region);
+        Log.d(TAG, "Place of Birth: " + pobMun);
+        Log.d(TAG, "Religion: " + religion);
+        Log.d(TAG, "Username: " + username);
+        Log.d(TAG, "Password: " + password);
+        Log.d(TAG, "Confirm Password: " + confirmPassword);
+        Log.d(TAG, "Crop: " + crop);
+        Log.d(TAG, "Barangay: " + barangay);
+        Log.d(TAG, "Sex: " + sex);
+        Log.d(TAG, "Birthdate: " + birthdate);
+
         // Validate inputs
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -158,19 +181,8 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        // Log the input values
-        Log.d(TAG, "First Name: " + firstName);
-        Log.d(TAG, "Middle Name: " + middleName);
-        Log.d(TAG, "Last Name: " + lastName);
-        Log.d(TAG, "Contact: " + contact);
-        Log.d(TAG, "Area: " + area);
-        Log.d(TAG, "Crop: " + crop);
-        Log.d(TAG, "Barangay: " + barangay);
-        Log.d(TAG, "Sex: " + sex);
-        Log.d(TAG, "Birthdate: " + birthdate);
-
         // API endpoint URL
-        String url = "https://harvest.dermocura.net/PHP_API/new_register.php";
+        String url = "https://harvest.dermocura.net/PHP_API/register.php";
 
         // Create a POST request using Volley
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -219,7 +231,7 @@ public class SignupActivity extends AppCompatActivity {
                 params.put("province", province);
                 params.put("region", region);
                 params.put("birthdate", birthdate);
-                params.put("place_of_birth", pobMun);
+                params.put("birthplace", pobMun);
                 params.put("religion", religion);
                 params.put("username", username);
                 params.put("password", password);
@@ -227,6 +239,12 @@ public class SignupActivity extends AppCompatActivity {
                 params.put("barangay_id", String.valueOf(getBrgyId(barangay)));
                 params.put("sex", sex);
                 params.put("role_id", "1");  // Ensure role_id is sent as "1" for farmers
+
+                // Log all the params
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    Log.d(TAG, "Param: " + entry.getKey() + " = " + entry.getValue());
+                }
+
                 return params;
             }
         };
