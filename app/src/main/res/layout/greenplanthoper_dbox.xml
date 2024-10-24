@@ -35,7 +35,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Green Leafhopper"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
             android:text="The green leafhopper is a small, greenish insect that is one of the primary vectors for transmitting viral diseases in rice."
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,15 +68,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: Rice leaves and stems. These insects feed on the plant's sap, weakening it while also transmitting viral diseases that reduce plant health and grain production."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -84,9 +85,49 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•The green leafhopper is notorious for transmitting diseases like tungro virus, which can cause significant stunting, yellowing of leaves, and reduced grain yield. Direct feeding can also lead to leaf curling and browning."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="•Imidacloprid\n•Thiamethoxam\n•Buprofezin\n•Pymetrozine"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="-Similar to brown planthopper, active during the wet season, from July to October."
+                android:textSize="12dp" />
+
 
         </LinearLayout>
 

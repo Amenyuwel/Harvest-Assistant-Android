@@ -35,7 +35,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Corn Earworm"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
             android:text="The corn earworm is a caterpillar that feeds on corn ears and is also known to attack other crops like tomatoes, cotton, and soybeans."
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,15 +68,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: Corn ears and kernels. These larvae chew through the corn ears and kernels, destroying grain quality and making the crop susceptible to diseases."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -84,9 +85,46 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•This pest bores into corn ears, feeding on the developing kernels, leading to reduced quality and yield. Infestations can also increase the risk of fungal infections due to damaged kernels."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="•Chlorantraniliprole\n•Spinosad\n•Methomyl\n•Emamectin Benzoate"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="-Active during the growing season, especially from July to September."
+                android:textSize="12dp" />
 
         </LinearLayout>
 

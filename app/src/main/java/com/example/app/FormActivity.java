@@ -101,7 +101,7 @@ public class FormActivity extends AppCompatActivity {
 
     private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
         // Define keys for the JSON request body
-        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";
+        String url = "https://harvest.dermocura.net/PHP_API/calendarbayot.php";
 
         // Create a JSON object for the request body
         JSONObject requestBody = new JSONObject();
@@ -110,10 +110,10 @@ public class FormActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         // log input
-        Log.i("phpLog", "FarmerID" + farmerId);
-        Log.i("phpLog", "crop_id" + cropId);
-        Log.i("phpLog", "area" + area);
-        Log.i("phpLog", "planting_date" + datePlanted);
+        Log.i("phpLog", "FarmerID:" + farmerId);
+        Log.i("phpLog", "crop_id:" + cropId);
+        Log.i("phpLog", "area:" + area);
+        Log.i("phpLog", "planting_date:" + datePlanted);
 
         // Populate the JSON request body
         try {

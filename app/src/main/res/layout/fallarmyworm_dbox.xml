@@ -34,7 +34,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Fall Armyworm"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -53,7 +53,7 @@
             android:text="The larvae of flies that bore into rice stems, causing damage that may result in the death of the tillers or weak plant growth. These maggots can significantly reduce yield if not managed early."
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,15 +67,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: Corn leaves, whorls, and ears. Fall armyworms feed on the leaves and ears, damaging the plant's ability to grow and form kernels."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -83,9 +84,48 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Fall armyworms feed on corn leaves, whorls, and ears, causing severe defoliation and stunted growth. They can also damage kernel formation, leading to significant reductions in yield."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="•Emamectin Benzoate\n•Spinetoram\n•Chlorantraniliprole\n•Bacillus thuringiensis (Bt)"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="- Active throughout the year but tends to peak during the dry season, from March to May."
+                android:textSize="12dp" />
+
 
         </LinearLayout>
 

@@ -24,72 +24,113 @@
         android:layout_marginStart="20dp" />
 
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:background="@drawable/cvgradient">
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibmbold"
+            android:text="Brown Planthoper"
+            android:textColor="@color/black"
+            android:textSize="23dp" />
+
+
+        <TextView
+            android:id="@+id/tv_intro"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="9dp"
+            android:text="A major pest of rice that feeds on the sap of rice plants, causing “hopperburn,” which leads to stunted growth and reduced yields. They also transmit viral diseases like rice ragged stunt and grassy stunt."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12dp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
-            android:background="@drawable/cvgradient">
+            android:layout_below="@+id/tv_intro"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
 
             <TextView
-                android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:text="Brown Planthoper"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
+                android:layout_marginStart="35dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Impact:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/ibmbold" />
+                android:text="•Main Target: The sap in the rice plant's vascular system. They primarily target the base of the plant, sucking sap from stems and leaves."
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:text="•By sucking sap from rice plants, brown planthoppers cause yellowing, stunted growth, and a condition known as (hopperburn), where the plant wilts and dies. Severe infestations can lead to significant yield losses."
+                android:textSize="12dp" />
 
 
             <TextView
-                android:id="@+id/tv_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv1"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="9dp"
-                android:text="A major pest of rice that feeds on the sap of rice plants, causing “hopperburn,” which leads to stunted growth and reduced yields. They also transmit viral diseases like rice ragged stunt and grassy stunt."
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:text="•Imidacloprid\n•Thiamethoxam\n•Buprofezin\n•Dinotefuran"
+                android:textSize="12dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@+id/tv_intro"
-                android:layout_marginTop="10dp">
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:text="-Active during the wet season, particularly from July to October when rice crops are planted."
+                android:textSize="12dp" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Impact:"
-                    android:textSize="17dp"
-                    android:layout_marginStart="35dp"
-                    android:fontFamily="@font/imbmedium"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="•Main Target: The sap in the rice plant's vascular system. They primarily target the base of the plant, sucking sap from stems and leaves."
-                    android:textSize="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="60dp" />
 
-                <TextView
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="•By sucking sap from rice plants, brown planthoppers cause yellowing, stunted growth, and a condition known as (hopperburn), where the plant wilts and dies. Severe infestations can lead to significant yield losses."
-                    android:textSize="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="60dp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
+    </RelativeLayout>
 
 
 </androidx.cardview.widget.CardView>

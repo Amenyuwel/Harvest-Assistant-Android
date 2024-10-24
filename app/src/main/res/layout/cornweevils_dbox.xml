@@ -35,7 +35,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Corn Weevil"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
             android:text="These are beetles that infest stored corn grain. They bore into kernels, reducing the quality and quantity of the stored produce."
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,15 +68,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: Stored corn grains. Corn weevils infest and feed on stored kernels, causing damage to both the grain and its quality."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -84,9 +85,45 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Corn weevils infest stored grains, physically damaging kernels and contaminating the grain. This reduces the quality and marketability of the corn, especially during long-term storage."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="•Deltamethrin (dust form)\n•Pirimiphos-methyl (as a fumigant)\n•Cypermethrin\n•Phosphine (for fumigation)"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="-Can be a problem post-harvest, particularly from June to October, when crops are stored and humidity is high."
+                android:textSize="12dp" />
 
         </LinearLayout>
 

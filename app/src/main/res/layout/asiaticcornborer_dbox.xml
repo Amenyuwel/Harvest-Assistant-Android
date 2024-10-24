@@ -35,7 +35,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Asiatic Corn Borer"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -55,7 +55,7 @@
 "
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,15 +69,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: Corn stalks, ears, and leaves. These borers tunnel into the stalks and ears, disrupting nutrient flow and grain development, which leads to structural weakness and yield loss."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -85,9 +86,46 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•The larvae bore into the plant, causing stem breakage, reducing plant vigor, and leading to poor grain development. In severe cases, it can cause up to 80% crop loss by damaging the plant's structure and reducing yield."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="•Chlorantraniliprole\n•Spinosad\n•Emamectin Benzoate\n•Bacillus thuringiensis (Bt)"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="- Activity peaks from July to October during the corn growing season, particularly in warmer, humid months."
+                android:textSize="12dp" />
 
         </LinearLayout>
 
