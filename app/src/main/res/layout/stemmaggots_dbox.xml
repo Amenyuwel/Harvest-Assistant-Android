@@ -34,7 +34,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Stem Maggots"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -53,7 +53,7 @@
             android:text="The larvae of flies that bore into rice stems, causing damage that may result in the death of the tillers or weak plant growth. These maggots can significantly reduce yield if not managed early."
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,15 +67,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: The rice stems. Stem maggots burrow into the stems, causing physical damage to the structure of the plant."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -83,9 +84,47 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Stem maggots feed on rice stems, leading to physical damage, weakening the plant, and often causing lodging. This results in decreased yields and weaker plants."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="•Chlorpyrifos\n•Fipronil\n•Lambda-Cyhalothrin\n•Imidacloprid"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="-These pests tend to be active from July to September, coinciding with the growing season."
+                android:textSize="12dp" />
+
 
         </LinearLayout>
 

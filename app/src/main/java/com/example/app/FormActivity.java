@@ -35,7 +35,7 @@ public class FormActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
 
     // Store the selected date
-    private String selectedDate;
+    private String selectedDate, sDate;
 
     // SharedPreferences to store and retrieve farmer_id
     private SharedPreferences sharedPreferences;
@@ -77,6 +77,7 @@ public class FormActivity extends AppCompatActivity {
             String formattedMonth = String.format("%02d", month + 1);
             String formattedDay = String.format("%02d", dayOfMonth);
             selectedDate = year + "-" + formattedMonth + "-" + formattedDay;
+            sDate = selectedDate.toString();
         });
 
         // Set up the button click listener
@@ -91,7 +92,7 @@ public class FormActivity extends AppCompatActivity {
             Log.i("pickDate", "farmerId" + selectedDate);
 
             // Schedule the planting date with the backend
-            schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), selectedDate);
+            schedulePlantingDate(farmerID, cropId, Double.parseDouble(area), sDate);
 
             // Once the button is clicked and the data is sent, transition to Calendarclass
             Intent intent = new Intent(FormActivity.this, Calendarclass.class);
@@ -101,7 +102,7 @@ public class FormActivity extends AppCompatActivity {
 
     private void schedulePlantingDate(int farmerId, int cropId, double area, String datePlanted) {
         // Define keys for the JSON request body
-        String url = "https://harvest.dermocura.net/PHP_API/calendar.php";
+        String url = "https://harvest.dermocura.net/PHP_API/calendarbayot.php";
 
         // Create a JSON object for the request body
         JSONObject requestBody = new JSONObject();
@@ -110,17 +111,17 @@ public class FormActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         // log input
-        Log.i("phpLog", "FarmerID" + farmerId);
-        Log.i("phpLog", "crop_id" + cropId);
-        Log.i("phpLog", "area" + area);
-        Log.i("phpLog", "planting_date" + datePlanted);
+        Log.i("phpLog", "FarmerID:" + farmerId);
+        Log.i("phpLog", "crop_id:" + cropId);
+        Log.i("phpLog", "area:" + area);
+        Log.i("phpLog", "planting_date:" + datePlanted);
 
         // Populate the JSON request body
         try {
             requestBody.put("farmer_id", farmerId);
             requestBody.put("crop_id", cropId);
             requestBody.put("area", area);
-            requestBody.put("planting_date", datePlanted);
+            requestBody.put("plant_date", datePlanted);
         } catch (JSONException e) {
             Log.e("request" + " makeHTTPRequest", String.valueOf(e));
             return;

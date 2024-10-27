@@ -35,7 +35,7 @@
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="Rice Black Bug"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
             android:text="A major rice pest found in Southeast Asia, the rice black bug is a small, dark-colored insect that feeds on the sap of rice plants."
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,15 +68,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Impact:"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:layout_marginStart="35dp"
-                android:fontFamily="@font/imbmedium"/>
+                android:fontFamily="@font/imbmedium"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•Main Target: Rice stems and base. These bugs feed on the sap from the base of the rice plants, disrupting the plant's ability to take up nutrients, leading to wilting and yellowing."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
 
@@ -84,9 +85,47 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="•The bugs suck sap from rice plants, causing wilting, stunted growth, yellowing of leaves, and even plant death. Severe infestations can lead to reduced grain filling, decreased yield, and plant lodging (falling over)."
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/imbmedium"
+                android:text="Recommended Insecticides:"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="•Lambda-Cyhalothrin\n•Carbaryl\n•Fipronil\n•Imidacloprid"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/imbmedium"
+                android:text="Month Active:"
+                android:textSize="14dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textAlignment="center"
+                android:text="-Can be active from June to September, but may extend into other parts of the year depending on weather patterns."
+                android:textSize="12dp" />
+
 
         </LinearLayout>
 

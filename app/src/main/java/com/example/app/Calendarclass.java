@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -208,9 +209,13 @@ public class Calendarclass extends AppCompatActivity {
                 String cropName = data.getString("crop_name");
 
                 updateUI(datePlanted, area, estimatedProduce, estimatedIncome, cropName);
+
+                ivDate.setVisibility(View.GONE);
             } else {
                 String message = response.optString("message", "Unknown error");
                 Log.e(TAG, "onRequestSuccess: Error - " + message);
+
+                ivDate.setVisibility(View.VISIBLE);
             }
         } catch (JSONException e) {
             Log.e(TAG, "onRequestSuccess: JSON Parsing error", e);
