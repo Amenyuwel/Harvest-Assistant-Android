@@ -6,6 +6,7 @@ public class Pest {
     private String recommendation;
     private String activeMonth;
     private String season;
+    private String pestImg;  // New field for image URL
 
     // Getters and Setters
     public String getPestName() {
@@ -46,5 +47,13 @@ public class Pest {
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+    public String getPestImg() {
+        return pestImg;
+    }
+
+    public void setPestImg(String pestImg) {
+        this.pestImg = pestImg;
     }
 }

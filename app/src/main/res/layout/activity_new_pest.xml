@@ -1,27 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NewPest">
+    android:layout_height="match_parent">
 
-    <!-- ScrollView to enable vertical scrolling -->
-    <ScrollView
+    <!-- Use a LinearLayout as the single direct child of ScrollView -->
+    <LinearLayout
+        android:id="@+id/pest_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <!-- LinearLayout to hold dynamically generated CardViews -->
-        <LinearLayout
-            android:id="@+id/pest_container"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:id="@+id/imageView" />
 
-            <!-- The CardViews will be added here programmatically in the NewPest activity -->
+        <!-- Add more views as needed -->
 
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</ScrollView>
