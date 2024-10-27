@@ -154,10 +154,18 @@ public class CameraActivity extends AppCompatActivity {
                     int selectedId = radioGroup.getCheckedRadioButtonId();
 
                     if (selectedId != -1) {
+                        // Get the selected radio button's text (severity)
                         RadioButton selectedRadioButton = dialogView.findViewById(selectedId);
-                        severity = selectedRadioButton.getText().toString();
+                        severity = selectedRadioButton.getText().toString(); // Capture the selected severity
+
+                        // Find the TextView in activity_camera.xml and update it with the selected severity
+                        TextView selectedSeverityTextView = findViewById(R.id.selectedSeverityTextView);
+                        selectedSeverityTextView.setText("Selected Severity: " + severity);
+
+                        // Show a toast to confirm the selection
                         Toast.makeText(CameraActivity.this, "Selected: " + severity, Toast.LENGTH_SHORT).show();
                     } else {
+                        // If no selection is made, show a toast message
                         Toast.makeText(CameraActivity.this, "No selection made", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -166,12 +174,11 @@ public class CameraActivity extends AppCompatActivity {
         // Show the dialog
         builder.create().show();
 
-
         recommendationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Intent to open a new activity
-                Intent intent = new Intent(CameraActivity.this, RecoMainActivity.class);
+                Intent intent = new Intent(CameraActivity.this, NewPest.class);
                 startActivity(intent); // Start the new activity
             }
         });
@@ -180,6 +187,13 @@ public class CameraActivity extends AppCompatActivity {
         // Send image button
         sendButton.setOnClickListener(view -> {
             if (capturedImage != null) {
+                // Check if severity is selected
+                if (severity == null || severity.isEmpty()) {
+                    Toast.makeText(CameraActivity.this, "Input pest damage severity", Toast.LENGTH_SHORT).show();
+                    return; // Prevent further execution
+                }
+
+                // Check for location permissions and proceed
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     getLastLocation();
                 } else {
@@ -352,6 +366,7 @@ public class CameraActivity extends AppCompatActivity {
         Log.d("Sending to PHP", "Address: " + address); // Log address to ensure it's not null
         Log.d("Sending to PHP", "Farmer ID: " + farmerID);
         Log.d("Sending to PHP", "Severity: " + severity); // Log severity for debugging
+        //time and date
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> {

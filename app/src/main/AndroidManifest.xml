@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -27,9 +26,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".BayotEmmanFAQ"
-            android:exported="false" />
         <activity
             android:name=".SecondLogin"
             android:exported="false" />
@@ -105,6 +101,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Calendarclass" />
+
+
     </application>
 
 </manifest>
