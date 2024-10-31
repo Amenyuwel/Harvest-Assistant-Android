@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
 
 
         cardView = rootView.findViewById(R.id.cvcalendar);
-        recoCardView = rootView.findViewById(R.id.card1);
+//        recoCardView = rootView.findViewById(R.id.card1);
         pestCardView = rootView.findViewById(R.id.card3);
         tutorialCardView = rootView.findViewById(R.id.card5);
         chatbotCardView = rootView.findViewById(R.id.card6);
@@ -91,13 +91,13 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        recoCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RecoMainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        recoCardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), RecoMainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         pestCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
         chatbotCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BayotEmmanFAQ.class);
+                Intent intent = new Intent(getActivity(), MainActivityFAQ.class);
                 startActivity(intent);
             }
         });
