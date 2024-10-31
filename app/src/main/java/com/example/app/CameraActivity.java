@@ -66,7 +66,7 @@ public class CameraActivity extends AppCompatActivity {
     private TextView result, recommendationTextView, locationTextView;
     private EditText damagedCrops, samples;
     private ImageView imageView;
-    private CardView picture;
+    private CardView picture, confidenceCardView;
     private TextView flaskButton, uploadImage, phpButton;
 
     private Bitmap capturedImage;
@@ -108,6 +108,7 @@ public class CameraActivity extends AppCompatActivity {
         samples = findViewById(R.id.numberOfSamples);
         uploadImage = findViewById(R.id.uploadImage);
         phpButton = findViewById(R.id.btnSend);
+        confidenceCardView = findViewById(R.id.confidenceCV);
 
 
         // Initialize location client
@@ -141,6 +142,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
+        // Set OnClickListener for recommendationTextView
         recommendationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,6 +169,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
+        // Set OnClickListener for phpButton
         phpButton.setOnClickListener(view -> {
             try {
                 String numberOfDamaged = damagedCrops.getText().toString().trim();
@@ -176,18 +179,25 @@ public class CameraActivity extends AppCompatActivity {
                 Log.d("CameraActivity", "Number of damaged crops: " + numberOfDamaged);
                 Log.d("CameraActivity", "Number of samples: " + numberOfSamples);
 
+                // Input validation
                 if (numberOfDamaged.isEmpty() || numberOfSamples.isEmpty()) {
                     Toast.makeText(CameraActivity.this, "Please enter values for damaged crops and samples", Toast.LENGTH_SHORT).show();
                     Log.w("CameraActivity", "Empty input for damaged crops or samples.");
                     return;
                 }
 
+                // Check if an image is captured
                 if (capturedImage != null) {
                     // Ensure image is encoded
                     encodedImage = encodeImage(capturedImage);
                     Log.d("CameraActivity", "Image successfully encoded.");
+
+                    // Send prediction to PHP server
                     sendPredictionToPhpServer(encodedImage, result.getText().toString().trim(), latitude, longitude, address, farmerID);
                     Log.d("CameraActivity", "Prediction sent to PHP server.");
+
+                    // Make the confidence CardView visible
+                    confidenceCardView.setVisibility(View.VISIBLE); // Assuming 'confidenceCardView' is the ID of your CardView
                 } else {
                     Toast.makeText(CameraActivity.this, "No image captured to send", Toast.LENGTH_SHORT).show();
                     Log.w("CameraActivity", "No image captured to send.");

@@ -48,20 +48,6 @@
             <!--NUMBER OF DAMAGED CROPS-->
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PEST INDEX"
-                android:textSize="20dp"
-                android:fontFamily="@font/ibmbold"
-                android:textColor="@color/matcha"
-                app:layout_constraintBottom_toTopOf="@+id/cardView4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.571" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView4"
                 android:layout_width="300dp"
@@ -128,16 +114,15 @@
                 <!--SEND TO PHP BUTTON-->
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
-                android:layout_height="48dp"
+                android:layout_height="30dp"
                 android:backgroundTint="@color/matcha"
                 android:clickable="true"
                 app:cardCornerRadius="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.933"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.915">
+                app:layout_constraintVertical_bias="0.953">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -166,40 +151,20 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             </androidx.cardview.widget.CardView>
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="150dp"
-                android:layout_height="30dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibmbold"
+                android:text="PEST INDEX"
+                android:textColor="@color/blueBlack"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardView4"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:visibility="invisible"
-                        android:id="@+id/confidence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RECOMMENDATIONS"
-                        android:fontFamily="@font/ibmbold"
-                        android:textColor="@color/blueBlack"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -262,6 +227,7 @@
             android:textColor="@color/blueBlack"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnTakePicture"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.507" />
@@ -277,7 +243,8 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.689"
+            app:layout_constraintStart_toEndOf="@+id/btnTakePicture"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.507" />
 
@@ -315,6 +282,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.068" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/confidenceCV"
+        android:visibility="gone"
+        android:contextClickable="true"
+        android:backgroundTint="@color/matcha"
+        android:layout_width="300dp"
+        android:elevation="5dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/inputCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/confidence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibmbold"
+                android:text="RECOMMENDATIONS"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
