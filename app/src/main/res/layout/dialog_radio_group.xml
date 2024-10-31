@@ -1,57 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <ScrollView
+    <EditText
+        android:id="@+id/et_crop_damage_severity_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contextClickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:hint="Severity Level 1"
+        android:inputType="text" />
 
-        <RadioGroup
-            android:layout_gravity="center"
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <EditText
+        android:id="@+id/et_crop_damage_severity_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Severity Level 2"
+        android:inputType="text" />
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="1 - VERY SLIGHT"
-                android:textStyle="bold" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="3 - SLIGHT"
-                android:textStyle="bold" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="5 - MODERATELY"
-                android:textStyle="bold" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="7 - SEVERE"
-                android:textStyle="bold" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="9 - HIGHLY SEVERE"
-                android:textStyle="bold" />
-
-
-        </RadioGroup>
-
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- TextView to display the selected severity levels -->
+    <TextView
+        android:id="@+id/tv_selected_severity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Selected Severity:"
+        android:textSize="16sp"
+        android:textColor="@android:color/black" />
+</LinearLayout>

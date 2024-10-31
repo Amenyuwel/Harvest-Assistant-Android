@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
@@ -22,12 +23,15 @@ import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -60,8 +64,10 @@ public class CameraActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE = 2;
 
     private TextView result, recommendationTextView, locationTextView;
+    private EditText damagedCrops, samples;
     private ImageView imageView;
-    private Button picture, sendButton, uploadImage;
+    private CardView picture;
+    private TextView flaskButton, uploadImage, phpButton;
 
     private Bitmap capturedImage;
     private FusedLocationProviderClient fusedLocationClient;
@@ -97,9 +103,11 @@ public class CameraActivity extends AppCompatActivity {
         locationTextView = findViewById(R.id.location);
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.btnTakePicture);
-        sendButton = findViewById(R.id.btnAnalyze);
+        flaskButton = findViewById(R.id.btnAnalyze);
+        damagedCrops = findViewById(R.id.numberOfDamaged);
+        samples = findViewById(R.id.numberOfSamples);
         uploadImage = findViewById(R.id.uploadImage);
-        ImageView showDialogButton = findViewById(R.id.getRate);
+        phpButton = findViewById(R.id.btnSend);
 
 
         // Initialize location client
@@ -132,47 +140,6 @@ public class CameraActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
             }
         });
-        showDialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(); // Call the method to show the dialog
-            }
-        });
-    }
-
-    private void showDialog() {
-        // Inflate the dialog layout
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_radio_group, null);
-
-        // Create the AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(CameraActivity.this);
-        builder.setTitle("SELECT CROP DAMAGE SEVERITY")
-                .setView(dialogView)
-                .setPositiveButton("OK", (dialog, which) -> {
-                    RadioGroup radioGroup = dialogView.findViewById(R.id.radioGroup);
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
-
-                    if (selectedId != -1) {
-                        // Get the selected radio button's text (severity)
-                        RadioButton selectedRadioButton = dialogView.findViewById(selectedId);
-                        severity = selectedRadioButton.getText().toString(); // Capture the selected severity
-
-                        // Find the TextView in activity_camera.xml and update it with the selected severity
-                        TextView selectedSeverityTextView = findViewById(R.id.selectedSeverityTextView);
-                        selectedSeverityTextView.setText("Selected Severity: " + severity);
-
-                        // Show a toast to confirm the selection
-                        Toast.makeText(CameraActivity.this, "Selected: " + severity, Toast.LENGTH_SHORT).show();
-                    } else {
-                        // If no selection is made, show a toast message
-                        Toast.makeText(CameraActivity.this, "No selection made", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-
-        // Show the dialog
-        builder.create().show();
 
         recommendationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,18 +151,14 @@ public class CameraActivity extends AppCompatActivity {
         });
 
 
-        // Send image button
-        sendButton.setOnClickListener(view -> {
+        flaskButton.setOnClickListener(view -> {
             if (capturedImage != null) {
-                // Check if severity is selected
-                if (severity == null || severity.isEmpty()) {
-                    Toast.makeText(CameraActivity.this, "Input pest damage severity", Toast.LENGTH_SHORT).show();
-                    return; // Prevent further execution
-                }
-
                 // Check for location permissions and proceed
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     getLastLocation();
+
+                    // Make CardViews visible after sending the image
+                    findViewById(R.id.inputCard).setVisibility(View.VISIBLE);
                 } else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
                 }
@@ -203,9 +166,40 @@ public class CameraActivity extends AppCompatActivity {
                 Toast.makeText(CameraActivity.this, "No image captured", Toast.LENGTH_SHORT).show();
             }
         });
+
+        phpButton.setOnClickListener(view -> {
+            try {
+                String numberOfDamaged = damagedCrops.getText().toString().trim();
+                String numberOfSamples = samples.getText().toString().trim();
+
+                // Log the input values
+                Log.d("CameraActivity", "Number of damaged crops: " + numberOfDamaged);
+                Log.d("CameraActivity", "Number of samples: " + numberOfSamples);
+
+                if (numberOfDamaged.isEmpty() || numberOfSamples.isEmpty()) {
+                    Toast.makeText(CameraActivity.this, "Please enter values for damaged crops and samples", Toast.LENGTH_SHORT).show();
+                    Log.w("CameraActivity", "Empty input for damaged crops or samples.");
+                    return;
+                }
+
+                if (capturedImage != null) {
+                    // Ensure image is encoded
+                    encodedImage = encodeImage(capturedImage);
+                    Log.d("CameraActivity", "Image successfully encoded.");
+                    sendPredictionToPhpServer(encodedImage, result.getText().toString().trim(), latitude, longitude, address, farmerID);
+                    Log.d("CameraActivity", "Prediction sent to PHP server.");
+                } else {
+                    Toast.makeText(CameraActivity.this, "No image captured to send", Toast.LENGTH_SHORT).show();
+                    Log.w("CameraActivity", "No image captured to send.");
+                }
+            } catch (Exception e) {
+                Log.e("CameraActivity", "An error occurred: " + e.getMessage(), e);
+                Toast.makeText(CameraActivity.this, "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    @Override
+        @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -285,7 +279,7 @@ public class CameraActivity extends AppCompatActivity {
         encodedImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://desktop-3mj7q7f.tail98551e.ts.net/predict"; // Update with your PHP URL
+        String url = "https://desktop-3mj7q7f.tail98551e.ts.net/predict"; // Update with your Flask URL
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> handleFlaskResponse(response, image),
@@ -300,7 +294,6 @@ public class CameraActivity extends AppCompatActivity {
                 params.put("latitude", String.valueOf(latitude));
                 params.put("longitude", String.valueOf(longitude));
                 params.put("address", address); // Pass the address
-                params.put("farmer_id", String.valueOf(farmerID)); // Add farmer ID to the request
                 return params;
             }
 
@@ -314,6 +307,7 @@ public class CameraActivity extends AppCompatActivity {
 
         queue.add(stringRequest);
     }
+
 
     private String formatPestType(String pestType) {
         if (pestType == null || pestType.isEmpty()) {
@@ -359,18 +353,26 @@ public class CameraActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://harvest.dermocura.net/PHP_API/receive_prediction.php";
 
+        // Assuming you have EditText fields to get the number of damaged crops and samples
+        EditText numberOfDamagedEditText = findViewById(R.id.numberOfDamaged);
+        EditText numberOfSamplesEditText = findViewById(R.id.numberOfSamples);
+
+        // Get the values from the EditText fields
+        String numberOfDamaged = numberOfDamagedEditText.getText().toString().trim();
+        String numberOfSamples = numberOfSamplesEditText.getText().toString().trim();
+
         Log.d("Sending to PHP", "Encoded Image Length: " + (encodedImage != null ? encodedImage.length() : "null"));
         Log.d("Sending to PHP", "Pest Type: " + pestType);
         Log.d("Sending to PHP", "Latitude: " + latitude);
         Log.d("Sending to PHP", "Longitude: " + longitude);
-        Log.d("Sending to PHP", "Address: " + address); // Log address to ensure it's not null
+        Log.d("Sending to PHP", "Address: " + address);
         Log.d("Sending to PHP", "Farmer ID: " + farmerID);
-        Log.d("Sending to PHP", "Severity: " + severity); // Log severity for debugging
-        //time and date
+        Log.d("Sending to PHP", "Number of Damaged Crops: " + numberOfDamaged); // Log number of damaged crops
+        Log.d("Sending to PHP", "Number of Samples: " + numberOfSamples); // Log number of samples
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
-                    Log.d("PHP Response", response); // Log the PHP response for debugging
+                    Log.d("PHP Response", response);
 
                     try {
                         JSONObject jsonResponse = new JSONObject(response);
@@ -378,8 +380,10 @@ public class CameraActivity extends AppCompatActivity {
                         String message = jsonResponse.getString("message");
 
                         if (success) {
+                            // SUCCESS
                             Toast.makeText(this, "Pest report added successfully", Toast.LENGTH_SHORT).show();
                         } else {
+                            // FAILED
                             Log.e("PHP Insert Error", "Error message from PHP: " + message);
                             Toast.makeText(this, "Error: " + message, Toast.LENGTH_LONG).show();
                         }
@@ -399,9 +403,10 @@ public class CameraActivity extends AppCompatActivity {
                 params.put("pest_type", pestType);
                 params.put("latitude", String.valueOf(latitude));
                 params.put("longitude", String.valueOf(longitude));
-                params.put("address", address); // Address being sent to PHP
+                params.put("address", address);
                 params.put("farmer_id", String.valueOf(farmerID));
-                params.put("severity", severity); // Add severity to parameters
+                params.put("damage", numberOfDamaged); // Add number of damaged crops
+                params.put("sampling", numberOfSamples); // Add number of samples
                 return params;
             }
 
