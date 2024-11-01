@@ -92,7 +92,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecoMainActivity" />
-        <activity android:name=".PestReal" />
+        <activity android:name=".NewPest" />
         <activity android:name=".HarvestVolMainActivity" />
         <activity android:name=".TutorialMainActivity" />
         <activity android:name=".MainActivityFAQ" />
