@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import java.util.ArrayList;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -76,7 +77,8 @@ public class CameraActivity extends AppCompatActivity {
 
     // Class member variables for encoded image and address
     private String encodedImage;
-    private String address;
+    private Map<String, Class<?>> pestActivityMap;
+    private String address, pestType;
     private int farmerID; // Class-level variable for farmer ID
     private String severity; // Added severity here
 
@@ -111,6 +113,7 @@ public class CameraActivity extends AppCompatActivity {
         confidenceCardView = findViewById(R.id.confidenceCV);
 
 
+
         // Initialize location client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -142,16 +145,24 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
-        // Set OnClickListener for recommendationTextView
         recommendationTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent to open a new activity
-                Intent intent = new Intent(CameraActivity.this, NewPest.class);
-                startActivity(intent); // Start the new activity
+                // Get the detected pest type from the result TextView
+                String pestType = result.getText().toString().trim(); // Assuming resultTextView is the ID of your TextView
+
+                // Ensure pestType is not empty
+                if (!pestType.isEmpty()) {
+                    // Create an Intent to start NewPest activity and pass the pest type
+                    Intent intent = new Intent(CameraActivity.this, NewPest.class);
+                    intent.putExtra("pest_type", pestType);
+                    startActivity(intent);
+                } else {
+                    // Handle the case where pestType is empty
+                    Toast.makeText(CameraActivity.this, "No pest detected. Please try again.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
 
         flaskButton.setOnClickListener(view -> {
             if (capturedImage != null) {
