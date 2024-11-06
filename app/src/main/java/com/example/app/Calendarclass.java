@@ -2,6 +2,7 @@ package com.example.app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,8 +45,15 @@ public class Calendarclass extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.darker_matcha));
         setContentView(R.layout.calendar_activity);
 
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
+            actionBar.setTitle("ESTIMATION");  // Remove ActionBar Title
+            actionBar.setDisplayHomeAsUpEnabled(true);  // Show the back button
+        }
+
         ivDate = findViewById(R.id.ivDate);
-        calendarBackButton = findViewById(R.id.calendarBackButton);
         tvGrowthStage = findViewById(R.id.tvGrowthStage);
         tvStageDescription = findViewById(R.id.tvStageDescription);
         tvStageSuggestions = findViewById(R.id.tvStageSuggestions);
@@ -56,11 +66,6 @@ public class Calendarclass extends AppCompatActivity {
             startActivity(i);
         });
 
-        // Go back to Dashboard
-        calendarBackButton.setOnClickListener(view -> {
-            Intent i = new Intent(Calendarclass.this, Dashboard.class);
-            startActivity(i);
-        });
 
         // Handle Done button press (submit harvest date)
         btnDone.setOnClickListener(view -> {

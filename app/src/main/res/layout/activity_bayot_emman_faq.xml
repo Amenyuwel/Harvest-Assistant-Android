@@ -8,15 +8,6 @@
     android:orientation="vertical"
     tools:context=".BayotEmmanFAQ">
 
-    <!-- FAQ Section Label -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FAQ Section"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="16dp" />
 
     <!-- Search Bar -->
     <androidx.appcompat.widget.SearchView
@@ -35,15 +26,15 @@
         android:layout_marginBottom="8dp" />
 
     <!-- Common Answers Label -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Frequently Asked Questions"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="center_horizontal" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:text="Frequently Asked Questions"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:layout_gravity="center_horizontal" />-->
 
     <!-- RecyclerView for Questions -->
     <androidx.recyclerview.widget.RecyclerView

@@ -1,12 +1,19 @@
 package com.example.app;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
+
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +48,15 @@ public class BayotEmmanFAQ extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: Activity Created");
         setContentView(R.layout.activity_bayot_emman_faq);
+
+
+        // Set the ActionBar background color
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
+            actionBar.setTitle("FREQUENTLY ASKED QUESTIONS");  // Remove ActionBar Title
+            actionBar.setDisplayHomeAsUpEnabled(true);  // Show the back button
+        }
 
         // Initialize views
         recyclerViewFAQ = findViewById(R.id.recyclerViewFAQ);
@@ -167,4 +183,15 @@ public class BayotEmmanFAQ extends AppCompatActivity {
         Log.e(TAG, "onRequestError: Error fetching FAQs", error);
         Toast.makeText(this, "Error fetching FAQs", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

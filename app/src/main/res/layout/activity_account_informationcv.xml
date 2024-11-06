@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccInfoCV"
-    android:background="@color/matcha">
+    android:background="@color/antique"
+    tools:context=".AccInfoCV">
 
-    <!-- Bottom Card -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:backgroundTint="@color/antique"
-        app:cardCornerRadius="3dp"
-        android:layout_alignParentBottom="true"
-        android:elevation="6dp"/>
 
     <!-- Centered CardView for Farmer Info -->
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
+        android:id="@+id/cardView2"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:cardCornerRadius="10dp"
         android:elevation="10dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,13 +40,17 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:paddingLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Full Name:"
+                    android:text="FULL NAME :"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:textAllCaps="true"
                     android:id="@+id/fullname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,13 +66,17 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:paddingLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="RSBSA Number:"
+                    android:text="RSBSA NUMBER :"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:textAllCaps="true"
                     android:id="@+id/rsbsanum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,13 +92,17 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sex:"
+                    android:paddingLeft="10dp"
+                    android:text="SEX :"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:textAllCaps="true"
                     android:id="@+id/sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,13 +118,17 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Contact Number:"
+                    android:paddingLeft="10dp"
+                    android:text="CONTACT NUMBER :"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:textAllCaps="true"
                     android:id="@+id/contact_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,13 +144,17 @@
                 android:layout_marginTop="20dp">
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Barangay:"
+                    android:paddingLeft="10dp"
+                    android:text="BARANGAY :"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:textAllCaps="true"
                     android:id="@+id/barangay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,11 +172,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Crop:"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:fontFamily="@font/ibmbold"
+                    android:text="GRAIN CROP :"
                     android:textColor="@color/black"
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:fontFamily="@font/ibmbold"
+                    android:textAllCaps="true"
                     android:id="@+id/crop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,5 +190,9 @@
             </LinearLayout>
 
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
-</RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

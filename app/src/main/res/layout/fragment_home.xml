@@ -102,7 +102,7 @@
             android:layout_width="35sp"
             android:layout_height="35sp"
             android:layout_gravity="right"
-            android:background="@drawable/cam"
+            android:background="@drawable/add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.957"

@@ -93,7 +93,7 @@ public class CameraActivity extends AppCompatActivity {
             // Set the ActionBar background color
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
             // Remove ActionBar Title
-            actionBar.setTitle("");
+            actionBar.setTitle("PEST IDENTIFICATION");
             // Show the back button in action bar
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

@@ -38,7 +38,7 @@ public class NewPest extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
-            actionBar.setTitle("");  // Remove ActionBar Title
+            actionBar.setTitle("PEST INFORMATION");  // Remove ActionBar Title
             actionBar.setDisplayHomeAsUpEnabled(true);  // Show the back button
         }
 

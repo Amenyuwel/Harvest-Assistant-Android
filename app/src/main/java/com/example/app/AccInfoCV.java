@@ -52,7 +52,7 @@ public class AccInfoCV extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.darker_matcha)));
-            actionBar.setTitle("");
+            actionBar.setTitle("ACCOUNT INFORMATION");
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
