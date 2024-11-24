@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <cache-path
+        name="cache"
+        path="." />  <!-- Access all files in the cache directory -->
+
+    <files-path
+        name="files"
+        path="." />  <!-- Access all files in the internal files directory -->
+
+    <external-path
+        name="images"
+        path="." />  <!-- Access all files in external storage -->
+</paths>
