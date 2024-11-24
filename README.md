@@ -1,1 +1,1 @@
-"# NewHarvestAssistant" 
+HARVEST ASSISTANT - Android Application
